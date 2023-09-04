@@ -26,7 +26,6 @@ app.config.update(dict(
     TESTING = False
 ))
 
-
 mail = Mail(app)
 
 # if SCHEMA == 2:
