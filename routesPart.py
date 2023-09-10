@@ -22,15 +22,14 @@ def get_vocab():
 
     semester = User.query.filter_by(username='Chris').first().semester
 
-    print(semester, type(semester))
+
     ## change to 'json_files/vocab.json' for semester 1
-    if semester == 1:
+    if SCHEMA == 1 or SCHEMA == 3 or SCHEMA == 6:
         vocabJSON = 'json_files/vocab.json'
-    elif semester == 2:
+    else:
         vocabJSON = 'json_files/vocab2.json'
 
-    if SCHEMA == 6:
-        S3_BUCKET_NAME = 'icc-lms'
+    print(SCHEMA, S3_BUCKET_NAME, vocabJSON)
 
     content_object = s3_resource.Object( S3_BUCKET_NAME, vocabJSON )
     file_content = content_object.get()['Body'].read().decode('utf-8')
