@@ -9,14 +9,17 @@ from flask_admin.contrib.sqla import ModelView
 # verify token
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from meta import *
-from modelsFRD import *
+from modelsFRD1 import *
+from modelsFRD2 import *
 from modelsICC import *
-from modelsLNC import *
-from modelsWPE import *
-from modelsVTM import *
-from modelsWRITE import *
-from modelsNME import *
-from modelsPENG import *
+from modelsWPE1 import *
+from modelsWPE2 import *
+from modelsFOOD import *
+
+# from modelsWRITE import *
+# from modelsNME import *
+# from modelsPENG import *
+# from modelsLNC import *
 
 def getSchema():
     SCHEMA = 0
@@ -27,17 +30,96 @@ def getSchema():
 
     return SCHEMA
 
+dicts = {
+        1 : [
+            ChatBox_FRD1,
+            Attendance_FRD1,
+            AttendLog_FRD1,
+            Units_FRD1,
+            Exams_FRD1,
+            Errors_FRD1,
+        ],
+        2 : [
+            ChatBox_FRD2,
+            Attendance_FRD2,
+            AttendLog_FRD2,
+            Units_FRD2,
+            Exams_FRD2,
+            Errors_FRD2,
+        ],
+        3 : [
+            ChatBox_WPE1,
+            Attendance_WPE1,
+            AttendLog_WPE1,
+            Units_WPE1,
+            Exams_WPE1,
+            Errors_WPE1,
+        ],
+        4 : [
+            ChatBox_WPE2,
+            Attendance_WPE2,
+            AttendLog_WPE2,
+            Units_WPE2,
+            Exams_WPE2,
+            Errors_WPE2,
+        ],
+        5 : [
+            ChatBox_FOOD,
+            Attendance_FOOD,
+            AttendLog_FOOD,
+            Units_FOOD,
+            Exams_FOOD,
+            Errors_FOOD,
+        ],
+        6 : [
+            ChatBox_ICC,
+            Attendance_ICC,
+            AttendLog_ICC,
+            Units_ICC,
+            Exams_ICC,
+            Errors_ICC,
+        ],
+    }
+
+infoDict = {
+        'mda' : [{},
+                 modDictAss_FRD1,
+                 modDictAss_FRD2,
+                 modDictAss_WPE1,
+                 modDictAss_WPE2,
+                 modDictAss_FOOD,
+                 modDictAss_ICC
+                 ],
+        'mdu' : [{},
+                 modDictUnits_FRD1,
+                 modDictUnits_FRD2,
+                 modDictUnits_WPE1,
+                 modDictUnits_WPE2,
+                 modDictUnits_FOOD,
+                 modDictUnits_ICC
+                 ]
+    }
 
 def getModels():
     SCHEMA = getSchema()
     # print('getModels', SCHEMA)
 
-    chatbox = [None, ChatBox_FRD, ChatBox_WPE, ChatBox_ICC, ChatBox_PENG, ChatBox_LNC, ChatBox_VTM, ChatBox_NME, ChatBox_WRITE]
-    attend = [None, Attendance_FRD, Attendance_WPE, Attendance_ICC, Attendance_PENG, Attendance_LNC, Attendance_VTM, Attendance_NME, Attendance_WRITE]
-    attl = [None, AttendLog_FRD, AttendLog_WPE, AttendLog_ICC, AttendLog_PENG, AttendLog_LNC, AttendLog_VTM, AttendLog_NME, AttendLog_WRITE]
-    units = [None, Units_FRD, Units_WPE, Units_ICC, Units_PENG, Units_LNC, Units_VTM, Units_NME, Units_WRITE]
-    exams = [None, Exams_FRD, Exams_WPE, Exams_ICC, Exams_PENG, Exams_LNC, Exams_VTM, Exams_NME, Exams_WRITE]
-    errors = [None, Errors_FRD, Errors_WPE, Errors_ICC, Errors_PENG, Errors_LNC, Errors_VTM, Errors_NME, Errors_WRITE]
+
+
+    chatbox = [None]
+    attend = [None]
+    attl = [None]
+    units = [None]
+    exams = [None]
+    errors = [None]
+
+    for d in dicts:
+        chatbox.append(dicts[d][0])
+        attend.append(dicts[d][1])
+        attl.append(dicts[d][2])
+        units.append(dicts[d][3])
+        exams.append(dicts[d][4])
+        errors.append(dicts[d][5])
 
     return {
         'ChatBox_' : chatbox[SCHEMA],
@@ -48,14 +130,8 @@ def getModels():
         'Errors_' : errors[SCHEMA]
     }
 
-
 def getInfo():
     SCHEMA = getSchema()
-
-    infoDict = {
-        'mda' : [{}, modDictAss_FRD, modDictAss_WPE, modDictAss_ICC, modDictAss_PENG, modDictAss_LNC, modDictAss_VTM, modDictAss_NME, modDictAss_WRITE],
-        'mdu' : [{}, modDictUnits_FRD, modDictUnits_WPE, modDictUnits_ICC, modDictUnits_PENG, modDictUnits_LNC, modDictUnits_VTM, modDictUnits_NME, modDictUnits_WRITE],
-    }
 
 
     modDictAss  = infoDict['mda'][SCHEMA]
@@ -131,13 +207,15 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(), nullable=False, default='profiles/default.PNG')
     password = db.Column(db.String(60), nullable=False)
     device = db.Column (db.String(), nullable=False)
-    frd = db.Column(db.Integer, default=0)
-    wpe = db.Column(db.Integer, default=0)
-    #icc = db.Column(db.Integer, default=0)
-    #lnc = db.Column(db.Integer, default=0)
-    app = db.Column(db.Integer, default=0)
-    vtm = db.Column(db.Integer, default=0)
-    png = db.Column(db.Integer, default=0)
+    frd1 = db.Column(db.Integer, default=0)
+    frd2 = db.Column(db.Integer, default=0)
+    wpe1 = db.Column(db.Integer, default=0)
+    wpe2 = db.Column(db.Integer, default=0)
+    food = db.Column(db.Integer, default=0)
+    icc = db.Column(db.Integer, default=0)
+    # app = db.Column(db.Integer, default=0)
+    # vtm = db.Column(db.Integer, default=0)
+    # png = db.Column(db.Integer, default=0)
     semester = db.Column(db.Integer)
     schema = db.Column(db.Integer)
     extra = db.Column(db.Integer)
@@ -202,38 +280,53 @@ admin = Admin(app, 'Example: Layout-BS3', base_template='admin.html', template_m
 admin.add_view(MyModelView(User, db.session))
 admin.add_view(MyModelView(Users, db.session))
 
-mList1 = [
-            Attendance_FRD, Attendance_WPE,  Attendance_VTM, Attendance_PENG, Attendance_WRITE, Attendance_NME, #Attendance_ICC, Attendance_LNC,
-            AttendLog_FRD, AttendLog_WPE,AttendLog_VTM, AttendLog_PENG, AttendLog_WRITE, AttendLog_NME,  #AttendLog_ICC, AttendLog_LNC,
-            Units_FRD, Units_WPE, Units_VTM, Units_PENG, Units_WRITE, Units_NME, #Units_ICC, Units_LNC,
-            Exams_FRD, Exams_WPE, Exams_VTM, Exams_PENG, Exams_WRITE, Exams_NME, #Exams_ICC, Exams_LNC,
-         ]
+mList1 = []
+
+for d in dicts:
+    mList1.append(dicts[d][1])
+for d in dicts:
+    mList1.append(dicts[d][2])
+for d in dicts:
+    mList1.append(dicts[d][3])
+for d in dicts:
+    mList1.append(dicts[d][4])
 
 for m in mList1:
+    # print(m, type(m))
     admin.add_view(MyModelView(m, db.session))
 
 
-mList2 = [modDictAss_FRD, modDictAss_WPE,  modDictAss_VTM, modDictAss_PENG, modDictAss_WRITE, modDictAss_NME,  ] #modDictAss_ICC, modDictAss_LNC,
-mList3 = [modDictUnits_FRD, modDictUnits_WPE, modDictUnits_VTM, modDictUnits_PENG, modDictUnits_WRITE, modDictUnits_NME,  ] #modDictUnits_ICC, modDictUnits_LNC,
-
-for s in mList3:
-    for d in s:
-        for m in s[d]:
-            if m:
-                admin.add_view(MyModelView(m, db.session))
-
-for d in mList2:
-    for x in d:
-        admin.add_view(MyModelView(d[x], db.session))
+# mList2 = []
+# mList3 = []
 
 
-mList4 = [
-            ChatBox_FRD, ChatBox_WPE, ChatBox_VTM, ChatBox_PENG, ChatBox_WRITE, ChatBox_NME,   #ChatBox_ICC, ChatBox_LNC,
-            Errors_FRD, Errors_WPE, Errors_VTM, Errors_PENG, Errors_WRITE, Errors_NME,    #Errors_ICC, Errors_LNC,
-         ]
+# for mda in infoDict['mda']:
+#     if infoDict['mda'].index(mda) > 0:
+#         print(mda)
+#         mList2.append(mda)
+# for mdu in infoDict['mdu']:
+#     if infoDict['mdu'].index(mda) > 0:
+#         print(mdu)
+#         mList2.append(mda)
 
-for m in mList4:
-    admin.add_view(MyModelView(m, db.session))
+# for s in mList3:
+#     for d in s:
+#         for m in s[d]:
+#             if m:
+#                 admin.add_view(MyModelView(m, db.session))
+
+# for d in mList2:
+#     for x in d:
+#         admin.add_view(MyModelView(d[x], db.session))
+
+
+# mList4 = [
+#             ChatBox_FRD, ChatBox_WPE, ChatBox_VTM, ChatBox_PENG, ChatBox_WRITE, ChatBox_NME,   #ChatBox_ICC, ChatBox_LNC,
+#             Errors_FRD, Errors_WPE, Errors_VTM, Errors_PENG, Errors_WRITE, Errors_NME,    #Errors_ICC, Errors_LNC,
+#          ]
+
+# for m in mList4:
+#     admin.add_view(MyModelView(m, db.session))
 
 
 

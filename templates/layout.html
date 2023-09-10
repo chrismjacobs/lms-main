@@ -44,13 +44,13 @@
                                   {% else %}
                                     <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('grades_final')}}", target="_blank">Grades</a>
                                   {% endif %}
-                            {% elif SCHEMA == 4 %}
+                            {% elif SCHEMA == 7 %}
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('peng_dash')}}", target="_blank">Dashboard</a>
 
-                            {% elif SCHEMA == 7 or SCHEMA == 6 %}
+                            {% elif SCHEMA == 9 %}
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('nme_dubdash', project=0)}}", target="_blank">Movie Dash</a>
 
-                            {% elif SCHEMA == 8 %}
+                            {% elif SCHEMA == 10 %}
                             <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('write_dash') }}", target="_blank">Dashboard</a>
                             <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('pCheck', mode='instructor') }}", target="_blank">Publish_Check</a>
                             {% endif %}
@@ -71,22 +71,22 @@
                           <a class="nav-item nav-link" href="{{ url_for ('course') }}">Course</a>
 
                           <a class="nav-item nav-link" href= "{{ url_for ('att_team') }}">Attendance</a>
-                                {% if SCHEMA < 4 %}
+                                {% if SCHEMA < 5 or SCHEMA == 6 %}
                                   <a class="nav-item nav-link" href="{{ url_for ('unit_list') }}">My Units</a>
                                 {% endif %}
 
-                                {% if SCHEMA < 4 %}
+                                {% if SCHEMA < 5 or SCHEMA == 6 %}
                                 <a class="nav-item nav-link" href="{{ url_for ('assignment_list') }}">My Assignments </a>
                                 {% endif %}
 
-                                {% if SCHEMA == 7 or SCHEMA == 6 %}
+                                {% if SCHEMA == 9 %}
                                 <a class="nav-item nav-link" style="color:{{titleColor}};background:white; display:none" href="{{ url_for ('nme_dubs_sample') }}">Movies Samples</a>
                                 <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('nme_dubs') }}"> Team Dubs</a>
                                 <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('nme_movies') }}">Movies</a>
                                 <a class="nav-item nav-link" style="color:{{titleColor}};background:white; display:none" href="{{ url_for ('nme_project') }}">Project</a>
                                 {% endif %}
 
-                                {% if SCHEMA == 8 %}
+                                {% if SCHEMA == 10 %}
                                   <a class="nav-item nav-link" href="{{ url_for ('tips') }}">Writing Tips</a>
                                   <a class="nav-item nav-link" href="{{ url_for ('published') }}">Published Work</a>
                                   <a class="nav-item nav-link" href="{{ url_for ('pCheck', mode='student') }}" style="background:royalblue">My Revisions</a>
@@ -95,7 +95,7 @@
 
 
                                 <div style="display:visible">
-                                {% if SCHEMA < 4 %}
+                                {% if SCHEMA < 5  or SCHEMA == 6%}
                                     {% if MTFN == 'MT' %}
                                       <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('exam_list_midterm') }}">My Exams</a>
                                     {% elif  MTFN == 'FN' %}
@@ -104,7 +104,7 @@
                                 {% endif %}
                                 </div>
 
-                               {% if SCHEMA == 4 %}
+                               {% if SCHEMA == 7 %}
                                   <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('peng_list') }}">My Presentations</a>
                                {% endif %}
 

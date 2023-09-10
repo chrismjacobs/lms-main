@@ -21,11 +21,12 @@
               <th scope="col" >userID</th>
               <th scope="col" >Name</th>
               <th scope="col" >ID</th>
-              <th scope="col" >FRD</th>
-              <th scope="col" >WPE</th>
-              <th scope="col" >WRITE</th>
-              <th scope="col" >PENG</th>
-              <th scope="col" >VTM</th>
+              <th scope="col" >FRD1</th>
+              <th scope="col" >WPE1</th>
+              <th scope="col" >FRD2</th>
+              <th scope="col" >WPE2</th>
+              <th scope="col" >FOOD</th>
+              <th scope="col" >ICC</th>
               <th scope="col" >EX</th>
               <th scope="col" >NEW</th>
             </tr>
@@ -87,11 +88,12 @@ let vue = new Vue({
               id : '---',
               username : '---',
               studentID : studentID,
-              frd : 0,
-              wpe : 0,
-              write : 0,
-              peng : 0,
-              vtm : 0,
+              frd1 : 0,
+              frd2 : 0,
+              wpe1 : 0,
+              wpe2 : 0,
+              food : 0,
+              icc : 0,
               extra : 0
             }
           }
@@ -106,11 +108,12 @@ let vue = new Vue({
         setOBJ : setOBJ,
         idOBJ : idOBJ,
         schemaList : {
-          1 : 'frd',
-          2 : 'wpe',
-          7 : 'write',
-          4 : 'peng',
-          6 : 'vtm'
+          1 : 'frd1',
+          2 : 'frd2',
+          3 : 'wpe1',
+          4 : 'wpe2',
+          5 : 'food',
+          6 : 'icc'
         },
         total : {
           wpe : ['100000000']
@@ -128,12 +131,12 @@ let vue = new Vue({
           let tag
 
           schemaList = {
-            1 : '_frd',
-            2 : '_wpe',
-            3 : '_icc',
-            4 : '_png',
-            5 : '_lnc',
-            6 : '_vtm'
+            1 : '_frd1',
+            2 : '_frd2',
+            3 : '_wpe1',
+            4 : '_wpe2',
+            5 : '_food',
+            6 : '_icc'
           }
 
           if (target != 'user') {
@@ -172,15 +175,23 @@ let vue = new Vue({
             });
         },
         cStyle: function(status, course) {
-          let p = ['frd', 'wpe']
-          if (status == 1 && p.includes(course)) {
+          let p = {
+            'frd1': 'green',
+            'wpe1': 'orange',
+            'frd2' : 'darkgreen',
+            'wpe2' : 'darkorange',
+            'icc' : 'darkblue',
+            'food' : 'red'
+          }
+
+          if (status == 1 && p[course].includes('1'|'2')) {
             return { background:'lightcoral'}
           }
           else if (status == 1 || status == 2) {
-            return { background:'mediumseagreen'}
+            return { background: p[course], color:'white'}
           }
           else if (status == 0 || status == undefined) {
-            return { background:'white'}
+            return { background:'white', color:p[course]}
           }
         },
         tStyle: function(studentID, course) {

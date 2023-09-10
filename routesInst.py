@@ -168,7 +168,7 @@ def dashboard():
         return abort(403)
 
     ## intro edit
-    if SCHEMA == 6 or SCHEMA == 3:
+    if SCHEMA == 6:
         period = ['01', '02', '03', '04', '05','06', '07', '08', '09', '10']
     else:
         period = ['01', '02', '03', '04', '05','06', '07', '08']
@@ -289,6 +289,8 @@ def get_attend_list():
 
     students = getUsers(SCHEMA)
 
+    print('STUDENTS', students)
+
     for student in students:
         if student.studentID not in IDLIST:
             print (student.studentID)
@@ -312,7 +314,9 @@ def get_attend_list():
     #### attend todays attendance
     attendance = getModels()['Attendance_'].query.all()
     for att in attendance:
-        if sDict[att.studentID]:
+        if att.studentID not in sDict:
+            print('NOT')
+        elif sDict[att.studentID]:
             sDict[att.studentID]['att'] = att.attend
 
     if request.method == 'POST':
@@ -365,21 +369,38 @@ def updateCourse():
     u = User.query.filter_by(studentID=userData).first()
 
 
-    if course == 'frd':
-        if u.frd == 0:
-            u.frd = 1
-        elif u.frd == 1:
-            u.frd = 2
-        elif u.frd == 2:
-            u.frd = 0
+    if course == 'frd1':
+        if u.frd1 == 0:
+            u.frd1 = 1
+        elif u.frd1 == 1:
+            u.frd1 = 2
+        elif u.frd1 == 2:
+            u.frd1 = 0
 
-    if course == 'wpe':
-        if u.wpe == 0:
-            u.wpe = 1
-        elif u.wpe == 1:
-            u.wpe = 2
-        elif u.wpe == 2:
-            u.wpe = 0
+    if course == 'frd2':
+        if u.frd2 == 0:
+            u.frd2 = 1
+        elif u.frd2 == 1:
+            u.frd2 = 2
+        elif u.frd2 == 2:
+            u.frd2 = 0
+
+    if course == 'wpe1':
+        if u.wpe1 == 0:
+            u.wpe1 = 1
+        elif u.wpe1 == 1:
+            u.wpe1 = 2
+        elif u.wpe1 == 2:
+            u.wpe1 = 0
+
+    if course == 'wpe2':
+        if u.wpe2 == 0:
+            u.wpe2 = 1
+        elif u.wpe2 == 1:
+            u.wpe2 = 2
+        elif u.wpe2 == 2:
+            u.wpe2 = 0
+
 
     if course == 'icc':
         if u.icc == 0:
@@ -387,11 +408,11 @@ def updateCourse():
         else:
             u.icc = 0
 
-    if course == 'lnc':
-        if u.lnc == 0:
-            u.lnc = 1
+    if course == 'food':
+        if u.food == 0:
+            u.food = 1
         else:
-            u.lnc = 0
+            u.food = 0
 
     if course == 'vtm' :
         if u.vtm == 0:
@@ -414,12 +435,15 @@ def updateCourse():
     db.session.commit()
 
     uDict = {}
-    uDict['frd'] = u.frd
-    uDict['wpe'] = u.wpe
+    uDict['frd1'] = u.frd1
+    uDict['wpe1'] = u.wpe1
+    uDict['frd2'] = u.frd2
+    uDict['wpe2'] = u.wpe2
     uDict['icc'] = u.icc
-    uDict['lnc'] = u.lnc
-    uDict['vtm'] = u.vtm
-    uDict['png'] = u.png
+    uDict['food'] = u.food
+    # uDict['lnc'] = u.lnc
+    # uDict['vtm'] = u.vtm
+    # uDict['png'] = u.png
 
 
     return jsonify({'userData' : userData, 'uDict' : json.dumps(uDict), 'course' : course})
@@ -461,11 +485,15 @@ def master_controls():
         uDict['id'] = u.id
         uDict['username'] = u.username
         uDict['studentID'] = u.studentID
-        uDict['frd'] = u.frd
-        uDict['wpe'] = u.wpe
-        uDict['write'] = u.app
-        uDict['peng'] = u.png
-        uDict['vtm'] = u.vtm
+        uDict['frd1'] = u.frd1
+        uDict['wpe1'] = u.wpe1
+        uDict['frd2'] = u.frd2
+        uDict['wpe2'] = u.wpe2
+        uDict['food'] = u.food
+        uDict['icc'] = u.icc
+        # uDict['write'] = u.app
+        # uDict['peng'] = u.png
+        # uDict['vtm'] = u.vtm
         uDict['extra'] = u.extra
         uDict['new'] = 0
 

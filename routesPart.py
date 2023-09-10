@@ -417,15 +417,20 @@ def shareUpload():
 
             contribution = None
 
+            print(entry.Comment)
+
             if int(teamnumber) < 100:
-                contribution = json.loads(entry.Comment)
+                try:
+                    contribution = json.loads(entry.Comment)
 
-                if current_user.username in contribution:
-                    contribution[current_user.username] += '/' + question
-                else:
-                    contribution[current_user.username] = question
+                    if current_user.username in contribution:
+                        contribution[current_user.username] += '/' + question
+                    else:
+                        contribution[current_user.username] = question
 
-                entry.Comment = json.dumps(contribution)
+                    entry.Comment = json.dumps(contribution)
+                except Exception as e:
+                    print('No JSON found')
 
             ## DO NOT ALLOW update of usernames
             ##entry.username = str(nameRange)

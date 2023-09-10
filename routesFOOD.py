@@ -9,15 +9,15 @@ import ast
 from pprint import pprint
 from routesUser import get_grades, get_sources
 
-from meta import BaseConfig
+from meta import *
 s3_resource = BaseConfig.s3_resource
-S3_LOCATION = BaseConfig.S3_LOCATION
-S3_BUCKET_NAME = BaseConfig.S3_BUCKET_NAME
-SCHEMA = BaseConfig.SCHEMA
-DESIGN = BaseConfig.DESIGN
+
 
 
 def get_food_projects():
+    SCHEMA = getSchema()
+    S3_LOCATION = schemaList[SCHEMA]['S3_LOCATION']
+    S3_BUCKET_NAME = schemaList[SCHEMA]['S3_BUCKET_NAME']
     content_object = s3_resource.Object( S3_BUCKET_NAME, 'json_files/sources.json' )
     file_content = content_object.get()['Body'].read().decode('utf-8')
     sDict = json.loads(file_content)  # json loads returns a dictionary
@@ -35,7 +35,7 @@ def food_list():
     link = ''
     grade = 0
 
-    project_answers = U021U.query.filter_by(username=current_user.username).first()
+    project_answers = U021U_FOOD.query.filter_by(username=current_user.username).first()
     if project_answers:
         link = project_answers.Ans03
         grade = project_answers.Grade
@@ -53,7 +53,7 @@ def build_presentation():
     link = ''
     grade = 0
 
-    project_answers = U021U.query.filter_by(username=current_user.username).first()
+    project_answers = U021U_FOOD.query.filter_by(username=current_user.username).first()
     if project_answers:
         link = project_answers.Ans03
         grade = project_answers.Grade
@@ -71,7 +71,7 @@ def share_presentation():
     link = ''
     grade = 0
 
-    project_answers = U021U.query.filter_by(username=current_user.username).first()
+    project_answers = U021U_FOOD.query.filter_by(username=current_user.username).first()
     if project_answers:
         link = project_answers.Ans03
         grade = project_answers.Grade
@@ -82,7 +82,7 @@ def share_presentation():
 
 
 def getShareList():
-    projects = U021U.query.all()
+    projects = U021U_FOOD.query.all()
 
 
     listps = []
@@ -128,7 +128,7 @@ def getShareList():
 @login_required
 def food_sharing():
 
-    project_answers = U021U.query.filter_by(username=current_user.username).first()
+    project_answers = U021U_FOOD.query.filter_by(username=current_user.username).first()
 
 
     if project_answers.Ans05 == None or project_answers.Ans05 == '{}' :
@@ -148,7 +148,7 @@ def updateShare():
     ug = request.form ['updateGrade']
     print(obj, ug)
 
-    project_answers = U021U.query.filter_by(username=current_user.username).first()
+    project_answers = U021U_FOOD.query.filter_by(username=current_user.username).first()
     project_answers.Ans05 = obj
     if ug:
         project_answers.Grade = 7
@@ -197,13 +197,13 @@ def updateFood():
 
 
     if proj == 'ND':
-        project_answers = U011U.query.filter_by(username=name).first()
+        project_answers = U011U_FOOD.query.filter_by(username=name).first()
         project_answers.Ans01 = json.dumps(ansDict)
     if proj == 'CV':
-        project_answers = U011U.query.filter_by(username=name).first()
+        project_answers = U011U_FOOD.query.filter_by(username=name).first()
         project_answers.Ans02 = json.dumps(ansDict)
     if proj == 'RR':
-        project_answers = U021U.query.filter_by(username=name).first()
+        project_answers = U021U_FOOD.query.filter_by(username=name).first()
         project_answers.Ans01 = json.dumps(ansDict)
 
     project_answers.Grade = grade
@@ -217,7 +217,7 @@ def updateLink():
 
 
 
-    project_answers = U021U.query.filter_by(username=current_user.username).first()
+    project_answers = U021U_FOOD.query.filter_by(username=current_user.username).first()
     project_answers.Ans03 = link
 
     db.session.commit()
@@ -226,6 +226,10 @@ def updateLink():
 
 @app.route('/createPPT', methods=['POST'])
 def createPPT():
+    SCHEMA = getSchema()
+    S3_LOCATION = schemaList[SCHEMA]['S3_LOCATION']
+    S3_BUCKET_NAME = schemaList[SCHEMA]['S3_BUCKET_NAME']
+
     proj = request.form ['proj']
     ansOBJ = request.form ['ansOBJ']
 
@@ -313,6 +317,9 @@ def createPPT():
 
 @app.route('/createPPT_RR', methods=['POST'])
 def createPPT_RR():
+    SCHEMA = getSchema()
+    S3_LOCATION = schemaList[SCHEMA]['S3_LOCATION']
+    S3_BUCKET_NAME = schemaList[SCHEMA]['S3_BUCKET_NAME']
 
     ansOBJ = request.form ['ansOBJ']
     ansDict = json.loads(ansOBJ)
@@ -505,15 +512,15 @@ def food_proj(proj):
     if proj == 'ND':
         title = 'National Dish'
         source = sDict['1']['M3']
-        model = U011U
+        model = U011U_FOOD
     elif proj == 'CV':
         source = sDict['1']['M4']
         title = 'Cooking Video'
-        model = U011U
+        model = U011U_FOOD
     else:
         source = sDict['1']['MA']
         title = 'Restaurant Review'
-        model = U021U
+        model = U021U_FOOD
 
 
     if model.query.filter_by(username=current_user.username).first():
@@ -557,7 +564,7 @@ def food_MT():
             'Data' : startDictGlobal('ND')
         }
 
-    project_answers = U011U.query.all()
+    project_answers = U011U_FOOD.query.all()
 
     for answer in project_answers:
         proj = None
@@ -614,7 +621,7 @@ def food_FN():
             'Link' : ''
         }
 
-    project_answers = U021U.query.all()
+    project_answers = U021U_FOOD.query.all()
 
     for answer in project_answers:
         rrDict = json.loads(answer.Ans01)

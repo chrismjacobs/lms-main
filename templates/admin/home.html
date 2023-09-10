@@ -20,20 +20,27 @@
 
 <div class="content-section">
 
-{% if current_user.frd == 2 and current_user.schema != 1 %}
+{% if current_user.frd1 == 2 and current_user.schema != 1 %}
 <a style="color:white;background:MEDIUMSEAGREEN" class="btn" href="{{ url_for ('change', schema=1) }}">FRD</a>
 {% endif %}
-{% if current_user.wpe == 2 and current_user.schema != 2 %}
-<a style="color:white;background:CORAL" class="btn" href="{{ url_for ('change', schema=2) }}">WPE</a>
+{% if current_user.frd2 == 2 and current_user.schema != 2 %}
+<a style="color:white;background:MEDIUMSEAGREEN" class="btn" href="{{ url_for ('change', schema=2) }}">FRD GE</a>
 {% endif %}
-{% if current_user.icc == 1 and current_user.schema != 3 %}
-<a style="color:white;background:DODGERBLUE" class="btn" href="{{ url_for ('change', schema=3) }}">ICC</a>
+{% if current_user.wpe1 == 2 and current_user.schema != 3 %}
+<a style="color:white;background:CORAL" class="btn" href="{{ url_for ('change', schema=3) }}">WPE</a>
 {% endif %}
-{% if current_user.lnc == 1 and current_user.schema != 5 %}
-<a style="color:white;background:REBECCAPURPLE" class="btn" href="{{ url_for ('change', schema=5) }}">LNC</a>
+{% if current_user.wpe2 == 2 and current_user.schema != 4 %}
+<a style="color:white;background:CORAL" class="btn" href="{{ url_for ('change', schema=4) }}">WPE GE</a>
 {% endif %}
+{% if current_user.icc == 1 and current_user.schema != 6 %}
+<a style="color:white;background:DODGERBLUE" class="btn" href="{{ url_for ('change', schema=6) }}">ICC</a>
+{% endif %}
+{% if current_user.food == 1 and current_user.schema != 5 %}
+<a style="color:white;background:red" class="btn" href="{{ url_for ('change', schema=5) }}">FOOD</a>
+{% endif %}
+
 {% if current_user.png == 1 and current_user.schema != 4 %}
-<a style="color:white;background:REBECCAPURPLE" class="btn" href="{{ url_for ('change', schema=4) }}">PENG</a>
+<a style="color:white;background:REBECCAPURPLE" class="btn" href="{{ url_for ('change', schema=7) }}">PENG</a>
 {% endif %}
 {% if current_user.app == 1 and current_user.schema != 8  %}
 <a style="color:white;background:steelblue" class="btn" href="{{ url_for ('change', schema=8) }}">APP</a>

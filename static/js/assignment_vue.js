@@ -315,7 +315,7 @@ function startVue(ansOBJ, device){
         blobURL : null,
         upload : false,
         SCHEMA : SCHEMA,
-        altLayout : 1,
+        altLayout : 2,
         showSpeakingNotes : false,
         showWritingNotes : false,
     },

@@ -26,13 +26,12 @@ def main():
                 password=dbpassword,
                 device=json.dumps('{}'),
                 semester=semester,
-                #icc=1,
-                frd=1,
-                wpe=1,
-                #lnc=1,
-                vtm=1,
-                png=1,
-                app=1,
+                icc=1,
+                frd1=1,
+                frd2=1,
+                wpe1=1,
+                wpe2=1,
+                food=1,
                 extra=10
                 )
     db.session.add(host)
@@ -48,19 +47,35 @@ def main():
     db.session.add(test)
     db.session.commit()
 
-    att = Attendance_FRD(username='Chris', studentID='100000000', teamnumber=97, teamsize=4, teamcount=10, unit='RR')
+    att = Attendance_FRD1(username='Chris', studentID='100000000', teamnumber=97, teamsize=4, teamcount=10, unit='RR')
     db.session.add(att)
     db.session.commit()
 
-    att = AttendLog_FRD(username='Chris', studentID='100000000')
+    att = AttendLog_FRD1(username='Chris', studentID='100000000')
     db.session.add(att)
     db.session.commit()
 
-    att = Attendance_WPE(username='Chris', studentID='100000000', teamnumber=97, teamsize=4, teamcount=10, unit='RR')
+    att = Attendance_FRD2(username='Chris', studentID='100000000', teamnumber=97, teamsize=4, teamcount=10, unit='RR')
     db.session.add(att)
     db.session.commit()
 
-    att = AttendLog_WPE(username='Chris', studentID='100000000')
+    att = AttendLog_FRD2(username='Chris', studentID='100000000')
+    db.session.add(att)
+    db.session.commit()
+
+    att = Attendance_WPE1(username='Chris', studentID='100000000', teamnumber=97, teamsize=4, teamcount=10, unit='RR')
+    db.session.add(att)
+    db.session.commit()
+
+    att = AttendLog_WPE1(username='Chris', studentID='100000000')
+    db.session.add(att)
+    db.session.commit()
+
+    att = Attendance_WPE2(username='Chris', studentID='100000000', teamnumber=97, teamsize=4, teamcount=10, unit='RR')
+    db.session.add(att)
+    db.session.commit()
+
+    att = AttendLog_WPE2(username='Chris', studentID='100000000')
     db.session.add(att)
     db.session.commit()
 
@@ -72,46 +87,15 @@ def main():
     db.session.add(att)
     db.session.commit()
 
-
-    att = Attendance_LNC(username='Chris', studentID='100000000', teamnumber=97, teamsize=4, teamcount=10, unit='RR')
+    att = Attendance_FOOD(username='Chris', studentID='100000000', teamnumber=97, teamsize=4, teamcount=10, unit='RR')
     db.session.add(att)
     db.session.commit()
 
-    att = AttendLog_LNC(username='Chris', studentID='100000000')
+    att = AttendLog_FOOD(username='Chris', studentID='100000000')
     db.session.add(att)
     db.session.commit()
 
-    att = Attendance_VTM(username='Chris', studentID='100000000', teamnumber=97, teamsize=4, teamcount=10, unit='RR')
-    db.session.add(att)
-    db.session.commit()
 
-    att = AttendLog_VTM(username='Chris', studentID='100000000')
-    db.session.add(att)
-    db.session.commit()
-
-    att = Attendance_WRITE(username='Chris', studentID='100000000', teamnumber=97, teamsize=4, teamcount=10, unit='RR')
-    db.session.add(att)
-    db.session.commit()
-
-    att = AttendLog_WRITE(username='Chris', studentID='100000000')
-    db.session.add(att)
-    db.session.commit()
-
-    att = Attendance_NME(username='Chris', studentID='100000000', teamnumber=97, teamsize=4, teamcount=10, unit='RR')
-    db.session.add(att)
-    db.session.commit()
-
-    att = AttendLog_NME(username='Chris', studentID='100000000')
-    db.session.add(att)
-    db.session.commit()
-
-    att = Attendance_PENG(username='Chris', studentID='100000000', teamnumber=97, teamsize=4, teamcount=10, unit='RR')
-    db.session.add(att)
-    db.session.commit()
-
-    att = AttendLog_PENG(username='Chris', studentID='100000000')
-    db.session.add(att)
-    db.session.commit()
 
 
 action = main()

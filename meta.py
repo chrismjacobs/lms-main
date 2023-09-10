@@ -40,13 +40,15 @@ s3_client = boto3.client('s3',
 
 jList = ['None',
         'reading-lms',
+        'reading-lms',
         'workplace-lms',
+        'workplace-lms',
+        'food-lms'
         'icc-lms',
         'peng-lms',
         'culture-lms',
-        'vietnam-lms',
         'nme-lms',
-        'food-lms'
+        'write-lms'
         ]
 
 schemaList = {
@@ -63,7 +65,21 @@ schemaList = {
     },
     1 : {
         "Course": "Reading and Vocab",
-        "courseCode" : "frd",
+        "courseCode" : "frd1",
+        "S3_BUCKET_NAME": "reading-lms",
+        "S3_LOCATION" : "https://reading-lms2.s3.ap-northeast-1.amazonaws.com/",
+        "DESIGN": {
+            "titleColor": "MEDIUMSEAGREEN",
+            "bodyColor": "MINTCREAM",
+            "titleColor2": "LightSeaGreen",
+            "bodyColor2": "Azure",
+            "headTitle": "Freshman Reading I",
+            "headLogo": "https://reading-lms2.s3-ap-northeast-1.amazonaws.com/profiles/favicon.png"
+        }
+    },
+    2 : {
+        "Course": "Reading and Vocab",
+        "courseCode" : "frd2",
         "S3_BUCKET_NAME": "reading-lms",
         "S3_LOCATION" : "https://reading-lms.s3.ap-northeast-1.amazonaws.com/",
         "DESIGN": {
@@ -71,24 +87,47 @@ schemaList = {
             "bodyColor": "MINTCREAM",
             "titleColor2": "LightSeaGreen",
             "bodyColor2": "Azure",
-            "headTitle": "Freshman Reading",
+            "headTitle": "Freshman Reading II",
             "headLogo": "https://reading-lms.s3-ap-northeast-1.amazonaws.com/profiles/favicon.png"
         }
     },
-    2 : {
+    3 : {
         "Course": "WorkPlace English",
-        "courseCode" : "wpe",
+        "courseCode" : "wpe1",
+        "S3_BUCKET_NAME": "workplace-lms",
+        "S3_LOCATION" : "https://workplace-lms2.s3.ap-northeast-1.amazonaws.com/",
+        "DESIGN": {
+            "titleColor": "CORAL",
+            "bodyColor": "FLORALWHITE",
+            "headTitle": "Workplace English I",
+            "headLogo": "https://writing-lms2.s3-ap-northeast-1.amazonaws.com/profiles/icon.png"
+        }
+    },
+    4 : {
+        "Course": "WorkPlace English",
+        "courseCode" : "wpe2",
         "S3_BUCKET_NAME": "workplace-lms",
         "S3_LOCATION" : "https://workplace-lms.s3.ap-northeast-1.amazonaws.com/",
         "DESIGN": {
             "titleColor": "CORAL",
             "bodyColor": "FLORALWHITE",
-            "headTitle": "Workplace English",
+            "headTitle": "Workplace English II",
             "headLogo": "https://writing-lms.s3-ap-northeast-1.amazonaws.com/profiles/icon.png"
         }
     },
-
-    3 : {
+    5 : {
+        "Course": "Food Conversations",
+        "courseCode" : "food",
+        "S3_BUCKET_NAME": "icc-lms",
+        "S3_LOCATION" : "https://food-lms.s3.ap-northeast-1.amazonaws.com/",
+        "DESIGN": {
+            "titleColor": "red",
+            "bodyColor": "whitesmoke",
+            "headTitle": "FOOD course",
+            "headLogo": "https://food-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
+        }
+    },
+    6 : {
         "Course": "Intercultural Communication",
         "courseCode" : "icc",
         "S3_BUCKET_NAME": "icc-lms",
@@ -100,8 +139,7 @@ schemaList = {
             "headLogo": "https://icc-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
         }
     },
-
-    4 : {
+    7 : {
         "Course": "Presentation English",
         "courseCode" : "peng",
         "S3_BUCKET_NAME": "peng-lms",
@@ -114,7 +152,7 @@ schemaList = {
         }
     },
 
-    5 : {
+    8 : {
         "Course": "Language and Culture",
         "S3_BUCKET_NAME": "culture-lms",
         "courseCode" : "lnc",
@@ -126,20 +164,7 @@ schemaList = {
             "headLogo": "https://culture-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
         }
     },
-
-    6 : {
-        "Course": "Vietnam Class",
-        "S3_BUCKET_NAME": "vietnam-lms",
-        "courseCode" : "write",
-        "S3_LOCATION" : "https://vietnam-lms.s3.ap-northeast-1.amazonaws.com/",
-        "DESIGN": {
-            "titleColor": "#F1C40F",
-            "bodyColor": "whitesmoke",
-            "headTitle": "APP course",
-            "headLogo": "https://nme-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
-        },
-    },
-    7 : {
+    9 : {
         "Course": "Movie Dubbing",
         "S3_BUCKET_NAME": "nme-lms",
         "courseCode" : "nme",
@@ -151,7 +176,7 @@ schemaList = {
             "headLogo": "https://nme-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
         }
     },
-    8 : {
+    10 : {
         "Course": "Writing App",
         "S3_BUCKET_NAME": "writing-lms",
         "courseCode" : "write",

@@ -257,7 +257,7 @@ def register():
 
         ## Add user to pvqc app
         vocab_user = Users(username=titleName, studentID = form.studentID.data, email = form.email.data,
-        password = hashed_password, vocab='tourism', classroom='work@pvqc')
+        password = hashed_password, vocab='tourism', classroom='work@pvqc' + str(course))
         db.session.add(vocab_user)
         db.session.commit()
 
@@ -267,29 +267,29 @@ def register():
 
 
         if course == 1:
-            user.frd = 1
-            chatModel = ChatBox_FRD
+            user.frd1 = 1
+            chatModel = ChatBox_FRD1
         elif course == 2:
-            user.wpe = 1
-            chatModel = ChatBox_WPE
+            user.frd2 = 1
+            chatModel = ChatBox_FRD2
         elif course == 3:
+            user.wpe1 = 1
+            chatModel = ChatBox_WPE1
+        elif course == 4:
+            user.wpe2 = 1
+            chatModel = ChatBox_WPE2
+        elif course == 5:
+            user.food = 1
+            chatModel = ChatBox_FOOD
+        elif course == 6:
             user.icc = 1
             chatModel = ChatBox_ICC
-        elif course == 4:
-            user.png = 1
-            chatModel = ChatBox_PENG
-        elif course == 5:
-            user.lnc = 1
-            chatModel = ChatBox_LNC
-        elif course == 6:
-            user.vtm = 1
-            chatModel = ChatBox_VTM
-        elif course == 7:
-            user.nme = 1
-            chatModel = ChatBox_NME
-        elif course == 8:
-            user.app = 1
-            chatModel = ChatBox_WRITE
+        # elif course == 7:
+        #     user.nme = 1
+        #     chatModel = ChatBox_NME
+        # elif course == 8:
+        #     user.app = 1
+        #     chatModel = ChatBox_WRITE
 
         db.session.commit()
 
@@ -343,22 +343,22 @@ def loginSet(user, data):
     schema = int(data)
 
     allow = False
-    if schema == 1 and user.frd >= 1:
+    if schema == 1 and user.frd1 >= 1:
         allow = True
-    if schema == 2 and user.wpe >= 1:
+    if schema == 2 and user.frd2 >= 1:
         allow = True
-    if schema == 3 and user.icc == 1:
+    if schema == 3 and user.wpe1 == 1:
         allow = True
-    if schema == 4 and user.png == 1:
+    if schema == 4 and user.wpe2 == 1:
         allow = True
-    if schema == 5 and user.lnc == 1:
+    if schema == 5 and user.food == 1:
         allow = True
-    if schema == 6 and user.vtm == 1:
+    if schema == 6 and user.icc == 1:
         allow = True
-    if schema == 7 and user.nme == 1:
-        allow = True
-    if schema == 8 and user.app == 1:
-        allow = True
+    # if schema == 7 and user.nme == 1:
+    #     allow = True
+    # if schema == 8 and user.app == 1:
+    #     allow = True
 
     if allow:
         user.schema = schema
