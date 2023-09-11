@@ -53,9 +53,9 @@ def getCourseRadios():
         ('2', 'GE Freshman'),
         ('3', 'Workplace English'),
         #('4', 'Workplace English 2'),
-        ('5', 'GE Sophomore'),
+        ('4', 'GE Sophomore'),
         ('6', 'Intercultural Communication'),
-        ('7', 'Advanced Conversation')
+        ('5', 'Advanced Conversation')
         ]
 
     overFlow = [
