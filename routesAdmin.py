@@ -255,15 +255,17 @@ def register():
         db.session.add(user)
         db.session.commit()
 
+        course = int(form.course.data)
+        print('register course', course)
+
         ## Add user to pvqc app
         vocab_user = Users(username=titleName, studentID = form.studentID.data, email = form.email.data,
         password = hashed_password, vocab='tourism', classroom='work@pvqc' + str(course))
         db.session.add(vocab_user)
         db.session.commit()
 
+
         chatModel = None
-        course = int(form.course.data)
-        print('register course', course)
 
 
         if course == 1:
