@@ -95,7 +95,7 @@
 
 
                                 <div style="display:visible">
-                                {% if SCHEMA < 5  or SCHEMA == 6%}
+                                {% if SCHEMA < 0  or SCHEMA == 0%}
                                     {% if MTFN == 'MT' %}
                                       <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('exam_list_midterm') }}">My Exams</a>
                                     {% elif  MTFN == 'FN' %}
