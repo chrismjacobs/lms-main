@@ -343,15 +343,16 @@ def loginExtra(student):
 def loginSet(user, data):
 
     schema = int(data)
+    print(user, data, schema)
 
     allow = False
     if schema == 1 and user.frd1 >= 1:
         allow = True
     if schema == 2 and user.frd2 >= 1:
         allow = True
-    if schema == 3 and user.wpe1 == 1:
+    if schema == 3 and user.wpe1 >= 1:
         allow = True
-    if schema == 4 and user.wpe2 == 1:
+    if schema == 4 and user.wpe2 >= 1:
         allow = True
     if schema == 5 and user.food == 1:
         allow = True
