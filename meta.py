@@ -67,7 +67,7 @@ schemaList = {
         "Course": "Reading and Vocab",
         "courseCode" : "frd1",
         "S3_BUCKET_NAME": "reading-lms",
-        "S3_LOCATION" : "https://reading-lms2.s3.ap-northeast-1.amazonaws.com/",
+        "S3_LOCATION" : "https://reading-lms.s3.ap-northeast-1.amazonaws.com/",
         "DESIGN": {
             "titleColor": "MEDIUMSEAGREEN",
             "bodyColor": "MINTCREAM",
@@ -80,8 +80,8 @@ schemaList = {
     2 : {
         "Course": "Reading and Vocab",
         "courseCode" : "frd2",
-        "S3_BUCKET_NAME": "reading-lms",
-        "S3_LOCATION" : "https://reading-lms.s3.ap-northeast-1.amazonaws.com/",
+        "S3_BUCKET_NAME": "reading-lms2",
+        "S3_LOCATION" : "https://reading-lms2.s3.ap-northeast-1.amazonaws.com/",
         "DESIGN": {
             "titleColor": "MEDIUMSEAGREEN",
             "bodyColor": "MINTCREAM",
@@ -95,7 +95,7 @@ schemaList = {
         "Course": "WorkPlace English",
         "courseCode" : "wpe1",
         "S3_BUCKET_NAME": "workplace-lms",
-        "S3_LOCATION" : "https://workplace-lms2.s3.ap-northeast-1.amazonaws.com/",
+        "S3_LOCATION" : "https://workplace-lms.s3.ap-northeast-1.amazonaws.com/",
         "DESIGN": {
             "titleColor": "CORAL",
             "bodyColor": "FLORALWHITE",
@@ -106,8 +106,8 @@ schemaList = {
     4 : {
         "Course": "WorkPlace English",
         "courseCode" : "wpe2",
-        "S3_BUCKET_NAME": "workplace-lms",
-        "S3_LOCATION" : "https://workplace-lms.s3.ap-northeast-1.amazonaws.com/",
+        "S3_BUCKET_NAME": "workplace-lms2",
+        "S3_LOCATION" : "https://workplace-lms2.s3.ap-northeast-1.amazonaws.com/",
         "DESIGN": {
             "titleColor": "CORAL",
             "bodyColor": "FLORALWHITE",
@@ -118,11 +118,11 @@ schemaList = {
     5 : {
         "Course": "Food Conversations",
         "courseCode" : "food",
-        "S3_BUCKET_NAME": "icc-lms",
+        "S3_BUCKET_NAME": "food-lms",
         "S3_LOCATION" : "https://food-lms.s3.ap-northeast-1.amazonaws.com/",
         "DESIGN": {
-            "titleColor": "red",
-            "bodyColor": "whitesmoke",
+            "titleColor": "crimson",
+            "bodyColor": "papayawhip",
             "headTitle": "FOOD course",
             "headLogo": "https://food-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
         }

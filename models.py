@@ -296,24 +296,79 @@ for m in mList1:
     admin.add_view(MyModelView(m, db.session))
 
 
-# mList2 = []
-# mList3 = []
+mList2 = []
+mList3 = []
 
 
-# for mda in infoDict['mda']:
-#     if infoDict['mda'].index(mda) > 0:
-#         print(mda)
-#         mList2.append(mda)
-# for mdu in infoDict['mdu']:
-#     if infoDict['mdu'].index(mda) > 0:
-#         print(mdu)
-#         mList2.append(mda)
+for mda in infoDict['mda']:
+    if infoDict['mda'].index(mda) > 0:
+        # print(mda)
+        mList2.append(mda)
+for mdu in infoDict['mdu']:
+    if infoDict['mdu'].index(mdu) > 0:
+        # print(mdu)
+        mList3.append(mda)
 
 # for s in mList3:
+#     print('MDU', s)
 #     for d in s:
-#         for m in s[d]:
-#             if m:
-#                 admin.add_view(MyModelView(m, db.session))
+#         print('D', d)
+#         if s[d]:
+#             admin.add_view(MyModelView(s[d], db.session))
+
+admin.add_view(MyModelView(A01A_FRD1, db.session))
+admin.add_view(MyModelView(A01A_FRD2, db.session))
+admin.add_view(MyModelView(A01A_WPE1, db.session))
+admin.add_view(MyModelView(A01A_WPE2, db.session))
+admin.add_view(MyModelView(A01A_ICC, db.session))
+
+admin.add_view(MyModelView(A02A_FRD1, db.session))
+admin.add_view(MyModelView(A02A_FRD2, db.session))
+admin.add_view(MyModelView(A02A_WPE1, db.session))
+admin.add_view(MyModelView(A02A_WPE2, db.session))
+admin.add_view(MyModelView(A02A_ICC, db.session))
+
+admin.add_view(MyModelView(A03A_FRD1, db.session))
+admin.add_view(MyModelView(A03A_FRD2, db.session))
+admin.add_view(MyModelView(A03A_WPE1, db.session))
+admin.add_view(MyModelView(A03A_WPE2, db.session))
+admin.add_view(MyModelView(A03A_ICC, db.session))
+
+admin.add_view(MyModelView(A04A_FRD1, db.session))
+admin.add_view(MyModelView(A04A_FRD2, db.session))
+admin.add_view(MyModelView(A04A_WPE1, db.session))
+admin.add_view(MyModelView(A04A_WPE2, db.session))
+admin.add_view(MyModelView(A04A_ICC, db.session))
+admin.add_view(MyModelView(A05A_ICC, db.session))
+
+### PARTICIPATION
+
+admin.add_view(MyModelView(U011U_FRD1, db.session))
+admin.add_view(MyModelView(U011U_FRD2, db.session))
+admin.add_view(MyModelView(U011U_WPE1, db.session))
+admin.add_view(MyModelView(U011U_WPE2, db.session))
+admin.add_view(MyModelView(U011U_ICC, db.session))
+
+admin.add_view(MyModelView(U012U_FRD1, db.session))
+admin.add_view(MyModelView(U012U_FRD2, db.session))
+admin.add_view(MyModelView(U012U_WPE1, db.session))
+admin.add_view(MyModelView(U012U_WPE2, db.session))
+admin.add_view(MyModelView(U012U_ICC, db.session))
+
+admin.add_view(MyModelView(U013U_FRD1, db.session))
+admin.add_view(MyModelView(U013U_FRD2, db.session))
+admin.add_view(MyModelView(U013U_WPE1, db.session))
+admin.add_view(MyModelView(U013U_WPE2, db.session))
+admin.add_view(MyModelView(U013U_ICC, db.session))
+
+admin.add_view(MyModelView(U014U_FRD1, db.session))
+admin.add_view(MyModelView(U014U_FRD2, db.session))
+admin.add_view(MyModelView(U014U_WPE1, db.session))
+admin.add_view(MyModelView(U014U_WPE2, db.session))
+admin.add_view(MyModelView(U014U_ICC, db.session))
+
+
+
 
 # for d in mList2:
 #     for x in d:
