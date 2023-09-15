@@ -25,6 +25,7 @@
         <h3> Team <span>{{teamnumber}}</span> </h3>
         <div v-if="mode == 'Instructor'">
             <button class="btn btn-outline-secondary btn-sm" style="border: 1px solid {{DESIGN['titleColor']}}" type="button" @click="openPart()"> Open/Close </button>
+            <button class="btn btn-outline-secondary btn-sm" style="border: 1px solid {{DESIGN['titleColor']}}" type="button" @click="openAdmin()"> Admin </button>
         </div>
 
         <h2 v-model="seeAnswers"></h3>
@@ -45,6 +46,8 @@
     <span id="schema" style="display:none">{{SCHEMA}}</span>
     <span id="design" style="display:none">{{THEME}}</span>
     <span id="deadline" style="display:none">{{deadline}}</span>
+    <span id="unit_num" style="display:none">{{unit_num}}</span>
+    <span id="part_num" style="display:none">{{part_num}}</span>
 
 </div>
 

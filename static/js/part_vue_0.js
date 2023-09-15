@@ -12,6 +12,12 @@ console.log('SCHEMA', SCHEMA)
 var deadline = document.getElementById('deadline').innerHTML
 console.log('DEADLINE PASSED', deadline)
 
+var unit_num = document.getElementById('unit_num').innerHTML
+console.log('unit_num', unit_num)
+
+var part_num = document.getElementById('part_num').innerHTML
+console.log('part_num', part_num)
+
 
 startVue(qOBJ)
 
@@ -116,6 +122,9 @@ function startVue(qOBJ){
         }
     },
     data: {
+      SCHEMA : SCHEMA,
+      unit_num : unit_num,
+      part_num : part_num,
       deadpass : deadline,
       qOBJ : qOBJ,
       ansOBJ : null,
@@ -658,6 +667,19 @@ function startVue(qOBJ){
           .fail(function(){
             alert('error')
           });
+      },
+      openAdmin : function() {
+        schemaList = {
+          1 : '_frd1',
+          2 : '_frd2',
+          3 : '_wpe1',
+          4 : '_wpe2',
+          6 : '_icc',
+          5 : '_food'
+        }
+        let url = (window.location.href).split('participation')[0] + 'admin/u' + this.unit_num + this.part_num + 'u' + schemaList[this.SCHEMA]
+        console.log('goTO', url, this.SCHEMA);
+        window.location = url
       },
       classCheck : function() {
         $.ajax({

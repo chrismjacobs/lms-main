@@ -327,7 +327,11 @@ function startVue(ansOBJ, device){
           return false
         }
       },
-      checkSpeakingPrep: function () {
+      checkSpeakingPrep: function (task) {
+        if (task == 1) {
+          return true
+        }
+
         if (this.sp1.length < 4 || this.sp2.length < 4, this.sp3.length < 4) {
           alert('Speaking prep not complete, please write a few words')
           return false
@@ -335,16 +339,17 @@ function startVue(ansOBJ, device){
           return true
         }
       },
-      start : function(arg){
+      start : function(task){
+        console.log('start', task)
 
         /// check speaking prep is completed
-        if (this.checkLayout() && this.checkSpeakingPrep() == false) {
+        if (this.checkLayout() && this.checkSpeakingPrep(task) == false && task == 2) {
           return false
         }
 
         for (var key in vue.show){
-          console.log(key, arg, vue.show);
-          if (key != arg) {
+          console.log(key, task, vue.show);
+          if (key != task) {
             vue.show[key] = false
           }
         }
@@ -472,7 +477,7 @@ function startVue(ansOBJ, device){
         let notes = this.n1
         let textTwo = this.t2
 
-        if (this.checkLayout) {
+        if (this.checkLayout()) {
           notes = JSON.stringify([this.sp1, this.sp2, this.sp3, this.n1])
           textTwo = JSON.stringify([this.ws1, this.ws2, this.ws3])
         }
@@ -584,8 +589,6 @@ function startVue(ansOBJ, device){
         player = document.getElementById('handler')
 
         player.src = playlist[arg]
-
-
 
       },
       fileValidation : function(task){

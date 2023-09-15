@@ -22,12 +22,8 @@ def get_vocab():
 
     semester = User.query.filter_by(username='Chris').first().semester
 
+    vocabJSON = 'json_files/vocab.json'
 
-    ## change to 'json_files/vocab.json' for semester 1
-    if SCHEMA == 1 or SCHEMA == 3 or SCHEMA == 6:
-        vocabJSON = 'json_files/vocab.json'
-    else:
-        vocabJSON = 'json_files/vocab2.json'
 
     print(SCHEMA, S3_BUCKET_NAME, vocabJSON)
 
@@ -497,6 +493,7 @@ def participation(unit_num,part_num,state):
     teamcount = chris_attend.teamcount
     print('teamcount', teamcount)
     #check source to see if unit is open yet
+
     unit_count = getModels()['Units_'].query.filter_by(unit=unit_num).count()
 
     # block
