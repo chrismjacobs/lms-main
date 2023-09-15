@@ -316,6 +316,127 @@ for mdu in infoDict['mdu']:
 #         if s[d]:
 #             admin.add_view(MyModelView(s[d], db.session))
 
+
+### PARTICIPATION
+
+### U01
+
+admin.add_view(MyModelView(U011U_FRD1, db.session))
+admin.add_view(MyModelView(U012U_FRD1, db.session))
+admin.add_view(MyModelView(U013U_FRD1, db.session))
+admin.add_view(MyModelView(U014U_FRD1, db.session))
+
+admin.add_view(MyModelView(U011U_FRD2, db.session))
+admin.add_view(MyModelView(U012U_FRD2, db.session))
+admin.add_view(MyModelView(U013U_FRD2, db.session))
+admin.add_view(MyModelView(U014U_FRD2, db.session))
+
+admin.add_view(MyModelView(U011U_WPE1, db.session))
+admin.add_view(MyModelView(U012U_WPE1, db.session))
+admin.add_view(MyModelView(U013U_WPE1, db.session))
+admin.add_view(MyModelView(U014U_WPE1, db.session))
+
+admin.add_view(MyModelView(U011U_WPE2, db.session))
+admin.add_view(MyModelView(U012U_WPE2, db.session))
+admin.add_view(MyModelView(U013U_WPE2, db.session))
+admin.add_view(MyModelView(U014U_WPE2, db.session))
+
+admin.add_view(MyModelView(U011U_ICC, db.session))
+admin.add_view(MyModelView(U012U_ICC, db.session))
+admin.add_view(MyModelView(U013U_ICC, db.session))
+admin.add_view(MyModelView(U014U_ICC, db.session))
+
+##### U02
+
+admin.add_view(MyModelView(U021U_FRD1, db.session))
+admin.add_view(MyModelView(U022U_FRD1, db.session))
+admin.add_view(MyModelView(U023U_FRD1, db.session))
+admin.add_view(MyModelView(U024U_FRD1, db.session))
+
+admin.add_view(MyModelView(U021U_FRD2, db.session))
+admin.add_view(MyModelView(U022U_FRD2, db.session))
+admin.add_view(MyModelView(U023U_FRD2, db.session))
+admin.add_view(MyModelView(U024U_FRD2, db.session))
+
+admin.add_view(MyModelView(U021U_WPE1, db.session))
+admin.add_view(MyModelView(U022U_WPE1, db.session))
+admin.add_view(MyModelView(U023U_WPE1, db.session))
+admin.add_view(MyModelView(U024U_WPE1, db.session))
+
+admin.add_view(MyModelView(U021U_WPE2, db.session))
+admin.add_view(MyModelView(U022U_WPE2, db.session))
+admin.add_view(MyModelView(U023U_WPE2, db.session))
+admin.add_view(MyModelView(U024U_WPE2, db.session))
+
+admin.add_view(MyModelView(U021U_ICC, db.session))
+admin.add_view(MyModelView(U022U_ICC, db.session))
+admin.add_view(MyModelView(U023U_ICC, db.session))
+admin.add_view(MyModelView(U024U_ICC, db.session))
+
+## U03
+admin.add_view(MyModelView(U031U_FRD1, db.session))
+admin.add_view(MyModelView(U032U_FRD1, db.session))
+admin.add_view(MyModelView(U033U_FRD1, db.session))
+admin.add_view(MyModelView(U034U_FRD1, db.session))
+
+admin.add_view(MyModelView(U031U_FRD2, db.session))
+admin.add_view(MyModelView(U032U_FRD2, db.session))
+admin.add_view(MyModelView(U033U_FRD2, db.session))
+admin.add_view(MyModelView(U034U_FRD2, db.session))
+
+admin.add_view(MyModelView(U031U_WPE1, db.session))
+admin.add_view(MyModelView(U032U_WPE1, db.session))
+admin.add_view(MyModelView(U033U_WPE1, db.session))
+admin.add_view(MyModelView(U034U_WPE1, db.session))
+
+admin.add_view(MyModelView(U031U_WPE2, db.session))
+admin.add_view(MyModelView(U032U_WPE2, db.session))
+admin.add_view(MyModelView(U033U_WPE2, db.session))
+admin.add_view(MyModelView(U034U_WPE2, db.session))
+
+admin.add_view(MyModelView(U031U_ICC, db.session))
+admin.add_view(MyModelView(U032U_ICC, db.session))
+admin.add_view(MyModelView(U033U_ICC, db.session))
+admin.add_view(MyModelView(U034U_ICC, db.session))
+
+## U04
+admin.add_view(MyModelView(U041U_FRD1, db.session))
+admin.add_view(MyModelView(U042U_FRD1, db.session))
+admin.add_view(MyModelView(U043U_FRD1, db.session))
+admin.add_view(MyModelView(U044U_FRD1, db.session))
+
+admin.add_view(MyModelView(U041U_FRD2, db.session))
+admin.add_view(MyModelView(U042U_FRD2, db.session))
+admin.add_view(MyModelView(U043U_FRD2, db.session))
+admin.add_view(MyModelView(U044U_FRD2, db.session))
+
+admin.add_view(MyModelView(U041U_WPE1, db.session))
+admin.add_view(MyModelView(U042U_WPE1, db.session))
+admin.add_view(MyModelView(U043U_WPE1, db.session))
+admin.add_view(MyModelView(U044U_WPE1, db.session))
+
+admin.add_view(MyModelView(U041U_WPE2, db.session))
+admin.add_view(MyModelView(U042U_WPE2, db.session))
+admin.add_view(MyModelView(U043U_WPE2, db.session))
+admin.add_view(MyModelView(U044U_WPE2, db.session))
+
+admin.add_view(MyModelView(U041U_ICC, db.session))
+admin.add_view(MyModelView(U042U_ICC, db.session))
+admin.add_view(MyModelView(U043U_ICC, db.session))
+admin.add_view(MyModelView(U044U_ICC, db.session))
+
+## ICC
+admin.add_view(MyModelView(U051U_ICC, db.session))
+admin.add_view(MyModelView(U052U_ICC, db.session))
+admin.add_view(MyModelView(U053U_ICC, db.session))
+admin.add_view(MyModelView(U054U_ICC, db.session))
+
+
+
+
+
+
+
 admin.add_view(MyModelView(A01A_FRD1, db.session))
 admin.add_view(MyModelView(A01A_FRD2, db.session))
 admin.add_view(MyModelView(A01A_WPE1, db.session))
@@ -340,33 +461,6 @@ admin.add_view(MyModelView(A04A_WPE1, db.session))
 admin.add_view(MyModelView(A04A_WPE2, db.session))
 admin.add_view(MyModelView(A04A_ICC, db.session))
 admin.add_view(MyModelView(A05A_ICC, db.session))
-
-### PARTICIPATION
-
-admin.add_view(MyModelView(U011U_FRD1, db.session))
-admin.add_view(MyModelView(U011U_FRD2, db.session))
-admin.add_view(MyModelView(U011U_WPE1, db.session))
-admin.add_view(MyModelView(U011U_WPE2, db.session))
-admin.add_view(MyModelView(U011U_ICC, db.session))
-
-admin.add_view(MyModelView(U012U_FRD1, db.session))
-admin.add_view(MyModelView(U012U_FRD2, db.session))
-admin.add_view(MyModelView(U012U_WPE1, db.session))
-admin.add_view(MyModelView(U012U_WPE2, db.session))
-admin.add_view(MyModelView(U012U_ICC, db.session))
-
-admin.add_view(MyModelView(U013U_FRD1, db.session))
-admin.add_view(MyModelView(U013U_FRD2, db.session))
-admin.add_view(MyModelView(U013U_WPE1, db.session))
-admin.add_view(MyModelView(U013U_WPE2, db.session))
-admin.add_view(MyModelView(U013U_ICC, db.session))
-
-admin.add_view(MyModelView(U014U_FRD1, db.session))
-admin.add_view(MyModelView(U014U_FRD2, db.session))
-admin.add_view(MyModelView(U014U_WPE1, db.session))
-admin.add_view(MyModelView(U014U_WPE2, db.session))
-admin.add_view(MyModelView(U014U_ICC, db.session))
-
 
 
 
