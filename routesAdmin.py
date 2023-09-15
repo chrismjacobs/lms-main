@@ -260,7 +260,7 @@ def register():
 
         ## Add user to pvqc app
         vocab_user = Users(username=titleName, studentID = form.studentID.data, email = form.email.data,
-        password = hashed_password, vocab='tourism', classroom='work@pvqc' + str(course))
+        password = hashed_password, vocab='tourism', classroom='work@pvqc')
         db.session.add(vocab_user)
         db.session.commit()
 
