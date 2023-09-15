@@ -36,7 +36,13 @@
         <template v-for="(user, key) in setOBJ">
             <tr>
 
-              <td v-for="(data, k) in user"> <span v-if="cValues().includes(k)" :style="tStyle(user.studentID, k)" class="p-2"> <button :style="cStyle(data, k)" @click="setCourse(key, k)" class="btn btn-sm" > [[k]] </button> </span> [[data]] </td>
+              <td v-for="(data, k) in user">
+                <span v-if="cValues().includes(k)" :style="tStyle(user.studentID, k)" class="p-2">
+                    <button :style="cStyle(data, k)" @click="setCourse(key, k)" class="btn btn-sm" > [[k]] </button>
+                </span>
+                <span v-if="courses.includes(k) && data == 1" :style="getColor(data)">[[data]]</span>
+                <span v-else-if="data && data.length > 1">[[data]]</span>
+              </td>
 
             </tr>
         </template>
@@ -107,6 +113,7 @@ let vue = new Vue({
 
         setOBJ : setOBJ,
         idOBJ : idOBJ,
+        courses: ['frd1', 'frd2', 'wpe1', 'wpe2'],
         schemaList : {
           1 : 'frd1',
           2 : 'frd2',
@@ -120,6 +127,12 @@ let vue = new Vue({
         }
     },
     methods: {
+        getColor: function (data) {
+          if (data == 1) {
+            console.log(data)
+            return {background:'red'}
+          }
+        },
         cValues: function () {
           cList = []
           for (let x in this.schemaList) {
