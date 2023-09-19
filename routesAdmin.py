@@ -258,9 +258,11 @@ def register():
         course = int(form.course.data)
         print('register course', course)
 
+        classroomCode = 'work@pvqc'
+
         ## Add user to pvqc app
         vocab_user = Users(username=titleName, studentID = form.studentID.data, email = form.email.data,
-        password = hashed_password, vocab='tourism', classroom='work@pvqc')
+        password = hashed_password, vocab='tourism', classroom=classroomCode)
         db.session.add(vocab_user)
         db.session.commit()
 
