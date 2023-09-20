@@ -5,11 +5,12 @@
 <span id="user" style="display:none">{{current_user.username}}</span>
 <span id="link" style="display:none">{{link}}</span>
 <span id="grade" style="display:none">{{grade}}</span>
+<span id="MTFN" style="display:none">{{MTFN}}</span>
 
 <div id="vue-app">
 
 <div class="content-section">
-        <h1> Final Exam Projects </h1>
+        <h1> Midterm Exam Projects </h1>
     </div>
     <div class="content-section">
     <div class="embed-responsive embed-responsive-4by3">
@@ -24,7 +25,7 @@
 <div class="content-section">
 
 
-    {% if MTFN == 'MT' %}
+    {% if MTFN == 'EDIT' %}
 
 
     <div>
@@ -81,15 +82,17 @@
 
     </div>
 
-    {% elif MTFN == 'EDIT' %}
+    {% elif MTFN == 'MT' %}
 
-    <h5 style="color:red"> Update Part 1 (Mar 15)
+    <h5 style="color:red"> Update Part 1 (Oct 10)
     <br>
     <br>
-    Update Plan  (Mar 22)
+    Update Plan  (Oct 17)
     <br>
     <br>
-    15/30%
+    Just meeting deadlines --> 15/30%
+    <br>
+    Choose ONE Topic for your presentation
     <br>
     <br>
     </h5>
@@ -129,6 +132,9 @@ var link = document.getElementById('link').innerHTML
 console.log('link', link);
 var grade = parseInt(document.getElementById('grade').innerHTML)
 console.log('grade', grade);
+
+var MTFN = parseInt(document.getElementById('MTFN').innerHTML)
+console.log('MTFN', MTFN);
 
 
 startVue()
