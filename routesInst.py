@@ -164,7 +164,7 @@ def dashboard():
 
 
 
-    if current_user.id != 1:
+    if current_user.id != 1 and current_user.username != 'Cherry Wai':
         return abort(403)
 
     ## intro edit
@@ -204,22 +204,23 @@ def dashboard():
         model = getInfo()['aModsDict'][unit]
         answers = model.query.order_by(desc(model.Grade)).all()
         for item in answers:
-            totalDict[item.username][unit] = {
-                'date' : str(item.date_posted),
-                'user' : item.username,
-                'idNum' : item.id,
-                'A1' : item.AudioDataOne,
-                'A2' : item.AudioDataTwo,
-                'L1' : item.LengthOne,
-                'L2' : item.LengthTwo,
-                'L2' : item.LengthTwo,
-                'Notes' : item.Notes,
-                'T1' : item.TextOne,
-                'T2' : item.TextTwo,
-                'G' : item.Grade,
-                'C' : item.Comment,
-                'F' : srcDict[unit]['Materials']['A']
-                }
+            if item.username in totalDict:
+                totalDict[item.username][unit] = {
+                    'date' : str(item.date_posted),
+                    'user' : item.username,
+                    'idNum' : item.id,
+                    'A1' : item.AudioDataOne,
+                    'A2' : item.AudioDataTwo,
+                    'L1' : item.LengthOne,
+                    'L2' : item.LengthTwo,
+                    'L2' : item.LengthTwo,
+                    'Notes' : item.Notes,
+                    'T1' : item.TextOne,
+                    'T2' : item.TextTwo,
+                    'G' : item.Grade,
+                    'C' : item.Comment,
+                    'F' : srcDict[unit]['Materials']['A']
+                    }
 
     # pprint(totalDict)
 

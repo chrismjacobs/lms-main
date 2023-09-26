@@ -1270,9 +1270,14 @@ def ass(unit):
 
 
     setting =  getModels()['Units_'].query.filter_by(unit=unit).first().uA
-    if setting != 1:
+
+    iList = ['Chris', 'Cherry Wai']
+
+    notInstructor = current_user.username not in iList
+    if setting != 1 and notInstructor:
         flash('This assignment is not open yet', 'danger')
         return redirect(request.referrer)
+
 
     # models update
     assDict = getInfo()['aModsDict']

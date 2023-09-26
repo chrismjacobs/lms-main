@@ -5,6 +5,7 @@
 <span id="ansString" style="display:none">{{ansString}}</span>
 <span id="att" style="display:none">{{att}}</span>
 <span id="MTFN" style="display:none">{{MTFN}}</span>
+<span id="name" style="display:none">{{current_user.username}}</span>
 
 <div id="vue-app">
 
@@ -70,9 +71,9 @@
                 <td style="width: 45px; word-wrap: break-word"><div  class="noScrollBar" style="overflow:scroll;width:210px;height:110px"><span v-for="(t,i) in getList(item.T2)"> [[i+1]]: [[t]] <br> </span> </div></td>
                 <td> [[  item.G  ]] </td>
                 <td> <textarea type="text" :style="commentStyle(item.C)" :id="user+key" v-model="item.C" required> </textarea></td>
-                <td> <button @click="commentSet(user,key)"> Up </button>
+                <td> <button @click="commentSet(user,key)"> Up </button> <br>
                   <button style="background:coral" @click="setComment(key, user), item.C = ''"> Cl </button>
-                  <button style="background:coral" @click="setComment(key, user)"> Set </button> <br>
+                  <button style="background:coral;display:none" @click="setComment(key, user)"> Set </button> <br>
                   <button style="background:aqua" @click="showAss(key, user)"> ppt </button>
                 </td>
 
@@ -124,6 +125,9 @@ console.log('MTFN', MTFN);
 var ATT = document.getElementById('att').innerHTML
 console.log('att', ATT);
 
+var name = document.getElementById('name').innerHTML
+console.log('name', name);
+
 startVue()
 
 function startVue(){
@@ -143,6 +147,7 @@ function startVue(){
 
     },
     data: {
+        instructor: name,
         showPPT: ['',''],
         MTFN: MTFN,
         showOld: true,
@@ -301,6 +306,9 @@ function startVue(){
         },
         commentSet: function(user, unit){
           var comment = document.getElementById(user+unit).value
+          if (this.instructor == 'Cherry Wai') {
+            comment += ', thanks, Cherry'
+          }
           console.log(user, unit);
           $.ajax({
           data : {
