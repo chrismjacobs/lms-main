@@ -148,15 +148,8 @@ def exams(test, unit):
         flash('This exam is not open yet', 'danger')
         return redirect(url_for('home'))
 
-    if semester == 1:
-        examString = 'json_files/exam.json'
-    else:
-        examString = 'json_files/exam2.json'
 
-
-    ## redirect VTM to ICC exam
-    if SCHEMA == 6:
-        S3_BUCKET_NAME = 'icc-lms'
+    examString = 'json_files/exam.json'
 
 
     content_object = s3_resource.Object( S3_BUCKET_NAME, examString )

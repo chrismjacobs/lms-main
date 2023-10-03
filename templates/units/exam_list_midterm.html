@@ -144,8 +144,14 @@ function startVue(){
           }
           var str = window.location.href
 
+          var version = 1
+
+          if (schema == 2 || schema == 4) {
+            version = 2
+          }
+
           if (test == 'exam' || test == 'review') {
-            url = (str).split('exam_list')[0] + 'exams/' + test + '/' + semester + unit
+            url = (str).split('exam_list')[0] + 'exams/' + test + '/' + version + unit
           } else {
             url = (str).split('exam_list')[0] + test
           }
