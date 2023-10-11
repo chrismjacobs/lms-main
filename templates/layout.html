@@ -49,6 +49,8 @@
                                   {% endif %}
                             {% elif SCHEMA == 7 %}
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('peng_dash')}}", target="_blank">Dashboard</a>
+                            {% elif SCHEMA == 5 %}
+                              <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('food_MT')}}", target="_blank">Projects</a>
 
                             {% elif SCHEMA == 9 %}
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('nme_dubdash', project=0)}}", target="_blank">Movie Dash</a>

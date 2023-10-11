@@ -7,7 +7,7 @@ from forms import *
 from models import *
 import ast
 from pprint import pprint
-from routesUser import get_grades, get_sources
+from routesGet import get_grades, get_sources, getUsers
 
 from meta import *
 s3_resource = BaseConfig.s3_resource
@@ -551,8 +551,9 @@ def food_proj(proj):
 @app.route ("/food_MT", methods=['GET','POST'])
 @login_required
 def food_MT():
+    SCHEMA = getSchema()
 
-    users = User.query.all()
+    users = getUsers(SCHEMA)
 
     mtDict = {}
     for user in users:

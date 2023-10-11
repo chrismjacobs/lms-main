@@ -255,7 +255,42 @@ class Users(db.Model): #import the model
     extraStr = db.Column(db.String())
     extraInfo = db.Column(db.String())
     extraInt = db.Column(db.Integer())
+    connects = db.relationship('Connected', backref='connected')
+    classes = db.relationship('Classroom', backref='classroom')
 
+
+class Tickets(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date_added = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    category = db.Column(db.String())
+    device = db.Column(db.String())
+    issue = db.Column(db.String())
+    reply = db.Column(db.String())
+    status = db.Column(db.Integer())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+
+class Classroom(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date_added = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    instructor = db.Column(db.String(20), nullable=False)
+    code = db.Column(db.String(), nullable=False)
+    vocab = db.Column(db.String())
+    limit = db.Column(db.Integer())
+    ids = db.Column(db.String())
+    expiry = db.Column(db.Integer())
+    extraStr = db.Column(db.String())
+    extraInt = db.Column(db.Integer())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+class Connected(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username =  db.Column(db.String(20), nullable=False)
+    friends =  db.Column(db.String())
+    sid =  db.Column(db.String())
+    extraStr = db.Column(db.String())
+    extraInt = db.Column(db.Integer())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 class MyModelView(ModelView):
     def is_accessible(self):
