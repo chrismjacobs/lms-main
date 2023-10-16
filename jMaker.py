@@ -8,6 +8,7 @@ from meta import BaseConfig
 s3_resource = BaseConfig.s3_resource
 GS_KEY_ID = BaseConfig.GS_KEY_ID
 CODE_STRING = BaseConfig.CODE_STRING
+DEBUG = BaseConfig.DEBUG
 
 
 import gspread
@@ -114,13 +115,15 @@ def make_sources(course, courseCode):
 
     #jDoc = json.dumps(jDict)
 
-    jfold = "static/json_files/" + courseCode + "/sources.json"
+    if DEBUG:
+        jfold = "static/json_files/" + courseCode + "/sources.json"
 
-    with open(jfold, 'w') as json_file:
-        json.dump(jDict, json_file)
+        with open(jfold, 'w') as json_file:
+            json.dump(jDict, json_file)
 
-    print('make sources', course)
-    putJson(2, course, None)
+        putJson(2, course)
+    else:
+        putJsonHeroku(2, course, jDict)
 
     return 'Make Sources ' + str(course) + ' ' + str(courseCode)
 
@@ -201,15 +204,20 @@ def make_exam(courseCode, unit, courseName):
             examDictUnit[line[0]][line[1]] = line[2].split('/')
             print(line[2].split('/'))
 
-    jfold = "static/json_files/" + courseName + "/" + jString
-
-    with open(jfold, 'w') as json_file:
-        #pprint(vocabDict)
-        json.dump(examDict, json_file)
 
     pprint(examDict)
     # file 4 = exam.json
     putJson(4, courseCode, None)
+
+    if DEBUG:
+        jfold = "static/json_files/" + courseName + "/" + jString
+        with open(jfold, 'w') as json_file:
+            #pprint(vocabDict)
+            json.dump(examDict, json_file)
+
+        putJson(4, courseCode)
+    else:
+        putJsonHeroku(2, courseCode, examDict)
 
 
     return 'Make Exams ' + str(courseName) + ' ' + str(courseCode) + ' ' + str(unit)
@@ -271,34 +279,34 @@ def make_vocab(course, courseCode):
                     else:
                         vocabDict[unit][part][ques][headers[i]] = line[i].strip()
 
-    jfold = 'static/json_files/' + courseCode + '/' + vocab_json
 
-    with open(jfold, 'w') as json_file:
-        #pprint(vocabDict)
-        json.dump(vocabDict, json_file)
+    if DEBUG:
+        jfold = 'static/json_files/' + courseCode + '/' + vocab_json
 
-    # file 3 = vocab.json
-    putJson(3, course, vocab_json)
+        with open(jfold, 'w') as json_file:
+            #pprint(vocabDict)
+            json.dump(vocabDict, json_file)
+
+        # file 3 = vocab.json
+        putJson(3, course)
+    else:
+        putJsonHeroku(3, course, vocabDict)
+
 
     #pprint(vocabDict)
 
     return 'Make Vocab ' + str(course) + ' ' + str(courseCode)
 
 
-def putJson(file, course, label):
-    print ('put MetaFile', file, course, label)
-
-    if globalSem == 1:
-        examString = 'exam.json'
-    else:
-        examString = 'exam2.json'
+def putJson(file, course):
+    print ('put MetaFile', file, course)
 
     fileList = [
         'blank',         #0
         "meta.json",     #1
         "sources.json",  #2
-        label,     #3
-        examString,    #4
+        'vocab.json',     #3
+        'exam.json',    #4
         ]
 
     print(folder[course], fileList[file])
@@ -312,6 +320,27 @@ def putJson(file, course, label):
     key = 'json_files/' + fileList[file]
     bucket = buckets[course]
     jstring = json.dumps(jload)
+    s3_resource.Bucket(bucket).put_object(
+        Key=key, Body=jstring)
+
+    print('json put in bucket location', bucket, key)
+    return [bucket, key]
+
+def putJsonHeroku(file, course, data):
+    print ('put MetaFile', file, course, data)
+
+    fileList = [
+        'blank',         #0
+        "meta.json",     #1
+        "sources.json",  #2
+        'vocab.json',     #3
+        'exam.json',    #4
+        ]
+
+
+    key = 'json_files/' + fileList[file]
+    bucket = buckets[course]
+    jstring = json.dumps(data)
     s3_resource.Bucket(bucket).put_object(
         Key=key, Body=jstring)
 
@@ -363,11 +392,12 @@ def actions(c, act):
 
     return result
 
+if DEBUG:
 
-# c = 'ICC'
-# act = 'src'
+    c = 'ICC'
+    act = 'src'
 
-# actions(c, act)
+    actions(c, act)
 # actions('FRD1', act)
 # actions('FRD2', act)
 # actions('WPE1', act)
