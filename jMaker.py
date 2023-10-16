@@ -364,10 +364,10 @@ def actions(c, act):
     return result
 
 
-c = 'ICC'
-act = 'src'
+# c = 'ICC'
+# act = 'src'
 
-actions(c, act)
+# actions(c, act)
 # actions('FRD1', act)
 # actions('FRD2', act)
 # actions('WPE1', act)
