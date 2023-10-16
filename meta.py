@@ -9,6 +9,8 @@ try:
     SQLALCHEMY_DATABASE_URI = KEYS.SQLALCHEMY_DATABASE_URI
     MAIL_PASSWORD = KEYS.MAIL_PASSWORD
     SECRET_KEY = KEYS.SECRET_KEY
+    GS_KEY_ID = KEYS.GS_KEY_ID
+    CODE_STRING = KEYS.CODE_STRING
     # REDIS_PASSWORD = KEYS.REDIS_PASSWORD
     DEBUG = True
 
@@ -19,6 +21,8 @@ except:
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_ALT']  ## because databse must be postgresql:  not  postgres:
     MAIL_PASSWORD = os.environ['MAIL_PASSWORD']
     SECRET_KEY = os.environ['SECRET_KEY']
+    GS_KEY_ID = os.environ['GS_KEY_ID']
+    CODE_STRING = os.environ['CODE_STRING']
     DEBUG = False
     # try:
     #     REDIS_PASSWORD = os.environ['REDIS_PASSWORD']
@@ -198,7 +202,8 @@ class BaseConfig:
     MAIL_PASSWORD = MAIL_PASSWORD
     SECRET_KEY = SECRET_KEY
     DEBUG = DEBUG
-
+    GS_KEY_ID = GS_KEY_ID
+    CODE_STRING = CODE_STRING
     s3_resource = s3_resource
     s3_client = s3_client
 

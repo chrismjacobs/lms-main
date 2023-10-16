@@ -9,6 +9,8 @@ from models import *
 from pprint import pprint
 from meta import *
 from routesGet import getUsers, get_MTFN, get_schedule, get_sources
+from jMaker import actions
+
 s3_resource = BaseConfig.s3_resource
 
 
@@ -591,6 +593,21 @@ def updateSet():
 
 
     return jsonify({'set_mode' : set_mode, 'setString' : setString})
+
+
+
+@app.route ("/update/<string:course>/<string:action>", methods = ['GET', 'POST'])
+@login_required
+def update(course, action):
+    result = 'Fail'
+    try:
+        if current_user.id == 1:
+            result = actions(course, action)
+    except Exception as e:
+        result = e
+
+    return str(result)
+
 
 
 
