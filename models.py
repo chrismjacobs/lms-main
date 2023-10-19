@@ -356,6 +356,10 @@ for mdu in infoDict['mdu']:
 
 ### U01
 
+admin.add_view(MyModelView(U011U_FOOD, db.session))
+admin.add_view(MyModelView(U021U_FOOD, db.session))
+
+
 admin.add_view(MyModelView(U011U_FRD1, db.session))
 admin.add_view(MyModelView(U012U_FRD1, db.session))
 admin.add_view(MyModelView(U013U_FRD1, db.session))

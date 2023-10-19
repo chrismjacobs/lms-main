@@ -3,6 +3,7 @@
 {% block content %}
 
 <span id="ansString" style="display:none">{{ansString}}</span>
+<span id="grade" style="display:none">{{grade}}</span>
 <span id="name" style="display:none">{{current_user.username}}</span>
 
 <div class="content-section">
@@ -83,7 +84,7 @@
 <br>
 
 <div v-if="updateReady">
-    <button  class="btn btn-danger" style="margin-right:5px" @click="createPPT()">Create PPT</button>
+    <button  :class="getClass()" style="margin-right:5px" @click="createPPT()">Create PPT [[grade]] </button>
 </div>
 
 
@@ -139,8 +140,10 @@
 <script type="text/javascript" >
 
 var ansString = document.getElementById('ansString').innerHTML
+var grade = document.getElementById('grade').innerHTML
 var ansOBJ = JSON.parse(ansString)
 console.log('ansOBJ', ansOBJ);
+console.log('grade', grade);
 
 var name = document.getElementById('name').innerHTML
 
@@ -157,6 +160,7 @@ function startVue(ansOBJ){
     },
     data: {
         ansOBJ: ansOBJ,
+        grade: grade,
         name : name,
         updateReady : true,
         pptLink : false,
@@ -181,6 +185,18 @@ function startVue(ansOBJ){
 
     },
     methods: {
+        getClass: function () {
+            if (this.grade < 4) {
+                return 'btn btn-danger'
+            }
+            else if (this.grade == 4) {
+                return 'btn btn-info'
+            }
+            else {
+                return 'btn btn-success'
+            }
+
+        },
         partOne: function () {
             if (ansOBJ['Dish'] && ansOBJ['Reasons'][1] && ansOBJ['Reasons'][2] && ansOBJ['Reasons'][3]) {
                 return true
@@ -245,6 +261,13 @@ function startVue(ansOBJ){
         },
         createPPT : function() {
             console.log('CreatePPT');
+            if (this.grade < 4) {
+                alert('Your work is not complete');
+                return false
+            } else if (this.grade == 4) {
+                alert('Your work must be checked by the instructor first, please contact for check');
+                return false
+            }
 
             $.ajax({
               data : {

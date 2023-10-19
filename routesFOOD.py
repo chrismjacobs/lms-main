@@ -542,9 +542,11 @@ def food_proj(proj):
         ansDict = project.Ans01
         html = 'food/food_proj_RR.html'
 
+    grade = project.Grade
+
 
     return render_template(html, legend='Food Project',
-    source=source, title=title, ansString=ansDict)
+    source=source, title=title, ansString=ansDict, grade=grade)
 
 
 
@@ -573,8 +575,8 @@ def food_MT():
         dish = None
         ndDict = json.loads(answer.Ans01)
         cvDict = json.loads(answer.Ans02)
-        print(get_all_values(ndDict))
-        print(get_all_values(cvDict))
+        # print(get_all_values(ndDict))
+        # print(get_all_values(cvDict))
 
         if get_all_values(ndDict) < get_all_values(cvDict):
             dish = ndDict['Dish']
@@ -595,11 +597,15 @@ def food_MT():
         mtDict[answer.username]['Grade'] = tGrade
         mtDict[answer.username]['Data'] = data
 
+
+
     pprint(mtDict)
 
     sDict = get_food_projects()
     source1 = sDict['1']['M3']
     source2 = sDict['1']['M4']
+
+
 
 
     return render_template('food/food_MT.html', legend='Food Project',
