@@ -922,7 +922,9 @@ def grades_midterm ():
 
     print('modelCheck ', model_check, getInfo()['unit_mods_list'] )
 
-    for model in getInfo()['unit_mods_list'][0:model_check]:
+    getInfoMods = getInfo()['unit_mods_list'][0:model_check]
+
+    for model in getInfoMods:
         rows = model.query.all()
         unit = str(model).split('U')[1]
         for row in rows:
@@ -936,11 +938,14 @@ def grades_midterm ():
 
     model_check = total_units
 
-    for model in getInfo()['ass_mods_list'][0:model_check]:
+    getInfoAss = getInfo()['ass_mods_list'][0:model_check]
+
+    for model in getInfoAss:
         unit = str(model).split('A')[1]
         rows = model.query.all()
         for row in rows:
-            gradesDict[row.username]['asses'] += row.Grade
+            if row.username in gradesDict:
+                gradesDict[row.username]['asses'] += row.Grade
 
 
 
