@@ -207,7 +207,7 @@ def make_exam(courseCode, unit, courseName):
 
     pprint(examDict)
     # file 4 = exam.json
-    putJson(4, courseCode, None)
+    putJson(4, courseCode)
 
     if DEBUG:
         jfold = "static/json_files/" + courseName + "/" + jString
@@ -385,19 +385,19 @@ def actions(c, act):
     elif act == 'put' :
         result = putJson(1, course, None)
     elif act == 'exam' :
-        result = make_exam(course, '1-1-2', c)
+        result = make_exam(course, '2-3-4', c)
     else:
         result = 'no command'
     print('ACTION COMPLETE ' + str(result))
 
     return result
 
-if DEBUG:
+# if DEBUG:
 
-    c = 'ICC'
-    act = 'src'
+#     c = 'WPE2'
+#     act = 'exam'
 
-    actions(c, act)
+#     actions(c, act)
 # actions('FRD1', act)
 # actions('FRD2', act)
 # actions('WPE1', act)

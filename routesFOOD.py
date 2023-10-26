@@ -186,9 +186,13 @@ def updateFood():
         grade = request.form ['grade']
         name = request.form ['name']
     except:
+        grade = int(request.form ['grade'])
         name = current_user.username
-        if get_all_values(ansDict) == 0:
-            grade = 4
+
+        if grade == 5:
+            grade = 5
+        elif get_all_values(ansDict) == 0:
+            grade = 1
         else:
             print ('GET_ALL', get_all_values(ansDict))
             grade = 0

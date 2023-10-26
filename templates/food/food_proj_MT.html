@@ -160,7 +160,7 @@ function startVue(ansOBJ){
     },
     data: {
         ansOBJ: ansOBJ,
-        grade: grade,
+        grade: parseInt(grade),
         name : name,
         updateReady : true,
         pptLink : false,
@@ -247,7 +247,8 @@ function startVue(ansOBJ){
             $.ajax({
               data : {
                 proj : this.project,
-                ansOBJ : JSON.stringify(this.ansOBJ)
+                ansOBJ : JSON.stringify(this.ansOBJ),
+                grade : this.grade
               },
               type : 'POST',
               url : '/updateFood',
@@ -260,12 +261,12 @@ function startVue(ansOBJ){
             });
         },
         createPPT : function() {
-            console.log('CreatePPT');
+            console.log('CreatePPT', this.grade);
             if (this.grade < 4) {
                 alert('Your work is not complete');
                 return false
             } else if (this.grade == 4) {
-                alert('Your work must be checked by the instructor first, please contact for check');
+                alert('Your work must be checked by the instructor first, please contact for checking');
                 return false
             }
 
