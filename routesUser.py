@@ -944,8 +944,12 @@ def grades_midterm ():
         unit = str(model).split('A')[1]
         rows = model.query.all()
         for row in rows:
-            if row.username in gradesDict:
+            try:
                 gradesDict[row.username]['asses'] += row.Grade
+            except:
+                print('user deleted')
+
+
 
 
 
