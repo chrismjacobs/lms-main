@@ -444,9 +444,10 @@ def completeStatus(time, name):
     aCount = 0
     uCount = 0
 
-    for model in getInfo()['aModsDict']:
+    aModsInfo = getInfo()['aModsDict']
+    for model in aModsInfo:
         if model in assignments[time]:
-            if getInfo()['aModsDict'][model].query.filter_by(username=name).first() and getInfo()['aModsDict'][model].query.filter_by(username=name).first().Grade > 0:
+            if aModsInfo[model].query.filter_by(username=name).first() and aModsInfo[model].query.filter_by(username=name).first().Grade > 0:
                 aCount += 1
 
     for model in partList:
@@ -771,6 +772,8 @@ def grades_final():
 
     model_check = total_units*4 ## 4 units for each unit
 
+
+
     for model in getInfo()['unit_mods_list'][uStart:(uStart + model_check)]:
         rows = model.query.all()
         unit = str(model).split('U')[1]
@@ -955,24 +958,28 @@ def grades_midterm ():
 
     practices = getModels()['Exams_'].query.all()
     for practice in practices:
-        reviewData = ast.literal_eval(practice.j1)
-        if len(reviewData[str(version) + '-1-2']) > 2:
-            gradesDict[practice.username]['tries1'] = reviewData[str(version) + '-1-2'][2]
-            gradesDict[practice.username]['pscore1'] = (reviewData[str(version) + '-1-2'][0] + reviewData[str(version) + '-1-2'][1])/2
-        if len(reviewData[str(version) + '-3-4']) > 2:
-            gradesDict[practice.username]['tries2'] = reviewData[str(version) + '-3-4'][2]
-            gradesDict[practice.username]['pscore2'] = (reviewData[str(version) + '-3-4'][0] + reviewData[str(version) + '-3-4'][1])/2
+        try:
+            reviewData = ast.literal_eval(practice.j1)
+            if len(reviewData[str(version) + '-1-2']) > 2:
+                gradesDict[practice.username]['tries1'] = reviewData[str(version) + '-1-2'][2]
+                gradesDict[practice.username]['pscore1'] = (reviewData[str(version) + '-1-2'][0] + reviewData[str(version) + '-1-2'][1])/2
+            if len(reviewData[str(version) + '-3-4']) > 2:
+                gradesDict[practice.username]['tries2'] = reviewData[str(version) + '-3-4'][2]
+                gradesDict[practice.username]['pscore2'] = (reviewData[str(version) + '-3-4'][0] + reviewData[str(version) + '-3-4'][1])/2
 
 
-        examData =  ast.literal_eval(practice.j2)
-        if len(examData[str(version) + '-1-2']) > 0 :
-            gradesDict[practice.username]['exam1'] = round( (examData[str(version) + '-1-2'][0] + examData[str(version) + '-1-2'][1])/2 )
-            gradesDict[practice.username]['rscore1'] = [examData[str(version) + '-1-2'][0], examData[str(version) + '-1-2'][1]]
-        if len(examData[str(version) + '-3-4']) > 0 :
-            gradesDict[practice.username]['exam2'] = round( (examData[str(version) + '-3-4'][0] + examData[str(version) + '-3-4'][1])/2 )
-            gradesDict[practice.username]['rscore2'] = [examData[str(version) + '-3-4'][0], examData[str(version) + '-3-4'][1]]
 
-        gradesDict[practice.username]['blurs'] = practice.j3
+            examData =  ast.literal_eval(practice.j2)
+            if len(examData[str(version) + '-1-2']) > 0 :
+                gradesDict[practice.username]['exam1'] = round( (examData[str(version) + '-1-2'][0] + examData[str(version) + '-1-2'][1])/2 )
+                gradesDict[practice.username]['rscore1'] = [examData[str(version) + '-1-2'][0], examData[str(version) + '-1-2'][1]]
+            if len(examData[str(version) + '-3-4']) > 0 :
+                gradesDict[practice.username]['exam2'] = round( (examData[str(version) + '-3-4'][0] + examData[str(version) + '-3-4'][1])/2 )
+                gradesDict[practice.username]['rscore2'] = [examData[str(version) + '-3-4'][0], examData[str(version) + '-3-4'][1]]
+
+            gradesDict[practice.username]['blurs'] = practice.j3
+        except Exception as e:
+            print('user deleted', e)
 
         #print('exam_list_data_checked')
 
