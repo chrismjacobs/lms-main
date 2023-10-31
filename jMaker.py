@@ -394,7 +394,7 @@ def actions(c, act):
 
 # if DEBUG:
 
-#     c = 'WPE2'
+#     c = 'FRD2'
 #     act = 'exam'
 
 #     actions(c, act)

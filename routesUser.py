@@ -591,11 +591,8 @@ def setStatus():
         print('set 1')
         student.extra = 1
         db.session.commit()
-    elif student.extra < 3:
+    elif student.extra < 6:
         student.extra += 1
-        db.session.commit()
-    elif student.extra == 3:
-        student.extra = 6
         db.session.commit()
     elif student.extra == 6:
         student.extra = 0
