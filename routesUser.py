@@ -902,7 +902,7 @@ def grades_midterm ():
         if un.unit in midterm_unit_list:
             total = un.u1 + un.u2 + un.u3 + un.u4
             maxU += total*2
-            if unit.uA and unit.uA > 0:
+            if un.uA and un.uA > 0:
                 maxA += 2
             total_units += 1
         else:
