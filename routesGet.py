@@ -154,7 +154,8 @@ def get_grades(ass, unt):
     for unit in units:
         total = unit.u1 + unit.u2 + unit.u3 + unit.u4
         maxU += total
-        maxA += unit.uA
+        if unit.uA and unit.uA > 0:
+            maxA += 1
         total_units += 1
     maxU = maxU*2
     maxA = maxA*2
