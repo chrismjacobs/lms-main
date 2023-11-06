@@ -464,15 +464,121 @@ admin.add_view(MyModelView(U042U_ICC, db.session))
 admin.add_view(MyModelView(U043U_ICC, db.session))
 admin.add_view(MyModelView(U044U_ICC, db.session))
 
-## ICC
+## U05
+admin.add_view(MyModelView(U051U_FRD1, db.session))
+admin.add_view(MyModelView(U052U_FRD1, db.session))
+admin.add_view(MyModelView(U053U_FRD1, db.session))
+admin.add_view(MyModelView(U054U_FRD1, db.session))
+
+admin.add_view(MyModelView(U051U_FRD2, db.session))
+admin.add_view(MyModelView(U052U_FRD2, db.session))
+admin.add_view(MyModelView(U053U_FRD2, db.session))
+admin.add_view(MyModelView(U054U_FRD2, db.session))
+
+admin.add_view(MyModelView(U051U_WPE1, db.session))
+admin.add_view(MyModelView(U052U_WPE1, db.session))
+admin.add_view(MyModelView(U053U_WPE1, db.session))
+admin.add_view(MyModelView(U054U_WPE1, db.session))
+
+admin.add_view(MyModelView(U051U_WPE2, db.session))
+admin.add_view(MyModelView(U052U_WPE2, db.session))
+admin.add_view(MyModelView(U053U_WPE2, db.session))
+admin.add_view(MyModelView(U054U_WPE2, db.session))
+
 admin.add_view(MyModelView(U051U_ICC, db.session))
 admin.add_view(MyModelView(U052U_ICC, db.session))
 admin.add_view(MyModelView(U053U_ICC, db.session))
 admin.add_view(MyModelView(U054U_ICC, db.session))
 
+## U06
+admin.add_view(MyModelView(U061U_FRD1, db.session))
+admin.add_view(MyModelView(U062U_FRD1, db.session))
+admin.add_view(MyModelView(U063U_FRD1, db.session))
+admin.add_view(MyModelView(U064U_FRD1, db.session))
+
+admin.add_view(MyModelView(U061U_FRD2, db.session))
+admin.add_view(MyModelView(U062U_FRD2, db.session))
+admin.add_view(MyModelView(U063U_FRD2, db.session))
+admin.add_view(MyModelView(U064U_FRD2, db.session))
+
+admin.add_view(MyModelView(U061U_WPE1, db.session))
+admin.add_view(MyModelView(U062U_WPE1, db.session))
+admin.add_view(MyModelView(U063U_WPE1, db.session))
+admin.add_view(MyModelView(U064U_WPE1, db.session))
+
+admin.add_view(MyModelView(U061U_WPE2, db.session))
+admin.add_view(MyModelView(U062U_WPE2, db.session))
+admin.add_view(MyModelView(U063U_WPE2, db.session))
+admin.add_view(MyModelView(U064U_WPE2, db.session))
+
+admin.add_view(MyModelView(U061U_ICC, db.session))
+admin.add_view(MyModelView(U062U_ICC, db.session))
+admin.add_view(MyModelView(U063U_ICC, db.session))
+admin.add_view(MyModelView(U064U_ICC, db.session))
+
+## U07
+admin.add_view(MyModelView(U071U_FRD1, db.session))
+admin.add_view(MyModelView(U072U_FRD1, db.session))
+admin.add_view(MyModelView(U073U_FRD1, db.session))
+admin.add_view(MyModelView(U074U_FRD1, db.session))
+
+admin.add_view(MyModelView(U071U_FRD2, db.session))
+admin.add_view(MyModelView(U072U_FRD2, db.session))
+admin.add_view(MyModelView(U073U_FRD2, db.session))
+admin.add_view(MyModelView(U074U_FRD2, db.session))
+
+admin.add_view(MyModelView(U071U_WPE1, db.session))
+admin.add_view(MyModelView(U072U_WPE1, db.session))
+admin.add_view(MyModelView(U073U_WPE1, db.session))
+admin.add_view(MyModelView(U074U_WPE1, db.session))
+
+admin.add_view(MyModelView(U071U_WPE2, db.session))
+admin.add_view(MyModelView(U072U_WPE2, db.session))
+admin.add_view(MyModelView(U073U_WPE2, db.session))
+admin.add_view(MyModelView(U074U_WPE2, db.session))
+
+admin.add_view(MyModelView(U071U_ICC, db.session))
+admin.add_view(MyModelView(U072U_ICC, db.session))
+admin.add_view(MyModelView(U073U_ICC, db.session))
+admin.add_view(MyModelView(U074U_ICC, db.session))
+
+## U08
+admin.add_view(MyModelView(U081U_FRD1, db.session))
+admin.add_view(MyModelView(U082U_FRD1, db.session))
+admin.add_view(MyModelView(U083U_FRD1, db.session))
+admin.add_view(MyModelView(U084U_FRD1, db.session))
+
+admin.add_view(MyModelView(U081U_FRD2, db.session))
+admin.add_view(MyModelView(U082U_FRD2, db.session))
+admin.add_view(MyModelView(U083U_FRD2, db.session))
+admin.add_view(MyModelView(U084U_FRD2, db.session))
+
+admin.add_view(MyModelView(U081U_WPE1, db.session))
+admin.add_view(MyModelView(U082U_WPE1, db.session))
+admin.add_view(MyModelView(U083U_WPE1, db.session))
+admin.add_view(MyModelView(U084U_WPE1, db.session))
+
+admin.add_view(MyModelView(U081U_WPE2, db.session))
+admin.add_view(MyModelView(U082U_WPE2, db.session))
+admin.add_view(MyModelView(U083U_WPE2, db.session))
+admin.add_view(MyModelView(U084U_WPE2, db.session))
+
+admin.add_view(MyModelView(U081U_ICC, db.session))
+admin.add_view(MyModelView(U082U_ICC, db.session))
+admin.add_view(MyModelView(U083U_ICC, db.session))
+admin.add_view(MyModelView(U084U_ICC, db.session))
 
 
+## ICC 09 10
+admin.add_view(MyModelView(U091U_ICC, db.session))
+admin.add_view(MyModelView(U092U_ICC, db.session))
+admin.add_view(MyModelView(U093U_ICC, db.session))
+admin.add_view(MyModelView(U094U_ICC, db.session))
 
+admin.add_view(MyModelView(U101U_ICC, db.session))
+admin.add_view(MyModelView(U102U_ICC, db.session))
+admin.add_view(MyModelView(U103U_ICC, db.session))
+admin.add_view(MyModelView(U104U_ICC, db.session))
 
 
 
@@ -499,7 +605,34 @@ admin.add_view(MyModelView(A04A_FRD2, db.session))
 admin.add_view(MyModelView(A04A_WPE1, db.session))
 admin.add_view(MyModelView(A04A_WPE2, db.session))
 admin.add_view(MyModelView(A04A_ICC, db.session))
+
+admin.add_view(MyModelView(A05A_FRD1, db.session))
+admin.add_view(MyModelView(A05A_FRD2, db.session))
+admin.add_view(MyModelView(A05A_WPE1, db.session))
+admin.add_view(MyModelView(A05A_WPE2, db.session))
 admin.add_view(MyModelView(A05A_ICC, db.session))
+
+admin.add_view(MyModelView(A06A_FRD1, db.session))
+admin.add_view(MyModelView(A06A_FRD2, db.session))
+admin.add_view(MyModelView(A06A_WPE1, db.session))
+admin.add_view(MyModelView(A06A_WPE2, db.session))
+admin.add_view(MyModelView(A06A_ICC, db.session))
+
+admin.add_view(MyModelView(A07A_FRD1, db.session))
+admin.add_view(MyModelView(A07A_FRD2, db.session))
+admin.add_view(MyModelView(A07A_WPE1, db.session))
+admin.add_view(MyModelView(A07A_WPE2, db.session))
+admin.add_view(MyModelView(A07A_ICC, db.session))
+
+admin.add_view(MyModelView(A08A_FRD1, db.session))
+admin.add_view(MyModelView(A08A_FRD2, db.session))
+admin.add_view(MyModelView(A08A_WPE1, db.session))
+admin.add_view(MyModelView(A08A_WPE2, db.session))
+admin.add_view(MyModelView(A08A_ICC, db.session))
+
+admin.add_view(MyModelView(A09A_ICC, db.session))
+admin.add_view(MyModelView(A10A_ICC, db.session))
+
 
 
 
