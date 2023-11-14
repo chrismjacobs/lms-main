@@ -82,7 +82,7 @@ def get_sources():
 def get_MTFN(t):
 
     SCHEMA = getSchema()
-    ICC = [3,6]
+    ICC = [6]
 
     MTFN = 'MT'
 
@@ -162,8 +162,8 @@ def get_grades(ass, unt):
 
     MTFN = get_MTFN('grades')
 
-    lessUnits = [1,2]
-    moreUnits = [5,3,6]
+    lessUnits = [1,2,3,4]
+    moreUnits = [6]
 
 
     print('MTFN set = ', MTFN)
