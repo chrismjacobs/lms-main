@@ -10,7 +10,7 @@
 <div id="vue-app">
 
 <div class="content-section">
-        <h1> Midterm Exam Projects </h1>
+        <h1> Final Exam Projects {{MTFN}} </h1>
     </div>
     <div class="content-section">
     <div class="embed-responsive embed-responsive-4by3">
@@ -25,11 +25,45 @@
 <div class="content-section">
 
 
-    {% if MTFN == 'EDIT' %}
+    {% if MTFN == 'MT' %}
 
 
     <div>
       <legend class="border-bottom mb-4"> Build Your Project: </legend>
+
+      <button  class="btn btn-danger" @click="goTo('RR')">Restaurant Review</button>
+
+    </div>
+
+    {% elif MTFN == 'HOLD' %}
+
+    <h5 style="color:red"> Update Part 1 (Oct 10)
+    <br>
+    <br>
+    Update Plan  (Oct 17)
+    <br>
+    <br>
+    Just meeting deadlines --> 15/30%
+    <br>
+    Choose ONE Topic for your presentation
+    <br>
+    <br>
+    </h5>
+
+    <div >
+      <button  class="btn btn-danger" @click="goTo('ND')">National Dish</button>
+    </div>
+
+    <br>
+    <br>
+
+    <div >
+      <button  class="btn btn-danger" @click="goTo('CV')">Cooking Video</button>
+    </div>
+
+    {% elif MTFN == 'EDIT' %}
+
+    <legend class="border-bottom mb-4"> Build Your Project: </legend>
 
       <button  class="btn btn-danger" @click="goTo('RR')">Restaurant Review</button>
 
@@ -79,34 +113,6 @@
 
       <button  class="btn btn-info" @click="goTo('sharing')">Start Sharing</button>
       </div>
-
-    </div>
-
-    {% elif MTFN == 'MT' %}
-
-    <h5 style="color:red"> Update Part 1 (Oct 10)
-    <br>
-    <br>
-    Update Plan  (Oct 17)
-    <br>
-    <br>
-    Just meeting deadlines --> 15/30%
-    <br>
-    Choose ONE Topic for your presentation
-    <br>
-    <br>
-    </h5>
-
-    <div >
-      <button  class="btn btn-danger" @click="goTo('ND')">National Dish</button>
-    </div>
-
-    <br>
-    <br>
-
-    <div >
-      <button  class="btn btn-danger" @click="goTo('CV')">Cooking Video</button>
-    </div>
 
     {% else %}
 

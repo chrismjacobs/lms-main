@@ -87,19 +87,13 @@ def get_MTFN(t):
     MTFN = 'MT'
 
     try:
-        if t == 'layout':
-            if getModels()['Units_'].query.filter_by(unit='02').first():
-                MTFN = 'MT'
-            elif getModels()['Units_'].query.filter_by(unit='06').first():
+
+        if SCHEMA in ICC:
+            if getModels()['Units_'].query.filter_by(unit='06').first():
                 MTFN = 'FN'
-        elif t == 'grades':
-            MTFN = 'MT'
-            if SCHEMA in ICC:
-                if getModels()['Units_'].query.filter_by(unit='06').first():
-                    MTFN = 'FN'
-            else:
-                if getModels()['Units_'].query.filter_by(unit='05').first():
-                    MTFN = 'FN'
+        else:
+            if getModels()['Units_'].query.filter_by(unit='05').first():
+                MTFN = 'FN'
     except:
         print('MTFN exception')
         MTFN = 'MT'
