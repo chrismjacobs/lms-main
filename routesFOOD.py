@@ -620,8 +620,9 @@ def food_MT():
 @app.route ("/food_FN", methods=['GET','POST'])
 @login_required
 def food_FN():
+    SCHEMA = getSchema()
 
-    users = User.query.all()
+    users = getUsers(SCHEMA)
 
     fnDict = {}
     for user in users:
