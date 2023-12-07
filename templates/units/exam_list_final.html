@@ -216,7 +216,7 @@ function startVue(){
           let url
 
           if (test == 'exam' || test == 'review') {
-            url = (str).split('exam_list')[0] + 'exams/' + test + '/' + '2' + unit
+            url = (str).split('exam_list')[0] + 'exams/' + test + '/' + this.semester + unit
           } else {
             url = (str).split('exam_list')[0] + test
           }
