@@ -207,6 +207,9 @@ function startVue(){
             alert('Practice exams are closed one hour before exams - please refer to your notes')
             return false
           }
+          if (this.schema == 2 || this.schema == 4) {
+            this.semester = '2'
+          }
 
           var str = window.location.href
 
