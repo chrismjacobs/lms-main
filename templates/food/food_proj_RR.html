@@ -4,6 +4,7 @@
 
 <span id="ansString" style="display:none">{{ansString}}</span>
 <span id="name" style="display:none">{{current_user.username}}</span>
+<span id="grade" style="display:none">{{grade}}</span>
 
 <div class="content-section">
         <h1> Project: <br> {{title}} </h1>
@@ -65,7 +66,7 @@
 <br>
 
 <div v-if="updateReady">
-    <button  class="btn btn-danger" style="margin-right:5px" @click="createPPT()">Create PPT</button>
+    <button  class="btn btn-danger" style="margin-right:5px" @click="createPPT()">Create PPT [[grade]] </button>
 </div>
 
 <br>
@@ -91,6 +92,7 @@
 
 var ansString = document.getElementById('ansString').innerHTML
 var ansOBJ = JSON.parse(ansString)
+var grade = document.getElementById('grade').innerHTML
 console.log('ansOBJ', ansOBJ);
 
 var name = document.getElementById('name').innerHTML
@@ -110,6 +112,7 @@ function startVue(ansOBJ){
         ansOBJ: ansOBJ,
         name : name,
         updateReady : true,
+        grade: parseInt(grade),
         pptLink : false,
         blurblocker : null,
         project: (window.location.href).split('/food/')[1],
@@ -180,6 +183,7 @@ function startVue(ansOBJ){
             $.ajax({
               data : {
                 proj : this.project,
+                grade : this.grade,
                 ansOBJ : JSON.stringify(this.ansOBJ)
               },
               type : 'POST',
@@ -199,7 +203,14 @@ function startVue(ansOBJ){
             });
         },
         createPPT : function() {
-            console.log('CreatePPT');
+            console.log('CreatePPT', this.grade);
+            if (this.grade < 4) {
+                alert('Your work is not complete');
+                return false
+            } else if (this.grade == 4) {
+                alert('Your work must be checked by the instructor first, please contact for checking');
+                return false
+            }
 
             $.ajax({
               data : {
