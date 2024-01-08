@@ -295,6 +295,42 @@ class U084U_WPE1(BaseUnits):
 modDictUnits_WPE1['08'].append(U084U_WPE1)
 
 
+class U091U_WPE1(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_WPE1['09']=[None]
+modDictUnits_WPE1['09'].append(U091U_WPE1)
+
+class U092U_WPE1(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_WPE1['09'].append(U092U_WPE1)
+
+class U093U_WPE1(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_WPE1['09'].append(U093U_WPE1)
+
+class U094U_WPE1(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_WPE1['09'].append(U084U_WPE1)
+
+
+class U101U_WPE1(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_WPE1['10']=[None]
+modDictUnits_WPE1['10'].append(U101U_WPE1)
+
+class U102U_WPE1(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_WPE1['10'].append(U102U_WPE1)
+
+class U103U_WPE1(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_WPE1['10'].append(U103U_WPE1)
+
+class U104U_WPE1(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_WPE1['10'].append(U104U_WPE1)
+
+
 ############### ASSIGNMENT MODELS ###################################
 
 class BaseAss(db.Model):

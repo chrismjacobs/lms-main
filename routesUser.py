@@ -748,7 +748,8 @@ def grades_final():
 
     if SCHEMA == 6 or SCHEMA == 3:
         final_unit_list = ['06', '07', '08', '09', '10']
-
+    # elif SCHEMA == 2 or SCHEMA == 4:
+    #     final_unit_list = ['05, '06', '07', '08', '09', '10']
     else:
         final_unit_list = ['05', '06', '07', '08']
 
