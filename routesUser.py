@@ -746,7 +746,7 @@ def grades_final():
         if a.username in gradesDict:
             gradesDict[a.username]['Name'] += ' ='
 
-    if SCHEMA == 6 or SCHEMA == 3:
+    if SCHEMA == 6:
         final_unit_list = ['06', '07', '08', '09', '10']
     # elif SCHEMA == 2 or SCHEMA == 4:
     #     final_unit_list = ['05, '06', '07', '08', '09', '10']
@@ -755,7 +755,7 @@ def grades_final():
 
     ### set max grades
 
-    if SCHEMA == 6 or SCHEMA == 3:
+    if SCHEMA == 6:
         total_units = 5
         maxU = 40
         maxA = 10
@@ -1129,7 +1129,7 @@ def classwork():
 
     unitList = []
 
-    ICC = [6]
+    ICC = [6, 4, 3]
 
 
     if get_MTFN('grades') == 'MT':
@@ -1139,8 +1139,10 @@ def classwork():
             unitList = getInfo()['unit_mods_list'][0:16]
     else:
         if SCHEMA in ICC:
+            print('schema in ICC')
             unitList = getInfo()['unit_mods_list'][20:40]
         else:
+            print('schema NOT')
             unitList = getInfo()['unit_mods_list'][16:32]
 
 
