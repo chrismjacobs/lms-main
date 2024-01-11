@@ -17,7 +17,7 @@
   <h3 style="color:green"> Tries: <span id="tryMarker"> </span>/3</h3>
 </div>
 
-<div class="content-section">
+<div class="content-section" :style="getBG()">
 
     <div style="overflow-x:auto;">
       <table class="table table-sm">
@@ -123,6 +123,28 @@ function startVue(){
         test: test
     },
     methods: {
+       getBG: function () {
+        let url = str.split('exams')[1]
+
+
+        colorOBJ = {
+          '-1-2': 'background:#D6EAF8',
+          '-3-4': 'background:#D6EAF8',
+          '-5-6': 'background:#D6EAF8',
+          '-7-8': 'background:#D6EAF8',
+        }
+
+        if (url.includes('exam')) {
+          console.log(colorOBJ[url.split('/')[2]])
+          if (url.includes('-1-2') || url.includes('-5-6')) {
+            return 'background:#EBF5FB'
+          }
+          else {
+            return 'background:#FDF2E9'
+          }
+        }
+
+       },
        goTo: function() {
           reDirectOBJ = {
             '1-1-2': 'exam_list_midterm',
@@ -155,7 +177,7 @@ function startVue(){
                       console.log(vue.errorCount);
                   }
                   else {
-                    e.setAttribute("style", "height:30px;width:150px;color:white;background:seagreen")
+                    e.setAttribute("style", "height:30px;width:150px;color:seagreen;background:seagreen")
                   }
               }
           }
