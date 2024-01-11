@@ -212,7 +212,7 @@ let vue = new Vue({
               return { background:'hotpink'}
             }
           }
-          else if (head[0] == 'p' || head[0] == 'r' || head[0] == 'F') {
+          else if (head[0] == 'p' || head[0] == 'r') {
             // M == midterm  p = pscore  r = rscore b = blurs F = final
             if (this.exdata == 0) {
               return { display:'none'}
@@ -223,13 +223,15 @@ let vue = new Vue({
             else if (this.exdata > 2 && head[0] != 'p') {
               return { display:'none'}
             }
-            // if (this.schema == 3 || this.schema == 6) {
-              // if (g == [5, 20]) {
-                // return { background:'green'}
-              // }
-            // } else if (g == [4, 16]) {
-                // return { background:'green'}
-            // }
+          }
+          else if (head[0] == 'F') {
+            // M == midterm  p = pscore  r = rscore b = blurs F = final
+            if (this.exdata == 0) {
+              return { display:'none'}
+            }
+            else if (g < 60) {
+              return { background:'coral'}
+            }
           }
           else if (g == 0) {
             return { background:'lightcoral'}
@@ -244,9 +246,10 @@ let vue = new Vue({
         },
         gListCreate: function () {
           for (let x in this.gradesOBJ) {
+            let name = this.gradesOBJ[x]['Name']
             let id = this.gradesOBJ[x]['ID']
             let total = this.gradesOBJ[x]['Total']
-            this.gList.push(id + ' ' + total)
+            this.gList.push(name + ' ' + id + ' ' + total)
           }
           console.log(this.gList)
         },

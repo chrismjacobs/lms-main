@@ -17,7 +17,7 @@
   <h3 style="color:green"> Tries: <span id="tryMarker"> </span>/3</h3>
 </div>
 
-<div class="content-section" :style="getBG()">
+<div class="content-section">
 
     <div style="overflow-x:auto;">
       <table class="table table-sm">
@@ -31,7 +31,7 @@
         <template v-for="(qSet, key) in examOBJ" >
 
             <tr>
-              <td style="background:lightgrey">
+              <td :style="getBG()">
                 <h6>[[ key ]]</h6>
               </td>
             </tr>
@@ -137,11 +137,13 @@ function startVue(){
         if (url.includes('exam')) {
           console.log(colorOBJ[url.split('/')[2]])
           if (url.includes('-1-2') || url.includes('-5-6')) {
-            return 'background:#EBF5FB'
+            return { background:'lightblue'}
           }
           else {
-            return 'background:#FDF2E9'
+            return { background:'lightpink'}
           }
+        }else {
+          return { background:'lightgrey'}
         }
 
        },
