@@ -161,6 +161,12 @@ def change(data):
     page = data.split('-')[1]
     current_user.schema = schema
     db.session.commit()
+    if page == 'grades':
+        if get_MTFN('layout') == 'FN':
+            page = 'grades_final'
+        else:
+            page = 'grades_midterm'
+
     return redirect (url_for(page))
 
 
