@@ -159,11 +159,17 @@ let vue = new Vue({
           }
         },
         gStyle: function(head, g) {
-          if (this.gList) {
+          if (this.gList > 0) {
             // console.log(head[0])
+            let showName = head[0] != 'N'
+            let nameToggle = this.gList > 1
             let remove = ['I', this.getType()]
-            if (!remove.includes(head[0]) && head[0] != 'N') {
+            if (!remove.includes(head[0]) && !showName) {
               return { display:'none'}
+            } else if (nameToggle && showName) {
+              return { display:'none'}
+            } else if (g < 60) {
+              return { background:'coral'}
             }
           } else if (head == 'Status'){
             if (g == 1) {
