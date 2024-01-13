@@ -10,6 +10,9 @@
 <span id="schema" style="display:none">{{SCHEMA}}</span>
 <span id="course" style="display:none"> {{course}} </span>
 
+
+
+
 <div class="content-section" :style="controlStyle()">
      <legend class="border-bottom mb-4">Controls</legend>
 
@@ -59,6 +62,22 @@ Teamsize
 <button class="btn btn-outline-secondary" @click="gotoAdmin('att_log')">Log Chart</button>
 <button class="btn btn-outline-secondary" @click="gotoAdmin('units')">Mode: {{MTFN}}</button>
 <br>
+<a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='1-controls') }}">FRD</a>
+
+<a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='2-controls') }}">FRD GE</a>
+
+<a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='3-controls') }}">WPE</a>
+
+<a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='4-controls') }}">WPE GE</a>
+
+<a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='6-controls') }}">ICC</a>
+
+<a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='5-controls') }}">FOOD</a>
+
+<a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='7-controls') }}">PENG</a>
+
+<a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='8-controls') }}">APP</a>
+
 <br>
 <button class="btn btn-outline-secondary" @click="attOBJ({{SCHEMA}})"> GET RECORDS </button>
 <button class="btn btn-outline-secondary" @click="getCopy()"> COPY </button>

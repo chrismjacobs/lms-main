@@ -100,10 +100,8 @@ def redisCheck():
 @app.context_processor
 def inject_user():
 
-
     SCHEMA = getSchema()
     DESIGN = schemaList[SCHEMA]['DESIGN']
-
 
     MTFN = get_MTFN('layout')
 
@@ -157,12 +155,13 @@ def admin():
     return render_template('instructor/admin_menu.html', assKeys=assKeys, mainList=mainList, unitsKeys=unitsKeys, title='admin')
 
 
-@app.route("/change/<int:schema>", methods = ['GET', 'POST'])
-def change(schema):
+@app.route("/change/<string:data>", methods = ['GET', 'POST'])
+def change(data):
+    schema = int(data.split('-')[0])
+    page = data.split('-')[1]
     current_user.schema = schema
     db.session.commit()
-
-    return redirect(url_for('home'))
+    return redirect (url_for(page))
 
 
 @app.route("/website", methods = ['GET', 'POST'])

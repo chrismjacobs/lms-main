@@ -14,6 +14,22 @@
      <button class="btn btn-outline-secondary" @click="resetAll()">Reset all</button>
      <button class="btn btn-outline-secondary" @click="goTo('participation_check')">Participation Check</button>
      <button class="btn btn-outline-secondary" @click="remove = !remove">Remove Exam: [[remove]]</button>
+     <br>
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='1-grades') }}">FRD</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='2-grades') }}">FRD GE</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='3-grades') }}">WPE</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='4-grades') }}">WPE GE</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='6-grades') }}">ICC</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='5-controls') }}">FOOD</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='7-controls') }}">PENG</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='8-controls') }}">APP</a>
 
 
 
