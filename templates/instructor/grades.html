@@ -162,7 +162,7 @@ let vue = new Vue({
           if (this.gList) {
             // console.log(head[0])
             let remove = ['I', this.getType()]
-            if (!remove.includes(head[0])) {
+            if (!remove.includes(head[0]) && head[0] != 'N') {
               return { display:'none'}
             }
           } else if (head == 'Status'){
