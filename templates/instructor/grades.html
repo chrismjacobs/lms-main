@@ -161,7 +161,7 @@ let vue = new Vue({
         gStyle: function(head, g) {
           if (this.gList > 0 && this.gList < 3) {
             // console.log(head[0])
-            let showName = head[0] != 'N'
+            let showName = head[0] == 'N'
             let nameToggle = this.gList > 1
             let remove = ['I', this.getType()]
             if (!remove.includes(head[0]) && !showName) {
