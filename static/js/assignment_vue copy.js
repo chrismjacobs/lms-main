@@ -134,7 +134,7 @@ window.globalFunc = function (action){
           /**
           *  ask permission of the user for use microphone or camera
           * */
-          navigator.mediaDevices.getDisplayMedia({ audio: true, video: true })
+          navigator.mediaDevices.getUserMedia({ audio: true, video: false })
           .then(gotStreamMethod)
           .catch('logError');
       };
@@ -360,8 +360,8 @@ function startVue(ansOBJ, device){
         vue.timer()
 
         if (this.device == 'A') {
-        var constraintObj = {audio: true, video: true };
-        navigator.mediaDevices.getDisplayMedia(constraintObj)
+        var constraintObj = {audio: true, video: false };
+        navigator.mediaDevices.getUserMedia(constraintObj)
             .then(function(mediaStreamObj) {
                 vue.mediaRecorder = new MediaRecorder(mediaStreamObj);
                 var chunks = [];
