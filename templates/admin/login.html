@@ -114,21 +114,21 @@ let labels = document.getElementsByTagName('label')
 console.log(labels)
 
 let colors = {
-    'L' : 'lightpink',
-    'P' : 'lightpink',
-    'I' : 'lightblue',
-    'A' : 'lightpink',
-    'F' : 'lightgreen',
-    'W' : 'peachpuff',
-    'G' : 'lightgrey',
-    'M' : 'lightgrey',
+    'Presentations' : 'lavender',
+    'Intercultural Communication' : 'lightblue',
+    'Food English' : 'lightpink',
+    'Freshman Reading 2' : 'lightgreen',
+    'Workplace English 2' : 'peachpuff',
+    'Pronunciation' : 'lightblue',
+    'Movies' : 'lightgrey',
+    'Writing' : 'lightgrey',
 }
 
 for (let e in labels) {
     let l = labels[e]
     console.log(l.innerHTML)
     if (l.innerHTML) {
-        l.style = "background:" + colors[l.innerHTML[0]]
+        l.style = "background:" + colors[l.innerHTML]
     }
 }
 

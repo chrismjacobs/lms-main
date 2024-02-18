@@ -365,10 +365,14 @@ def loginSet(user, data):
         allow = True
     if schema == 6 and user.icc == 1:
         allow = True
-    # if schema == 7 and user.nme == 1:
-    #     allow = True
-    # if schema == 8 and user.app == 1:
-    #     allow = True
+    if schema == 7 and user.png == 1:
+        allow = True
+    if schema == 8 and user.prn == 1:
+        allow = True
+    if schema == 9 and user.nme == 1:
+        allow = True
+    if schema == 10 and user.app == 1:
+        allow = True
 
     if allow:
         user.schema = schema

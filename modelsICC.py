@@ -106,6 +106,7 @@ class BaseUnits(db.Model):
     Ans06 = db.Column(db.String)
     Ans07 = db.Column(db.String)
     Ans08 = db.Column(db.String)
+    Ans09 = db.Column(db.String)
     Grade = db.Column(db.Integer)
     Comment = db.Column(db.String)
 

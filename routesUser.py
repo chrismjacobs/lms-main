@@ -44,8 +44,6 @@ def chatCheck():
         return jsonify({'new' : lastChat})
 
 
-
-
 @app.route ("/", methods = ['GET', 'POST'])
 @app.route ("/home", methods = ['GET', 'POST'])
 def home():
@@ -100,7 +98,10 @@ def home():
     'title' : 'Home'
     }
 
-    return render_template('admin/home.html', **context, SCHEMA=SCHEMA)
+    if SCHEMA == 10:
+        return render_template('work/home.html', **context, SCHEMA=SCHEMA)
+    else:
+        return render_template('admin/home.html', **context, SCHEMA=SCHEMA)
 
 
 ######## Exams //////////////////////////////////////////////

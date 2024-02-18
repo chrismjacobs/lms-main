@@ -9,7 +9,7 @@
 
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 
-  {% if SCHEMA == 8 %}
+  {% if SCHEMA == 10 %}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='myStyle.css') }}">
   {% endif %}
 
@@ -50,7 +50,7 @@
                             {% elif SCHEMA == 7 %}
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('peng_dash')}}", target="_blank">Dashboard</a>
                             {% elif SCHEMA == 5 %}
-                              <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('food_FN')}}", target="_blank">Projects</a>
+                              <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('food_MT')}}", target="_blank">Projects</a>
 
                             {% elif SCHEMA == 9 %}
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('nme_dubdash', project=0)}}", target="_blank">Movie Dash</a>
@@ -111,6 +111,10 @@
 
                                {% if SCHEMA == 7 %}
                                   <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('peng_list') }}">My Presentations</a>
+                               {% endif %}
+
+                               {% if SCHEMA == 8 %}
+                                  <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('unit_list') }}">My Pronunciation</a>
                                {% endif %}
 
                                {% if SCHEMA == 5 %}

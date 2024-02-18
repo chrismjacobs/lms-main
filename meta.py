@@ -157,15 +157,15 @@ schemaList = {
     },
 
     8 : {
-        "Course": "Language and Culture",
-        "S3_BUCKET_NAME": "culture-lms",
-        "courseCode" : "lnc",
+        "Course": "Pronunciation",
+        "S3_BUCKET_NAME": "pron-lms",
+        "courseCode" : "pron",
         "S3_LOCATION" : "https://culture-lms.s3.ap-northeast-1.amazonaws.com/",
         "DESIGN": {
             "titleColor": "RebeccaPurple",
             "bodyColor": "whitesmoke",
-            "headTitle": "LNC course",
-            "headLogo": "https://culture-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
+            "headTitle": "PR course",
+            "headLogo": "https://pron-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
         }
     },
     9 : {

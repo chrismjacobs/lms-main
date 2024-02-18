@@ -5,21 +5,20 @@ from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 
 
-modDictUnits_FRD2 = {}
-modDictAss_FRD2 = {}
-
+modDictUnits_PRON = {}
+modDictAss_PRON = {}
 
 
 ''' top of page
 
-modDictUnits_FRD2 = {}  dictionary of all unit models   01 : [None, Mod1, Mod2, Mod3, Mod4]
-modDictAss_FRD2 = {}  dictionary of all assignment models  01 : Model
+modDictUnits_PRON = {}  dictionary of all unit models   01 : [None, Mod1, Mod2, Mod3, Mod4]
+modDictAss_PRON = {}  dictionary of all assignment models  01 : Model
 
 '''
 
 
 
-class ChatBox_FRD2(db.Model):
+class ChatBox_PRON(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.now)
     username =  db.Column(db.String, nullable=False)
@@ -31,7 +30,7 @@ class ChatBox_FRD2(db.Model):
         return f"ChatBox('{self.username}','{self.chat}','{self.response}')"
      # the foreignkey shows a db.relationship to User ID ('User' is the class whereas 'user' is the table name which would be lower case)
 
-class Attendance_FRD2(db.Model):
+class Attendance_PRON(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.now)
     username =  db.Column(db.String, unique=True, nullable=False)
@@ -42,7 +41,7 @@ class Attendance_FRD2(db.Model):
     teamcount = db.Column(db.Integer)
     unit = db.Column(db.String(9))
 
-class AttendLog_FRD2(db.Model):
+class AttendLog_PRON(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.now)
     username =  db.Column(db.String, nullable=False)
@@ -54,7 +53,7 @@ class AttendLog_FRD2(db.Model):
     extraInt = db.Column(db.Integer)
 
 
-class Units_FRD2(db.Model):
+class Units_PRON(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     unit = db.Column(db.String)
     u1 = db.Column(db.Integer)
@@ -63,7 +62,7 @@ class Units_FRD2(db.Model):
     u4 = db.Column(db.Integer)
     uA = db.Column(db.Integer)
 
-class Exams_FRD2(db.Model):
+class Exams_PRON(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String)
     j1 = db.Column(db.String)
@@ -75,7 +74,7 @@ class Exams_FRD2(db.Model):
     j7 = db.Column(db.String)
     j8 = db.Column(db.String)
 
-class Errors_FRD2(db.Model):
+class Errors_PRON(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     #date_added = db.Column(db.DateTime, default=datetime.now)
     username = db.Column(db.String)
@@ -106,17 +105,17 @@ class BaseUnits(db.Model):
     Grade = db.Column(db.Integer)
     Comment = db.Column(db.String)
 
-class U001U_FRD2(BaseUnits):
+class U001U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
 
 
-class U002U_FRD2(BaseUnits):
+class U002U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
 
-class U003U_FRD2(BaseUnits):
+class U003U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
 
-class U004U_FRD2(BaseUnits):
+class U004U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
 
 
@@ -126,171 +125,171 @@ class U004U_FRD2(BaseUnits):
 
 
 
-modDictUnits_FRD2['00']=[None]
-modDictUnits_FRD2['00'].append(U001U_FRD2)
-modDictUnits_FRD2['00'].append(U002U_FRD2)
-modDictUnits_FRD2['00'].append(U003U_FRD2)
-modDictUnits_FRD2['00'].append(U004U_FRD2)
+modDictUnits_PRON['00']=[None]
+modDictUnits_PRON['00'].append(U001U_PRON)
+modDictUnits_PRON['00'].append(U002U_PRON)
+modDictUnits_PRON['00'].append(U003U_PRON)
+modDictUnits_PRON['00'].append(U004U_PRON)
 
 ########################################
 
-class U011U_FRD2(BaseUnits):
+class U011U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['01']=[None]
-modDictUnits_FRD2['01'].append(U011U_FRD2)
+modDictUnits_PRON['01']=[None]
+modDictUnits_PRON['01'].append(U011U_PRON)
 
-class U012U_FRD2(BaseUnits):
+class U012U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['01'].append(U012U_FRD2)
+modDictUnits_PRON['01'].append(U012U_PRON)
 
-class U013U_FRD2(BaseUnits):
+class U013U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['01'].append(U013U_FRD2)
+modDictUnits_PRON['01'].append(U013U_PRON)
 
-class U014U_FRD2(BaseUnits):
+class U014U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['01'].append(U014U_FRD2)
+modDictUnits_PRON['01'].append(U014U_PRON)
 
 
 
 ##########################################
 
-class U021U_FRD2(BaseUnits):
+class U021U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['02']=[None]
-modDictUnits_FRD2['02'].append(U021U_FRD2)
+modDictUnits_PRON['02']=[None]
+modDictUnits_PRON['02'].append(U021U_PRON)
 
-class U022U_FRD2(BaseUnits):
+class U022U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['02'].append(U022U_FRD2)
+modDictUnits_PRON['02'].append(U022U_PRON)
 
-class U023U_FRD2(BaseUnits):
+class U023U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['02'].append(U023U_FRD2)
+modDictUnits_PRON['02'].append(U023U_PRON)
 
-class U024U_FRD2(BaseUnits):
+class U024U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['02'].append(U024U_FRD2)
+modDictUnits_PRON['02'].append(U024U_PRON)
 
 
 ##########################################
 
-class U031U_FRD2(BaseUnits):
+class U031U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['03']=[None]
-modDictUnits_FRD2['03'].append(U031U_FRD2)
+modDictUnits_PRON['03']=[None]
+modDictUnits_PRON['03'].append(U031U_PRON)
 
-class U032U_FRD2(BaseUnits):
+class U032U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['03'].append(U032U_FRD2)
+modDictUnits_PRON['03'].append(U032U_PRON)
 
-class U033U_FRD2(BaseUnits):
+class U033U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['03'].append(U033U_FRD2)
+modDictUnits_PRON['03'].append(U033U_PRON)
 
-class U034U_FRD2(BaseUnits):
+class U034U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['03'].append(U034U_FRD2)
+modDictUnits_PRON['03'].append(U034U_PRON)
 
 ##########################################
 
-class U041U_FRD2(BaseUnits):
+class U041U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['04']=[None]
-modDictUnits_FRD2['04'].append(U041U_FRD2)
+modDictUnits_PRON['04']=[None]
+modDictUnits_PRON['04'].append(U041U_PRON)
 
-class U042U_FRD2(BaseUnits):
+class U042U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['04'].append(U042U_FRD2)
+modDictUnits_PRON['04'].append(U042U_PRON)
 
-class U043U_FRD2(BaseUnits):
+class U043U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['04'].append(U043U_FRD2)
+modDictUnits_PRON['04'].append(U043U_PRON)
 
-class U044U_FRD2(BaseUnits):
+class U044U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['04'].append(U044U_FRD2)
-
-
-##########################################
-
-class U051U_FRD2(BaseUnits):
-    id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['05']=[None]
-modDictUnits_FRD2['05'].append(U051U_FRD2)
-
-class U052U_FRD2(BaseUnits):
-    id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['05'].append(U052U_FRD2)
-
-class U053U_FRD2(BaseUnits):
-    id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['05'].append(U053U_FRD2)
-
-class U054U_FRD2(BaseUnits):
-    id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['05'].append(U054U_FRD2)
-
+modDictUnits_PRON['04'].append(U044U_PRON)
 
 
 ##########################################
 
-class U061U_FRD2(BaseUnits):
+class U051U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['06']=[None]
-modDictUnits_FRD2['06'].append(U061U_FRD2)
+modDictUnits_PRON['05']=[None]
+modDictUnits_PRON['05'].append(U051U_PRON)
 
-class U062U_FRD2(BaseUnits):
+class U052U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['06'].append(U062U_FRD2)
+modDictUnits_PRON['05'].append(U052U_PRON)
 
-class U063U_FRD2(BaseUnits):
+class U053U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['06'].append(U063U_FRD2)
+modDictUnits_PRON['05'].append(U053U_PRON)
 
-class U064U_FRD2(BaseUnits):
+class U054U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['06'].append(U064U_FRD2)
+modDictUnits_PRON['05'].append(U054U_PRON)
+
 
 
 ##########################################
 
-class U071U_FRD2(BaseUnits):
+class U061U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['07']=[None]
-modDictUnits_FRD2['07'].append(U071U_FRD2)
+modDictUnits_PRON['06']=[None]
+modDictUnits_PRON['06'].append(U061U_PRON)
 
-class U072U_FRD2(BaseUnits):
+class U062U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['07'].append(U072U_FRD2)
+modDictUnits_PRON['06'].append(U062U_PRON)
 
-class U073U_FRD2(BaseUnits):
+class U063U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['07'].append(U073U_FRD2)
+modDictUnits_PRON['06'].append(U063U_PRON)
 
-class U074U_FRD2(BaseUnits):
+class U064U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['07'].append(U074U_FRD2)
+modDictUnits_PRON['06'].append(U064U_PRON)
 
 
 ##########################################
 
-class U081U_FRD2(BaseUnits):
+class U071U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['08']=[None]
-modDictUnits_FRD2['08'].append(U081U_FRD2)
+modDictUnits_PRON['07']=[None]
+modDictUnits_PRON['07'].append(U071U_PRON)
 
-class U082U_FRD2(BaseUnits):
+class U072U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['08'].append(U082U_FRD2)
+modDictUnits_PRON['07'].append(U072U_PRON)
 
-class U083U_FRD2(BaseUnits):
+class U073U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['08'].append(U083U_FRD2)
+modDictUnits_PRON['07'].append(U073U_PRON)
 
-class U084U_FRD2(BaseUnits):
+class U074U_PRON(BaseUnits):
     id = db.Column(db.Integer, primary_key=True)
-modDictUnits_FRD2['08'].append(U084U_FRD2)
+modDictUnits_PRON['07'].append(U074U_PRON)
+
+
+##########################################
+
+class U081U_PRON(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_PRON['08']=[None]
+modDictUnits_PRON['08'].append(U081U_PRON)
+
+class U082U_PRON(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_PRON['08'].append(U082U_PRON)
+
+class U083U_PRON(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_PRON['08'].append(U083U_PRON)
+
+class U084U_PRON(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_PRON['08'].append(U084U_PRON)
 
 
 ############### ASSIGNMENT MODELS ###################################
@@ -310,7 +309,7 @@ class BaseAss(db.Model):
     Grade = db.Column(db.Integer)
     Comment = db.Column(db.String)
 
-class A00A_FRD2 (BaseAss):
+class A00A_PRON (BaseAss):
     id = db.Column(db.Integer, primary_key=True)
 
 
@@ -318,40 +317,40 @@ class A00A_FRD2 (BaseAss):
 ## intro edit
 
 ### recode UNIT 00
-modDictAss_FRD2['00'] = A00A_FRD2
+modDictAss_PRON['00'] = A00A_PRON
 # print('MOD ASS FRD 00')
 
-class A01A_FRD2 (BaseAss):
+class A01A_PRON (BaseAss):
     id = db.Column(db.Integer, primary_key=True)
-modDictAss_FRD2['01'] = A01A_FRD2
+modDictAss_PRON['01'] = A01A_PRON
 
-class A02A_FRD2 (BaseAss):
+class A02A_PRON (BaseAss):
     id = db.Column(db.Integer, primary_key=True)
-modDictAss_FRD2['02'] = A02A_FRD2
+modDictAss_PRON['02'] = A02A_PRON
 
-class A03A_FRD2 (BaseAss):
+class A03A_PRON (BaseAss):
     id = db.Column(db.Integer, primary_key=True)
-modDictAss_FRD2['03'] = A03A_FRD2
+modDictAss_PRON['03'] = A03A_PRON
 
-class A04A_FRD2 (BaseAss):
+class A04A_PRON (BaseAss):
     id = db.Column(db.Integer, primary_key=True)
-modDictAss_FRD2['04'] = A04A_FRD2
+modDictAss_PRON['04'] = A04A_PRON
 
-class A05A_FRD2 (BaseAss):
+class A05A_PRON (BaseAss):
     id = db.Column(db.Integer, primary_key=True)
-modDictAss_FRD2['05'] = A05A_FRD2
+modDictAss_PRON['05'] = A05A_PRON
 
-class A06A_FRD2 (BaseAss):
+class A06A_PRON (BaseAss):
     id = db.Column(db.Integer, primary_key=True)
-modDictAss_FRD2['06'] = A06A_FRD2
+modDictAss_PRON['06'] = A06A_PRON
 
-class A07A_FRD2 (BaseAss):
+class A07A_PRON (BaseAss):
     id = db.Column(db.Integer, primary_key=True)
-modDictAss_FRD2['07'] = A07A_FRD2
+modDictAss_PRON['07'] = A07A_PRON
 
-class A08A_FRD2 (BaseAss):
+class A08A_PRON (BaseAss):
     id = db.Column(db.Integer, primary_key=True)
-modDictAss_FRD2['08'] = A08A_FRD2
+modDictAss_PRON['08'] = A08A_PRON
 
 
 ##############################################

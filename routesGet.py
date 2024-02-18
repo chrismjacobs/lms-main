@@ -35,6 +35,17 @@ def getUsers(schema):
         userList = User.query.filter_by(food=1).order_by(asc(User.studentID)).all()
     if schema == 6:
         userList = User.query.filter_by(icc=1).order_by(asc(User.studentID)).all()
+    if schema == 7:
+        userList = User.query.filter_by(png=1).order_by(asc(User.studentID)).all()
+    if schema == 8:
+        userList = User.query.filter_by(prn=1).order_by(asc(User.studentID)).all()
+    if schema == 9:
+        userList = User.query.filter_by(nme=1).order_by(asc(User.studentID)).all()
+    if schema == 10:
+        userList = User.query.filter_by(app=1).order_by(asc(User.studentID)).all()
+
+
+
 
     #print('getUsers', userList)
 

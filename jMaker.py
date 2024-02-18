@@ -57,7 +57,7 @@ folder = [
         "json_files/FOOD/", #5
         "json_files/ICC/",  #6
         "json_files/PENG/", #7
-        "json_files/LNC/",  #8
+        "json_files/PRON/",  #8
         "json_files/DUB/",  #9
         "json_files/WRITE/",  #10
     ]
@@ -71,9 +71,10 @@ buckets = [
         "food-lms", #5
         "icc-lms", #6
         "peng-lms",
-        "culture-lms",
+        "pron-lms",
         "nme-lms",
-        "writing-lms"
+        "writing-lms",
+        "culture-lms",
 
         ]
 
@@ -85,7 +86,7 @@ courseDict = {
         'FOOD' : 5,
         'ICC' : 6,
         'PENG' : 7,
-        'LNC' : 8,
+        'PRON' : 8,
         'DUB' : 9,
         'WRITE' : 10
         }
@@ -319,6 +320,7 @@ def putJson(file, course):
 
     key = 'json_files/' + fileList[file]
     bucket = buckets[course]
+    print('BUCKET', bucket)
     jstring = json.dumps(jload)
     s3_resource.Bucket(bucket).put_object(
         Key=key, Body=jstring)
@@ -356,8 +358,6 @@ def get_ids(course, courseCode):
 
     ifold = "static/ids.json"
 
-
-
     with open(ifold, "r") as f:
         iload = json.load(f)
 
@@ -385,22 +385,29 @@ def actions(c, act):
     elif act == 'put' :
         result = putJson(1, course, None)
     elif act == 'exam' :
-        result = make_exam(course, '2-3-4', c)
+        num = '1'
+        if '2' in c:
+            num = '2'
+
+        result = make_exam(course, num + '-7-8', c)
     else:
         result = 'no command'
     print('ACTION COMPLETE ' + str(result))
 
     return result
 
-# if DEBUG:
 
-#     c = 'FRD2'
-#     act = 'exam'
+c = 'WPE2'
+act = 'ids'
+''' reset WPE2 exam '''
 
-#     actions(c, act)
+#actions(c, act)
+
 # actions('FRD1', act)
 # actions('FRD2', act)
 # actions('WPE1', act)
 # actions('WPE2', act)
-# actions('ICC', act)
+# actions('PENG', act)
 # actions('FOOD', act)
+# actions('PRON', act)
+# actions('WRITE', act)

@@ -15,6 +15,10 @@ from modelsICC import *
 from modelsWPE1 import *
 from modelsWPE2 import *
 from modelsFOOD import *
+from modelsPENG import *
+from modelsPRON import *
+from modelsWRITE import *
+from modelsNME import *
 
 # from modelsWRITE import *
 # from modelsNME import *
@@ -79,6 +83,38 @@ dicts = {
             Exams_ICC,
             Errors_ICC,
         ],
+        7 : [
+            ChatBox_PENG,
+            Attendance_PENG,
+            AttendLog_PENG,
+            Units_PENG,
+            Exams_PENG,
+            Errors_PENG,
+        ],
+        8 : [
+            ChatBox_PRON,
+            Attendance_PRON,
+            AttendLog_PRON,
+            Units_PRON,
+            Exams_PRON,
+            Errors_PRON,
+        ],
+        9 : [
+            ChatBox_NME,
+            Attendance_NME,
+            AttendLog_NME,
+            Units_NME,
+            Exams_NME,
+            Errors_NME,
+        ],
+        10 : [
+            ChatBox_WRITE,
+            Attendance_WRITE,
+            AttendLog_WRITE,
+            Units_WRITE,
+            Exams_WRITE,
+            Errors_WRITE,
+        ],
     }
 
 infoDict = {
@@ -88,7 +124,11 @@ infoDict = {
                  modDictAss_WPE1,
                  modDictAss_WPE2,
                  modDictAss_FOOD,
-                 modDictAss_ICC
+                 modDictAss_ICC,
+                 modDictAss_PENG,
+                 modDictAss_PRON,
+                 modDictAss_NME,
+                 modDictAss_WRITE
                  ],
         'mdu' : [{},
                  modDictUnits_FRD1,
@@ -96,7 +136,11 @@ infoDict = {
                  modDictUnits_WPE1,
                  modDictUnits_WPE2,
                  modDictUnits_FOOD,
-                 modDictUnits_ICC
+                 modDictUnits_ICC,
+                 modDictUnits_PENG,
+                 modDictUnits_PRON,
+                 modDictUnits_NME,
+                 modDictUnits_WRITE,
                  ]
     }
 
@@ -213,9 +257,10 @@ class User(db.Model, UserMixin):
     wpe2 = db.Column(db.Integer, default=0)
     food = db.Column(db.Integer, default=0)
     icc = db.Column(db.Integer, default=0)
-    # app = db.Column(db.Integer, default=0)
-    # vtm = db.Column(db.Integer, default=0)
-    # png = db.Column(db.Integer, default=0)
+    app = db.Column(db.Integer, default=0)
+    prn = db.Column(db.Integer, default=0)
+    png = db.Column(db.Integer, default=0)
+    nme = db.Column(db.Integer, default=0)
     semester = db.Column(db.Integer)
     schema = db.Column(db.Integer)
     extra = db.Column(db.Integer)

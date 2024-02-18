@@ -32,23 +32,24 @@
 {% if current_user.wpe2 >= 1 and current_user.schema != 4 %}
 <a style="color:white;background:CORAL" class="btn" href="{{ url_for ('change', data='4-home') }}">WPE GE</a>
 {% endif %}
-{% if current_user.icc == 1 and current_user.schema != 6 %}
-<a style="color:white;background:DODGERBLUE" class="btn" href="{{ url_for ('change', data='6-home') }}">ICC</a>
-{% endif %}
 {% if current_user.food == 1 and current_user.schema != 5 %}
 <a style="color:white;background:red" class="btn" href="{{ url_for ('change', data='5-home') }}">FOOD</a>
 {% endif %}
-
-{% if current_user.png == 1 and current_user.schema != 4 %}
+{% if current_user.icc == 1 and current_user.schema != 6 %}
+<a style="color:white;background:DODGERBLUE" class="btn" href="{{ url_for ('change', data='6-home') }}">ICC</a>
+{% endif %}
+{% if current_user.png == 1 and current_user.schema != 7 %}
 <a style="color:white;background:REBECCAPURPLE" class="btn" href="{{ url_for ('change', data='7-home') }}">PENG</a>
 {% endif %}
-{% if current_user.app == 1 and current_user.schema != 8  %}
-<a style="color:white;background:steelblue" class="btn" href="{{ url_for ('change', data='8-home') }}">APP</a>
+{% if current_user.prn == 1 and current_user.schema != 8 %}
+<a style="color:white;background:DODGERBLUE" class="btn" href="{{ url_for ('change', data='8-home') }}">PR</a>
 {% endif %}
-{% if current_user.app == 1 and current_user.schema != 6  %}
-
+{% if current_user.nme == 1 and current_user.schema != 9  %}
+<a style="color:white;background:gold" class="btn" href="{{ url_for ('change', data='9-home') }}">DUB</a>
 {% endif %}
-
+{% if current_user.app == 1 and current_user.schema != 10  %}
+<a style="color:white;background:steelblue" class="btn" href="{{ url_for ('change', data='10-home') }}">APP</a>
+{% endif %}
 
 
 <a style="color:white;background:blue;display:none" class="btn" href="https://vocab-app-uryj.onrender.com/" target="_blank">VOCAB</a>
