@@ -52,14 +52,14 @@ def getCourseRadios():
         #('1', 'Freshman Reading'),
         ('2', 'Freshman Reading 2'),
         #('3', 'Workplace English'),
-        ('4', 'Workplace English 2'),
-        #('4', 'GE Sophomore'),
-        ('5', 'Food English'),
-        #('6', 'Intercultural Communication'),
-        ('7', 'Presentations'),
-        ('8', 'Pronunciation'),
-        #('9', 'Movies'),
-        ('10', 'Writing')
+        # ('4', 'Workplace English 2'),
+        # #('4', 'GE Sophomore'),
+        # ('5', 'Food English'),
+        # #('6', 'Intercultural Communication'),
+        # ('7', 'Presentations'),
+        # ('8', 'Pronunciation'),
+        # #('9', 'Movies'),
+        # ('10', 'Writing')
         ]
 
     return radioList
