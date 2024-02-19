@@ -292,6 +292,42 @@ class U084U_PRON(BaseUnits):
 modDictUnits_PRON['08'].append(U084U_PRON)
 
 
+##############################
+
+class U091U_PRON(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_PRON['09']=[None]
+modDictUnits_PRON['09'].append(U091U_PRON)
+
+class U092U_PRON(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_PRON['09'].append(U092U_PRON)
+
+class U093U_PRON(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_PRON['09'].append(U093U_PRON)
+
+class U094U_PRON(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_PRON['09'].append(U094U_PRON)
+
+class U101U_PRON(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_PRON['10']=[None]
+modDictUnits_PRON['10'].append(U101U_PRON)
+
+class U102U_PRON(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_PRON['10'].append(U102U_PRON)
+
+class U103U_PRON(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_PRON['10'].append(U103U_PRON)
+
+class U104U_PRON(BaseUnits):
+    id = db.Column(db.Integer, primary_key=True)
+modDictUnits_PRON['10'].append(U104U_PRON)
+
 ############### ASSIGNMENT MODELS ###################################
 
 class BaseAss(db.Model):
