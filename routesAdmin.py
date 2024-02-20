@@ -297,13 +297,13 @@ def register():
             user.icc = 1
             chatModel = ChatBox_PENG
         elif course == 8:
-            user.icc = 1
+            user.prn = 1
             chatModel = ChatBox_PRON
         elif course == 9:
-            user.icc = 1
+            user.nme = 1
             chatModel = ChatBox_NME
         elif course == 10:
-            user.icc = 1
+            user.app = 1
             chatModel = ChatBox_WRITE
         # elif course == 7:
         #     user.nme = 1
