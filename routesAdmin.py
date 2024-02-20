@@ -293,6 +293,18 @@ def register():
         elif course == 6:
             user.icc = 1
             chatModel = ChatBox_ICC
+        elif course == 7:
+            user.icc = 1
+            chatModel = ChatBox_PENG
+        elif course == 8:
+            user.icc = 1
+            chatModel = ChatBox_PRON
+        elif course == 9:
+            user.icc = 1
+            chatModel = ChatBox_NME
+        elif course == 10:
+            user.icc = 1
+            chatModel = ChatBox_WRITE
         # elif course == 7:
         #     user.nme = 1
         #     chatModel = ChatBox_NME
