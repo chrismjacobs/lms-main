@@ -404,7 +404,6 @@ def updateCourse():
         elif u.wpe2 == 2:
             u.wpe2 = 0
 
-
     if course == 'icc':
         if u.icc == 0:
             u.icc = 1
@@ -417,11 +416,11 @@ def updateCourse():
         else:
             u.food = 0
 
-    if course == 'vtm' :
-        if u.vtm == 0:
-            u.vtm = 1
+    if course == 'pron' :
+        if u.prn == 0:
+            u.prn = 1
         else:
-            u.vtm  = 0
+            u.prn  = 0
 
     if course == 'peng':
         if u.png == 0:
@@ -444,9 +443,10 @@ def updateCourse():
     uDict['wpe2'] = u.wpe2
     uDict['icc'] = u.icc
     uDict['food'] = u.food
-    # uDict['lnc'] = u.lnc
-    # uDict['vtm'] = u.vtm
-    # uDict['png'] = u.png
+    uDict['pron'] = u.prn
+    uDict['app'] = u.app
+    uDict['nme'] = u.nme
+    uDict['peng'] = u.png
 
 
     return jsonify({'userData' : userData, 'uDict' : json.dumps(uDict), 'course' : course})
@@ -488,15 +488,16 @@ def master_controls():
         uDict['id'] = u.id
         uDict['username'] = u.username
         uDict['studentID'] = u.studentID
-        uDict['frd1'] = u.frd1
-        uDict['wpe1'] = u.wpe1
+        # uDict['frd1'] = u.frd1
         uDict['frd2'] = u.frd2
+        # uDict['wpe1'] = u.wpe1
         uDict['wpe2'] = u.wpe2
         uDict['food'] = u.food
-        uDict['icc'] = u.icc
-        # uDict['write'] = u.app
-        # uDict['peng'] = u.png
-        # uDict['vtm'] = u.vtm
+        # uDict['icc'] = u.icc
+        uDict['pron'] = u.prn
+        uDict['write'] = u.app
+        uDict['peng'] = u.png
+        # uDict['nme'] = u.nme
         uDict['extra'] = u.extra
         uDict['new'] = 0
 
@@ -504,10 +505,6 @@ def master_controls():
             uDict['new'] = 1
 
         sDict[u.studentID] = uDict.copy()
-
-
-
-
 
     setString = json.dumps(sDict)
     idString = json.dumps(idDict)

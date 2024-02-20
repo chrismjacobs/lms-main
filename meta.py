@@ -162,10 +162,10 @@ schemaList = {
         "courseCode" : "pron",
         "S3_LOCATION" : "https://culture-lms.s3.ap-northeast-1.amazonaws.com/",
         "DESIGN": {
-            "titleColor": "RebeccaPurple",
+            "titleColor": "dodgerblue",
             "bodyColor": "whitesmoke",
             "headTitle": "PR course",
-            "headLogo": "https://pron-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
+            "headLogo": "https://icc-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
         }
     },
     9 : {

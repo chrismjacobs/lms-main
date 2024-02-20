@@ -94,13 +94,18 @@ let vue = new Vue({
               id : '---',
               username : '---',
               studentID : studentID,
-              frd1 : 0,
+              //frd1 : 0,
               frd2 : 0,
-              wpe1 : 0,
+              //wpe1 : 0,
               wpe2 : 0,
               food : 0,
-              icc : 0,
+              //icc : 0,
+              pron : 0,
+              write : 0,
+              peng : 0,
+              //nme : 0,
               extra : 0
+
             }
           }
 
@@ -120,7 +125,11 @@ let vue = new Vue({
           3 : 'wpe1',
           4 : 'wpe2',
           5 : 'food',
-          6 : 'icc'
+          6 : 'icc',
+          7 : 'peng',
+          8 : 'pron',
+          9 : 'nme',
+          10 : 'write'
         },
         total : {
           wpe : ['100000000']
@@ -149,7 +158,11 @@ let vue = new Vue({
             3 : '_wpe1',
             4 : '_wpe2',
             5 : '_food',
-            6 : '_icc'
+            6 : '_icc',
+            7 : '_peng',
+            8 : '_pron',
+            9 : '_nme',
+            10 : '_write',
           }
 
           if (target != 'user') {
@@ -194,7 +207,10 @@ let vue = new Vue({
             'frd2' : 'darkgreen',
             'wpe2' : 'darkorange',
             'icc' : 'darkblue',
-            'food' : 'red'
+            'food' : 'red',
+            'peng' :　'pink',
+            'pron' :　'blue',
+            'write' :　'purple',
           }
 
           if (status == 1 && p[course].includes('1'|'2')) {

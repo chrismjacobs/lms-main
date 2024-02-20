@@ -57,9 +57,9 @@ def getCourseRadios():
         # ('5', 'Food English'),
         # #('6', 'Intercultural Communication'),
         # ('7', 'Presentations'),
-        # ('8', 'Pronunciation'),
+        ('8', 'Pronunciation'),
         # #('9', 'Movies'),
-        ('10', 'Writing')
+        # ('10', 'Writing')
         ]
 
     return radioList
