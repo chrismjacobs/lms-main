@@ -73,7 +73,6 @@ def loadAWS(file, unit):
 #     return jload
 
 
-
 def getWriteUsers():
     ### sperate for vietnam class
 
@@ -81,23 +80,28 @@ def getWriteUsers():
     es = []
     userList = []
 
-    for u in getUsers(6):
-        # print(u.username, u.vtm)
-        vs.append(u.username)
+    ## CODE FOR SEPARTING TO CLASSES
 
-    if current_user.username not in vs:
+    # for u in getUsers(10):
+    #     # print(u.username, u.vtm)
+    #     vs.append(u.username)
 
-        for u in getUsers(8):
-            if u.username not in vs:
-                es.append(u.username)
+    # if current_user.username not in vs:
 
-    if current_user.username not in vs:
-        userList = es
-    else:
-        userList = vs
+    #     for u in getUsers(8):
+    #         if u.username not in vs:
+    #             es.append(u.username)
 
-    # userList = es + vs
-    #print(userList)
+    # if current_user.username not in vs:
+    #     userList = es
+    # else:
+    #     userList = vs
+
+    for u in getUsers(10):
+        es.append(u.username)
+
+
+    userList = es
 
     return userList
 

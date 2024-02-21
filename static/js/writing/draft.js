@@ -124,14 +124,19 @@ function startVue(newPlan, info, draft){
     methods: {
         getBG: function () {
             if (this.user == this.partner) {
-                return {background:'#AB47BC'}
+                return {background:'RebeccaPurple'}
             }
+        },
+        alertSwitch: function () {
+            alert('please switch to editor mode')
         },
         selectText: function(id){
             console.log(id)
             document.getElementById(id).setAttribute('class', 'input2')
+            this.helper[id] = true
         },
         deSelect: function(id, idx){
+            this.helper[id] = false
             let string = (this.$refs[id])[0].value
             console.log('STRING', string, 'ID_INPUT', this.draftOBJ[id])
             //check if change has been made before updating object

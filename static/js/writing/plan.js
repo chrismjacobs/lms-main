@@ -64,9 +64,16 @@ function startVue(plan, slides){ new Vue({
         user: user,
     },
     methods: {
-        getBG: function () {
+        getUser: function () {
             if (this.user == this.partner) {
-                return {background:'#AB47BC'}
+                return true
+            } else {
+                return false
+            }
+        },
+        getBG: function () {
+            if (this.getUser()) {
+                return {background:'RebeccaPurple'}
             }
         },
         selectText: function(id){

@@ -689,7 +689,19 @@ admin.add_view(MyModelView(A08A_ICC, db.session))
 # admin.add_view(MyModelView(A09A_ICC, db.session))
 # admin.add_view(MyModelView(A10A_ICC, db.session))
 
+### WRITE ASSIGNMENTS
+admin.add_view(MyModelView(A01A_WRITE, db.session))
+admin.add_view(MyModelView(A02A_WRITE, db.session))
+admin.add_view(MyModelView(A03A_WRITE, db.session))
+admin.add_view(MyModelView(A04A_WRITE, db.session))
+admin.add_view(MyModelView(A05A_WRITE, db.session))
+admin.add_view(MyModelView(A06A_WRITE, db.session))
+admin.add_view(MyModelView(A07A_WRITE, db.session))
+admin.add_view(MyModelView(A08A_WRITE, db.session))
 
+## PENG PROJECTS
+admin.add_view(MyModelView(U011U_PENG, db.session))
+admin.add_view(MyModelView(U021U_PENG, db.session))
 
 
 # for d in mList2:

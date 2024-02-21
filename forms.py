@@ -56,8 +56,8 @@ def getCourseRadios():
         # #('4', 'GE Sophomore'),
         # ('5', 'Food English'),
         # #('6', 'Intercultural Communication'),
-        # ('7', 'Presentations'),
-        ('8', 'Pronunciation'),
+        ('7', 'Presentations'),
+        # ('8', 'Pronunciation'),
         # #('9', 'Movies'),
         # ('10', 'Writing')
         ]

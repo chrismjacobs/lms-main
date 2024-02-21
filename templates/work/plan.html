@@ -28,10 +28,16 @@
         <div v-for="(input, key, index) in planOBJ">
 
             <legend class="border-bottom" style="color:white">[[ key ]]</legend>
-
-                <textarea v-if="input.length > 0"  class="input3" v-bind:id="key" :ref="key" v-on:focus="selectText(key)" v-on:blur="deSelect(key, index)" v-model="input"></textarea>
-                <textarea v-else  class="input1" v-bind:id="key" :ref="key" v-on:focus="selectText(key)" v-on:blur="deSelect(key, index)" v-model="input"></textarea>
-                <br>
+                <div v-if="user != partner">
+                    <textarea v-if="input.length > 0"  class="input3" v-bind:id="key" :ref="key" v-on:focus="selectText(key)" v-on:blur="deSelect(key, index)" v-model="input"></textarea>
+                    <textarea v-else  class="input1" v-bind:id="key" :ref="key" v-on:focus="selectText(key)" v-on:blur="deSelect(key, index)" v-model="input"></textarea>
+                    <br>
+                </div>
+                <div v-else id="mark as disabled">
+                    <textarea  v-if="input.length > 0" disabled class="input3" v-bind:id="key" :ref="key" v-model="input"></textarea>
+                    <textarea v-else  disabled class="input1" v-bind:id="key" :ref="key" v-model="input"></textarea>
+                    <br>
+                </div>
 
                 <div v-if="control[index]" >
                     <span  v-if="control[index] == 'None'" style="color:tomato"> (Please use commas ',' to seperate your details)</span>
