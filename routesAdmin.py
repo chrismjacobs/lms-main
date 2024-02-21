@@ -294,7 +294,7 @@ def register():
             user.icc = 1
             chatModel = ChatBox_ICC
         elif course == 7:
-            user.icc = 1
+            user.png = 1
             chatModel = ChatBox_PENG
         elif course == 8:
             user.prn = 1
