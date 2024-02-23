@@ -160,12 +160,12 @@ schemaList = {
         "Course": "Pronunciation",
         "S3_BUCKET_NAME": "pron-lms",
         "courseCode" : "pron",
-        "S3_LOCATION" : "https://culture-lms.s3.ap-northeast-1.amazonaws.com/",
+        "S3_LOCATION" : "https://pron-lms.s3.ap-northeast-1.amazonaws.com/",
         "DESIGN": {
             "titleColor": "dodgerblue",
             "bodyColor": "whitesmoke",
             "headTitle": "PR course",
-            "headLogo": "https://icc-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
+            "headLogo": "https://pron-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
         }
     },
     9 : {

@@ -114,6 +114,79 @@ def unit_list():
     return render_template('units/unit_list.html', legend='Units Dashboard',
     unitDict=json.dumps(unitDict), Grade=unitGrade, max=maxU, title='Units', todays_unit=todays_unit, student_attendance=student_attendance)
 
+@app.route ("/pr_unit_list", methods=['GET','POST'])
+@login_required
+def pr_unit_list():
+
+    srcDict = get_sources()
+    for x in srcDict:
+        print('source unit', x)
+
+    ''' deal with grades '''
+    grades = get_grades(False, True)
+    print ('GRADES', grades)
+    unitGrade = grades['unitGrade']
+    recs = grades['unitGradRec']
+    maxU = grades['maxU']
+
+    print ('RECS', recs)
+
+    todays_unit = getModels()['Attendance_'].query.filter_by(username='Chris').first().unit
+    try:
+        int(todays_unit)
+        review = 0
+        print('TRY unit_list todays unit')
+    except:
+        review = 1
+        print('EXCEPT unit_list todays unit')
+
+    unitDict = {}
+
+    for us in getModels()['Units_'].query.all():
+        print('Units', us)
+        unitDict[us.unit] = {}
+
+    for unit in recs:
+        print('UNIT', unit)
+        unit2c = unit[0:2] # string 011 --> 01
+        print('UNIT2', unit2c)
+        part = unit[2]
+
+        checkOpen = getModels()['Units_'].query.filter_by(unit=unit2c).first()
+        checkDict = {
+            1 : checkOpen.u1,
+            2 : checkOpen.u2,
+            3 : checkOpen.u3,
+            4 : checkOpen.u4
+        }
+        print('checkDict', checkDict)
+
+        if checkDict[int(part)] == 0:
+            access = 0
+        elif review == 1:
+            access = 1  ## mean attedance not started so open for access
+        else:
+            if todays_unit == unit2c:
+                access = 2  ## button option for writer/reader
+            else:
+                access = 0  ## disbaled
+
+        unitDict[unit2c][ unit2c + '-' + part ] = {
+            'Unit' : unit2c,
+            'Part' : part,
+            'Deadline' : srcDict[unit2c]['Deadline'],
+            'Title' : srcDict[unit2c]['Title'],
+            'Grade' : recs[unit]['Grade'],
+            'Comment' : recs[unit]['Comment'],
+            'Source' : srcDict[unit2c]['Materials'][part],
+            'Access' : access
+        }
+
+    student_attendance = getModels()['Attendance_'].query.filter_by(username=current_user.username).count()
+
+    return render_template('units/unit_list.html', legend='Units Dashboard',
+    unitDict=json.dumps(unitDict), Grade=unitGrade, max=maxU, title='Units', todays_unit=todays_unit, student_attendance=student_attendance)
+
 
 @app.route('/recError', methods=['POST'])
 def recError():
@@ -592,8 +665,6 @@ def participationTest():
         'DESIGN' : DESIGN
     }
     return render_template('units/part_vue_test.html', **context)
-
-
 
 
 @app.route('/studentRemove', methods=['POST'])

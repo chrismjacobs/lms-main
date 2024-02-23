@@ -1,0 +1,168 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<span id="Table" style="display:none">{{Dict}}</span>
+<span id="max" style="display:none">{{max}}</span>
+<span id="Grade" style="display:none">{{Grade}}</span>
+
+<div id="vue-app">
+
+
+
+<div class="content-section" :style="headStyle()">
+<h3 style="display: inline-block"> Assignments: {{Grade}}/{{max}} </h3>
+
+  <div>
+    <h5> Complete assignments before the deadline to get maximum points</h5>
+  </div>
+</div>
+
+<div class="content-section">
+
+    <div style="overflow-x:auto;">
+      <table class="table table-sm">
+        <thead>
+            <tr>
+              <th scope="col" ></th>
+              <th scope="col" ></th>
+              <th scope="col" ></th>
+            </tr>
+        </thead>
+
+        <tbody>
+        <template v-for="(unit, key) in assOBJ"  :key="key" >
+            <tr>
+              <td style="background:whitesmoke;width:60%"> <span @click="goTo(key)" class="unit-span" style="background:{{theme}}; padding:3px">[[  key  ]]:[[  unit.Title  ]]</span> </td>
+              <td> [[  unit.Deadline  ]] </td>
+              <td> [[  unit.Grade  ]] </td>
+            </tr>
+            <tr :bgcolor="bgStyle(unit.Grade)" style>
+              <td colspan ="3" :style="commentStyle(unit.Comment)"> [[  unit.Comment  ]] </td>
+            </tr>
+
+            </template>
+
+        </tbody>
+
+      </table>
+    </div>
+
+</div>
+
+
+</div> <!-- end of Vue app -->
+
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+
+<script type="text/javascript" >
+
+var Table = document.getElementById('Table').innerHTML
+var OBJ = JSON.parse(Table)
+console.log('unitOBJ', OBJ);
+var max = parseInt(document.getElementById('max').innerHTML)
+var Grade = parseInt(document.getElementById('Grade').innerHTML)
+
+
+console.log(navigator.userAgent);
+
+if (Grade > 0){
+  var colorFloat = Grade / max
+  console.log('1', colorFloat);
+}
+else{
+  var colorFloat = 0
+  console.log('0', colorFloat);
+}
+
+startVue(OBJ, colorFloat)
+
+function startVue(assOBJ, colorFloat){ new Vue({
+
+    el: '#vue-app',
+    delimiters: ['[[', ']]'],
+
+    data: {
+        assOBJ: assOBJ,
+        colorFloat: colorFloat
+    },
+    methods: {
+        commentStyle: function(comment){
+          return {width:'100%', 'background-color':'lightgray', height: '30px !important'}
+
+
+          console.log(comment);
+          if(comment.includes("on time")){
+            return {width:'100%', 'background-color':'pink', height: '30px !important'}
+          }
+          if(comment.includes("Open to")){
+            return {width:'100%', 'background-color':'lightcoral', height: '30px !important'}
+          }
+          else if(comment.includes("check..")){
+            return {width:'100%', 'background-color':'thistle', height: '30px !important'}
+          }
+          else if(comment.includes("progress")){
+            return {width:'100%', 'background-color':'orange', height: '30px !important'}
+          }
+          else if(comment.includes("completed late")){
+            return {width:'100%', 'background-color':'yellow', height: '110px !important'}
+          }
+          else{
+            return {width:'100%', 'background-color':'lightgreen', height: '110px !important'}
+          }
+        },
+        headStyle: function(){
+            return ''
+            if (colorFloat < .4) {
+                var background ='salmon';
+              } else if (colorFloat < .6 ) {
+                var background ='lightpink';
+              } else if (colorFloat < .8 ) {
+                var background ='peachpuff';
+              } else if (colorFloat < 1) {
+                var background ='lemonchiffon';
+              } else {
+                var background ='honeydew';
+              }
+            console.log('color', background);
+            return {background : background }
+        },
+        bgStyle: function(grade){
+
+            if (grade == 1) {
+                background = "lightblue";
+              }
+              else if (grade == 2) {
+                background = "lightgreen";
+              }
+              else {
+                background = "mistyrose";
+              }
+            console.log(background, grade);
+            return background
+        },
+        goTo: function(key){
+          var str = window.location.href
+
+          let url = (str).split('assignments')[0] + 'ass/' + key
+          console.log('goTO', url);
+            window.location = url
+            console.log('DONE');
+        }
+
+    }
+})// end NEW VUE
+
+
+
+}// endFunction
+
+</script>
+
+{% endblock %}
+
