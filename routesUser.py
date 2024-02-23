@@ -9,7 +9,7 @@ from models import *
 from modelsPRON import *
 from flask_mail import Message
 import ast # eval literal for list str
-from routesGet import get_grades, get_sources, get_MTFN, getUsers, pr_get_grades
+from routesGet import get_grades, get_sources, get_MTFN, getUsers
 
 from meta import *
 s3_resource = BaseConfig.s3_resource
