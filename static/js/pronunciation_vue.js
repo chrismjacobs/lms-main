@@ -320,7 +320,7 @@ function startVue(ansOBJ, device){
           vue.showCapture[key] = false
         }
 
-        this.playVideo(task)
+        this.playVideo(task, 'video')
 
         document.getElementById('handlerVideo').addEventListener('ended', function(e) {
             vue.echoMessage = 'ECHO...'
@@ -463,7 +463,7 @@ function startVue(ansOBJ, device){
                 chunks.push(ev.data);
               }
 
-              vue.captureRecorder.oninactive = function(ev) {
+              vue.captureRecorder.onended = function(ev) {
                 console.log(task, ev)
                 vue.stop_capture(task)
               }
