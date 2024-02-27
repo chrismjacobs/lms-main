@@ -46,7 +46,7 @@
     </div>
 
     <b> Title <input class="textAss m-2" v-model="ansOBJ[i]['TextData'][0]" style="width:80%"></input><br>
-    <b> Text <input class="textAss m-2" v-model="ansOBJ[i]['TextData'][1]" style="width:80%"></input><br>
+    <b> Text <textarea class="textAss m-2" v-model="ansOBJ[i]['TextData'][1]" style="width:80%"></textarea><br>
     <h3>[[echoMessage]] [[echoCount]] </h3>
 
     <template id="Screen Capture"  v-if="checkShow(i, 'capture')">
@@ -55,10 +55,10 @@
             <button type="button" class="btn btn-outline-danger" style="margin-right:5px" disable > 0 secs </button>
             </div>
             <div  v-if="video[i] == 2">
-                <button type="button" class="btn btn-primary" style="margin-right:5px" @click="playVideo(i)">
+                <button type="button" class="btn btn-primary" style="margin-right:5px" @click="playVideo(i, 'video')">
                     <span >Play Capture Video</span>
                 </button>
-                <button type="button" class="btn btn-primary" style="margin-right:5px" @click="playAudio(i)">
+                <button type="button" class="btn btn-primary" style="margin-right:5px" @click="playVideo(i, 'audio')">
                     <span >Play Capture Audio</span>
                 </button>
             </div>

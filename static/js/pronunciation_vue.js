@@ -292,6 +292,7 @@ function startVue(ansOBJ, device){
         },
         rec_timer : null,
         mediaRecorder : null,
+        captureRecorder : null,
         audio_source : null,
         base64data : null,
         blobURL : null,
@@ -453,16 +454,21 @@ function startVue(ansOBJ, device){
         var constraintObj = {audio: true, video: true};
         navigator.mediaDevices.getDisplayMedia(constraintObj)
             .then(function(mediaStreamObj) {
-                vue.mediaRecorder = new MediaRecorder(mediaStreamObj);
+                vue.captureRecorder = new MediaRecorder(mediaStreamObj);
                 var chunks = [];
-                vue.mediaRecorder.start();
-                console.log('status:' + vue.mediaRecorder.state);
+                vue.captureRecorder.start();
+                console.log('capture status:' + vue.captureRecorder.state);
 
-              vue.mediaRecorder.ondataavailable = function(ev) {
+              vue.captureRecorder.ondataavailable = function(ev) {
                 chunks.push(ev.data);
               }
 
-              vue.mediaRecorder.onstop = (ev)=>{
+              vue.captureRecorder.oninactive = function(ev) {
+                console.log(task, ev)
+                vue.stop_capture(task)
+              }
+
+              vue.captureRecorder.onstop = (ev)=>{
                     try{
                       /// screen capture
                       var blob = new Blob(chunks, { 'audio' : 'audio/mpeg;' });
@@ -496,8 +502,8 @@ function startVue(ansOBJ, device){
 
         console.log('stopped');
         vue.video[task] = 3
-        vue.mediaRecorder.stop();
-        console.log('status:' + vue.mediaRecorder.state);
+        vue.captureRecorder.stop();
+        console.log('capture status:' + vue.captureRecorder.state);
       },
       cancel_capture: function(){
         clearInterval(vue.rec_timer)
@@ -774,8 +780,7 @@ function startVue(ansOBJ, device){
         player.src = playlist[arg]
 
       },
-      playVideo : function (arg) {
-        this.showVideo = true
+      playVideo : function (arg, mode) {
 
         let playlist = {
           '0' : vue.blobURL,
@@ -783,9 +788,13 @@ function startVue(ansOBJ, device){
           '2' : vue.ansOBJ['2']['VideoData'],
           '3' : vue.ansOBJ['3']['VideoData'],
         }
-        player = document.getElementById('handlerVideo')
+        if (mode == 'video') {
+          this.showVideo = true
+          player = document.getElementById('handlerVideo')
+        } else {
+          player = document.getElementById('handler')
+        }
         console.log(playlist[arg], player)
-
         player.src = playlist[arg]
 
       },
