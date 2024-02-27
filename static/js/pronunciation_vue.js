@@ -323,7 +323,7 @@ function startVue(ansOBJ, device){
 
         document.getElementById('handlerVideo').addEventListener('ended', function(e) {
             vue.echoMessage = 'ECHO...'
-            vue.echoCount = 5
+            vue.echoCount = 3
             vue.echoTimer = setInterval(function() {
               vue.echoCount -= 1
             }, 1000)
@@ -359,7 +359,7 @@ function startVue(ansOBJ, device){
 
               vue.mediaRecorder.onstop = (ev)=>{
                     try{
-                      var blob = new Blob(chunks, { 'audio' : 'audio/mpeg;' });
+                      var blob = new Blob(chunks, { 'audio' : 'video/mp4' });
                       console.log(blob);
                       chunks = [];// here we clean out the array
                       var blobURL = window.URL.createObjectURL(blob);

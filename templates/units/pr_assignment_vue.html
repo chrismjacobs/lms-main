@@ -56,7 +56,10 @@
             </div>
             <div  v-if="video[i] == 2">
                 <button type="button" class="btn btn-primary" style="margin-right:5px" @click="playVideo(i)">
-                    <span >Play Capture</span>
+                    <span >Play Capture Video</span>
+                </button>
+                <button type="button" class="btn btn-primary" style="margin-right:5px" @click="playAudio(i)">
+                    <span >Play Capture Audio</span>
                 </button>
             </div>
             <div  v-if="video[i] == 3" >
