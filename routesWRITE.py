@@ -23,7 +23,6 @@ s3_resource = BaseConfig.s3_resource
 # monitor titles (all caps, no caps, periods)
 # figure out why when students fix title it doesn't update
 # Why is draft sometimes saving as stage 1?
-# Do not allow writing on pink page
 ## Do not allow work to be saved if 'i' or no space between . ,
 ### Do not allow work to be save if first letter is not capital
 

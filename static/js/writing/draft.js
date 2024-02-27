@@ -245,6 +245,17 @@ function startVue(newPlan, info, draft){
             }
 
             for (var pLine in periodCheck){
+                let trimSen = periodCheck[pLine].trim()
+                console.log(trimSen)
+                if (pLine != 0){
+                    const regex = /[a-z]/g
+                    if (trimSen[0] && trimSen[0].match(regex)){
+                        alert('Use Space + Capital Letter after period')
+                    }
+                }
+            }
+
+            for (var pLine in periodCheck){
                 console.log(periodCheck[pLine])
                 if (pLine != 0){
                     if (periodCheck[pLine][0] != ' '){
@@ -293,9 +304,35 @@ function startVue(newPlan, info, draft){
             }
             console.log(key, this.helper)
         },
+        checkWork: function (key, work) {
+            console.log(key, work)
+            if (work.includes('i ')) {
+                alert('You have used " i "  in your writing - please fix before saving. See: ' + key )
+                return false
+            }
+            var periodCheck = string.split('.')
+            for (var pLine in periodCheck){
+                let trimSen = periodCheck[pLine].trim()
+                console.log(trimSen)
+                if (periodCheck[pLine][0] && periodCheck[pLine][0] == ' '){
+                    alert('Sorry there is a problem with Period + Capital Letter. See: ' + key)
+                    return false
+                }
+                if (pLine != 0){
+                    const regex = /[a-z]/g
+                    if (trimSen[0] && trimSen[0].match(regex)){
+                        alert('Sorry there is a problem with Period + Capital Letter. See: ' + key)
+                        return false
+                    }
+                }
+            }
+        },
         readRefs: function(){
             var count = 0
             for(var key in this.draftOBJ) {
+                // check work first before saving
+                this.checkWork()
+
                 if (this.draftOBJ[key] == ''){
                     alert('Warning! ' + key + ' is not complete yet - but you can fix it later' )
                     stage = 1
