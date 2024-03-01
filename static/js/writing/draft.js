@@ -133,10 +133,17 @@ function startVue(newPlan, info, draft){
         selectText: function(id){
             console.log(id)
             document.getElementById(id).setAttribute('class', 'input2')
-            this.helper[id] = true
+            for(let i in this.helper) {
+                if (i == id) {
+                   this.helper[i] = true
+                } else {
+                   this.helper[i] = false
+                }
+            }
+
         },
         deSelect: function(id, idx){
-            this.helper[id] = false
+            //this.helper[id] = false
             let string = (this.$refs[id])[0].value
             console.log('STRING', string, 'ID_INPUT', this.draftOBJ[id])
             //check if change has been made before updating object
@@ -250,7 +257,7 @@ function startVue(newPlan, info, draft){
                 if (pLine != 0){
                     const regex = /[a-z]/g
                     if (trimSen[0] && trimSen[0].match(regex)){
-                        alert('Use Space + Capital Letter after period')
+                        //alert('Use Space + Capital Letter after period')
                     }
                 }
             }
@@ -310,8 +317,9 @@ function startVue(newPlan, info, draft){
                 alert('You have used " i "  in your writing - please fix before saving. See: ' + key )
                 return false
             }
-            var periodCheck = string.split('.')
+            var periodCheck = work.split('.')
             for (var pLine in periodCheck){
+                return true
                 let trimSen = periodCheck[pLine].trim()
                 console.log(trimSen)
                 if (periodCheck[pLine][0] && periodCheck[pLine][0] == ' '){
@@ -329,12 +337,13 @@ function startVue(newPlan, info, draft){
         },
         readRefs: function(){
             var count = 0
+            var msg = ''
             for(var key in this.draftOBJ) {
                 // check work first before saving
-                this.checkWork()
+                this.checkWork(key, this.draftOBJ[key])
 
                 if (this.draftOBJ[key] == ''){
-                    alert('Warning! ' + key + ' is not complete yet - but you can fix it later' )
+                    msg += ' ' + key + ' '
                     stage = 1
                     date = 'none'
                 }
@@ -352,6 +361,9 @@ function startVue(newPlan, info, draft){
 
                     console.log('COUNT', count)
                 }
+            }
+            if (msg != '') {
+                alert('Warning! ' + msg + ' is not complete yet - but you can fix it later' )
             }
             this.sendData(this.draftOBJ, stage)
             alert('Please wait a moment while your writing is being updated')
