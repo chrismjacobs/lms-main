@@ -51,9 +51,7 @@
 
     <template id="Screen Capture"  v-if="checkShow(i, 'capture')">
         <div style="display:flex">
-            <div  v-if="video[i] == 1" >
-            <button type="button" class="btn btn-outline-danger" style="margin-right:5px" disable > 0 secs </button>
-            </div>
+
             <div  v-if="video[i] == 2 && capture1.play">
                 <button type="button" class="btn btn-primary" style="margin-right:5px" @click="playVideo(i, 'video')">
                     <span >Play Capture Video</span>

@@ -439,6 +439,7 @@ function startVue(ansOBJ, device){
           alert('Cannot screen capture on mobile device, please use a computer')
           return false
         }
+        vue.echoBlock = task
         console.log('setup capture', task)
 
         for (var key in vue.showCapture){
@@ -521,7 +522,6 @@ function startVue(ansOBJ, device){
       stop_capture : function(task){
 
         vue.capture1.stop = false
-        vue.capture1.capture = true
         vue.capture1.play = true
         vue.capture1.save = true
         vue.capture1.cancel = true
