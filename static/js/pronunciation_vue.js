@@ -282,7 +282,9 @@ function startVue(ansOBJ, device){
             count : false
         },
         capture1: {
-            start : true,
+            play : true,
+            capture : true,
+            start : false,
             stop : false,
             save : false,
             cancel : false,
@@ -302,7 +304,8 @@ function startVue(ansOBJ, device){
         echoMessage : '',
         echoTimer : null,
         echoCount : '',
-        echoBlock : null
+        echoBlock : null,
+        dataChunks : []
     },
     methods: {
       start_speak: function (task) {
@@ -332,6 +335,7 @@ function startVue(ansOBJ, device){
             setTimeout(function() {
               clearInterval(vue.echoTimer)
               vue.echoCount = ''
+              vue.echoTimer = null
               vue.start(task)
             }, 3000)
         })
@@ -360,7 +364,7 @@ function startVue(ansOBJ, device){
 
               vue.mediaRecorder.onstop = (ev)=>{
                     try{
-                      var blob = new Blob(chunks, { 'audio' : 'video/mp4' });
+                      var blob = new Blob(chunks, { type : 'audio/webm' });
                       console.log(blob);
                       chunks = [];// here we clean out the array
                       var blobURL = window.URL.createObjectURL(blob);
@@ -430,12 +434,12 @@ function startVue(ansOBJ, device){
         vue.blobURL = null
         this.audioCheck()
       },
-      start_capture : function(task){
+      setup_capture : function(task){
         if (!this.desktop) {
           alert('Cannot screen capture on mobile device, please use a computer')
           return false
         }
-        console.log('start', task)
+        console.log('setup capture', task)
 
         for (var key in vue.showCapture){
           if (key != task) {
@@ -446,34 +450,33 @@ function startVue(ansOBJ, device){
           vue.showSpeak[key] = false
         }
 
-        vue.capture1.start = false
-        vue.capture1.stop = true
-        vue.capture1.timer = true
-        vue.timer_capture()
+        vue.capture1.capture = false
+        vue.capture1.play = false
+        vue.capture1.start = true
+        // vue.capture1.timer = true
+        // vue.timer_capture()
+        vue.chunks = []
 
         var constraintObj = {audio: true, video: true};
         navigator.mediaDevices.getDisplayMedia(constraintObj)
             .then(function(mediaStreamObj) {
                 vue.captureRecorder = new MediaRecorder(mediaStreamObj);
-                var chunks = [];
-                vue.captureRecorder.start();
-                console.log('capture status:' + vue.captureRecorder.state);
 
               vue.captureRecorder.ondataavailable = function(ev) {
-                chunks.push(ev.data);
+                vue.chunks.push(ev.data);
               }
 
-              vue.captureRecorder.onended = function(ev) {
-                console.log(task, ev)
-                vue.stop_capture(task)
-              }
+              // vue.captureRecorder.oninactive = function(ev) {
+              //   console.log('inactive', task, ev)
+              //   vue.stop_capture(task)
+              // }
 
               vue.captureRecorder.onstop = (ev)=>{
                     try{
                       /// screen capture
-                      var blob = new Blob(chunks, { 'audio' : 'audio/mpeg;' });
+                      var blob = new Blob(vue.chunks, { type : 'video/webm' });
                       console.log(blob);
-                      chunks = [];// here we clean out the array
+                      vue.chunks = [];// here we clean out the array
                       var blobURL = window.URL.createObjectURL(blob);
                       console.log(blobURL);
                       //get the base64data string from the blob
@@ -492,9 +495,34 @@ function startVue(ansOBJ, device){
              })
 
       },
+      start_capture : function(task){
+        if (!this.desktop) {
+          alert('Cannot screen capture on mobile device, please use a computer')
+          return false
+        }
+        console.log('start capture', task)
+
+        for (var key in vue.showCapture){
+          if (key != task) {
+            vue.showCapture[key] = false
+          }
+        }
+        for (var key in vue.showSpeak){
+          vue.showSpeak[key] = false
+        }
+
+        vue.capture1.start = false
+        vue.capture1.stop = true
+        vue.capture1.timer = true
+        vue.timer_capture()
+        vue.captureRecorder.start()
+
+      },
       stop_capture : function(task){
 
         vue.capture1.stop = false
+        vue.capture1.capture = true
+        vue.capture1.play = true
         vue.capture1.save = true
         vue.capture1.cancel = true
         clearInterval(vue.rec_timer)
@@ -511,7 +539,8 @@ function startVue(ansOBJ, device){
         for (var key in vue.capture1){
         vue.capture1[key] = false
         }
-        vue.capture1.start = true
+        vue.capture1.capture = true
+        vue.capture1.play = true
 
         for (var key in vue.showCapture){
           vue.showCapture[key] = true

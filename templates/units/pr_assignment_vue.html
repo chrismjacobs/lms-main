@@ -54,24 +54,24 @@
             <div  v-if="video[i] == 1" >
             <button type="button" class="btn btn-outline-danger" style="margin-right:5px" disable > 0 secs </button>
             </div>
-            <div  v-if="video[i] == 2">
+            <div  v-if="video[i] == 2 && capture1.play">
                 <button type="button" class="btn btn-primary" style="margin-right:5px" @click="playVideo(i, 'video')">
                     <span >Play Capture Video</span>
                 </button>
-                <button type="button" class="btn btn-primary" style="margin-right:5px" @click="playVideo(i, 'audio')">
-                    <span >Play Capture Audio</span>
-                </button>
             </div>
             <div  v-if="video[i] == 3" >
-            <button type="button" class="btn btn-dark" style="margin-right:5px" @click="playVideo('0')">Test Listen</button>
+            <button type="button" class="btn btn-dark" style="margin-right:5px" @click="playVideo('0', 'video')">Test Capture</button>
             </div>
         </div>
 
         <br>
 
         <div style="display:flex">
+                <div  v-if="capture1.capture">
+                    <button  class="btn btn-dark" @click="setup_capture(i)" >Set Up</button>
+                </div>
                 <div  v-if="capture1.start">
-                    <button  class="btn btn-success" @click="start_capture(i)" >Capture</button>
+                    <button  class="btn btn-success" @click="start_capture(i)" >Start Capture</button>
                 </div>
                 <div  v-if="capture1.stop">
                     <button  class="btn btn-danger" @click="stop_capture(i)" >Stop</button>
