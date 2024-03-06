@@ -23,13 +23,16 @@
 
 
 <div class="content-section">
- <h6> [[ notice ]] </h6>
-
+ <h6> [[ device]] - [[ notice ]] </h6>
     <div>
     <audio id="handler" ref="player" controls autoplay></audio>
     </div>
-    <div :style="videoDisplay()">
-        <video id="handlerVideo" ref="player" controls autoplay style="width:100%"></video>
+</div>
+
+<div :style="videoDisplay()" class="content-section">
+    <video id="handlerVideo" ref="player" controls autoplay style="width:100%" playsinline></video>
+    <div>
+        <button class="btn btn-danger" @click="stop_video()" >Close</button>
     </div>
 </div>
 

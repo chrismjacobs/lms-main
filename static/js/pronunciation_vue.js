@@ -41,11 +41,12 @@ else if (report.includes('iPad')){
     device = 'I'
 }
 else if (report.includes('iPhone OS')){
-  for (var n in 30) {
-    if (n >= 10) {
-      let nText = n.toString()
+  console.log('Found iPhone OS')
+  for (var n = 0; n < 30; n++) {
+    if (n >= 10 && report.includes('iPhone OS ' + n)) {
       device = 'I'
-      notice = 'Recording in iOS ' + nText
+      notice = 'Recording in iOS ' + n
+      break
     } else {
       device = 'I'
       notice = 'Recording in iOS <10'
@@ -809,7 +810,8 @@ function startVue(ansOBJ, device){
         player.src = playlist[arg]
 
       },
-      playVideo : function (arg, mode) {
+      playVideo: function (arg, mode) {
+        vue.echoBlock = arg
 
         let playlist = {
           '0' : vue.blobURL,
@@ -826,6 +828,12 @@ function startVue(ansOBJ, device){
         console.log(playlist[arg], player)
         player.src = playlist[arg]
 
+      },
+      stop_video: function () {
+        vue.echoBlock = null
+        this.showVideo = false
+        player = document.getElementById('handlerVideo')
+        player.src = null
       },
       videoDisplay: function () {
         if (!this.showVideo) {
