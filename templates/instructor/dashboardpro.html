@@ -71,12 +71,12 @@
 
                 <td style="width: 45px; word-wrap: break-word"> <div class="noScrollBar" style="overflow:scroll;width:210px;height:110px"><span> <b>[[getText(item.A06, 0)]]</b> <br> [[getText(item.A06, 1)]] </span> </div></td>
 
-                <td> <button @click="play(item.A01)" :class="getColor(item.A07)"> [[  getTag(item.A07) ]] </button> <br>
-                  <button @click="playVideo(item.A02)" :class="getColor(item.A08)"> [[  getTag(item.A08) ]] </button> <br>
+                <td> <button @click="play(item.A07)" :class="getColor(item.A07)"> [[  getTag(item.A07) ]] </button> <br>
+                  <button @click="playVideo(item.A08)" :class="getColor(item.A08)"> [[  getTag(item.A08) ]] </button> <br>
                 <div v-if="item.A08">
                   <a :href="item.A08" :download="getDownload(item.A08)" :style="getDevice(item.device)">DL_[[item.device]]</a> <br>
                   <div>
-                   <input type="file" :id="'video' + key + user + 2" accept="video/*" @change="videoValidation(key, user, 3)"> </input> <button class="btn btn-secondary btn-sm"> Select </button>
+                   <input type="file" :id="'video' + key + user + 3" accept="video/*" @change="videoValidation(key, user, 3)"> </input> <button class="btn btn-secondary btn-sm"> Select </button>
                  </div>
                  <div v-if="video64['fileType'] && video64['key'] == key + user + 3">
                    <button  class="btn btn-danger btn-sm" @click="storeB64(getDownload(item.A08))">Upload</button>
