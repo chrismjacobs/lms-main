@@ -33,8 +33,9 @@
                       <div class="collapse navbar-collapse" id="navbarToggle" data-toggle="collapse" data-target=".navbar-collapse.show">
                       <!-- Navbar Right Side -->
                         <div class="navbar-nav">
-                        {% if current_user.username == 'Cherry Mak' and SCHEMA != 4  %}
+                        {% if current_user.username == 'Cherry Mak'%}
                         <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('dashboard')}}", target="_blank">Dashboard</a>
+                        <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('dashboardpro', project=0)}}", target="_blank">Pro Dash</a>
                         {% endif %}
                         {% if current_user.id == 1 %}
                           <div class="navbar-nav mr-auto">

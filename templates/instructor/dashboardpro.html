@@ -40,11 +40,11 @@
 
             <template v-for="(item, key) in ansOBJ[user]">
               <tr v-if="item.idNum && showAll(key)">
-                <td > <button @click="edit(item.idNum, key)"> [[  key ]] </button> </td>
-                <td> <button @click="play(item.A01)"> [[  getTag(item.A01) ]] </button> <br>
-                  <button @click="playVideo(item.A02)"> [[  getTag(item.A02) ]] </button> <br>
+                <td > <button @click="edit(item.idNum, key)" > [[  key ]] </button> </td>
+                <td> <button @click="play(item.A01)" :class="getColor(item.A01)"> [[  getTag(item.A01) ]] </button> <br>
+                  <button @click="playVideo(item.A02)" :class="getColor(item.A02)"> [[  getTag(item.A02) ]] </button> <br>
                 <div v-if="item.A02">
-                    <a :href="item.A02" :download="getDownload(item.A02)">DL_[[item.device]]</a> <br>
+                    <a :href="item.A02" :download="getDownload(item.A02)" :style="getDevice(item.device)">DL_[[item.device]]</a> <br>
                     <div>
                     <input type="file" :id="'video' + key + user + 1" accept="video/*" @change="videoValidation(key, user, 1)"> </input> <button class="btn btn-secondary btn-sm"> Select </button>
                   </div>
@@ -56,10 +56,10 @@
 
                 <td style="width: 45px; word-wrap: break-word"> <div class="noScrollBar" style="overflow:scroll;width:210px;height:110px"><span> <b>[[getText(item.A03, 0)]]</b> <br> [[getText(item.A03, 1)]] </span> </div></td>
 
-                <td> <button @click="play(item.A04)"> [[  getTag(item.A04) ]] </button> <br>
-                     <button @click="playVideo(item.A05)"> [[  getTag(item.A05) ]] </button> <br>
+                <td> <button @click="play(item.A04)" :class="getColor(item.A04)"> [[  getTag(item.A04) ]] </button> <br>
+                     <button @click="playVideo(item.A05)" :class="getColor(item.A05)"> [[  getTag(item.A05) ]] </button> <br>
                   <div v-if="item.A05">
-                     <a :href="item.A02" :download="getDownload(item.A05)">DL_[[item.device]]</a> <br>
+                     <a :href="item.A05" :download="getDownload(item.A05)" :style="getDevice(item.device)">DL_[[item.device]]</a> <br>
                      <div>
                       <input type="file" :id="'video' + key + user + 2" accept="video/*" @change="videoValidation(key, user, 2)"> </input> <button class="btn btn-secondary btn-sm"> Select </button>
                     </div>
@@ -71,10 +71,10 @@
 
                 <td style="width: 45px; word-wrap: break-word"> <div class="noScrollBar" style="overflow:scroll;width:210px;height:110px"><span> <b>[[getText(item.A06, 0)]]</b> <br> [[getText(item.A06, 1)]] </span> </div></td>
 
-                <td> <button @click="play(item.A01)"> [[  getTag(item.A07) ]] </button> <br>
-                  <button @click="playVideo(item.A02)"> [[  getTag(item.A08) ]] </button> <br>
+                <td> <button @click="play(item.A01)" :class="getColor(item.A07)"> [[  getTag(item.A07) ]] </button> <br>
+                  <button @click="playVideo(item.A02)" :class="getColor(item.A08)"> [[  getTag(item.A08) ]] </button> <br>
                 <div v-if="item.A08">
-                  <a :href="item.A08" :download="getDownload(item.A08)">DL_[[item.device]]</a> <br>
+                  <a :href="item.A08" :download="getDownload(item.A08)" :style="getDevice(item.device)">DL_[[item.device]]</a> <br>
                   <div>
                    <input type="file" :id="'video' + key + user + 2" accept="video/*" @change="videoValidation(key, user, 3)"> </input> <button class="btn btn-secondary btn-sm"> Select </button>
                  </div>
@@ -199,11 +199,24 @@ function startVue(){
           }
         },
         getTag: function (link) {
-
           if (link) {
             return link.slice(-4) // + link.slice(-3) + link.slice(-2) + link.slice(-1)
           } else {
             return '---'
+          }
+        },
+        getColor: function (link) {
+          if (link && link.slice(-4) == '.mov') {
+            return 'btn btn-sm btn-success'
+          } else if (link && link.slice(-4) == '.mp4'){
+            return 'btn btn-sm btn-outline-info'
+          }
+        },
+        getDevice: function (dev) {
+          if (dev == 'Apple') {
+            return 'background:lightgreen'
+          } else {
+            return 'background:lightblue'
           }
         },
         getText: function (text, i) {
