@@ -56,10 +56,10 @@
 
                 <td style="width: 45px; word-wrap: break-word"> <div class="noScrollBar" style="overflow:scroll;width:210px;height:110px"><span> <b>[[getText(item.A03, 0)]]</b> <br> [[getText(item.A03, 1)]] </span> </div></td>
 
-                <td> <button @click="play(item.A01)"> [[  getTag(item.A04) ]] </button> <br>
-                     <button @click="playVideo(item.A02)"> [[  getTag(item.A05) ]] </button> <br>
+                <td> <button @click="play(item.A04)"> [[  getTag(item.A04) ]] </button> <br>
+                     <button @click="playVideo(item.A05)"> [[  getTag(item.A05) ]] </button> <br>
                   <div v-if="item.A05">
-                     <a :href="item.A02" :download="getDownload(item.A02)">DL_[[item.device]]</a> <br>
+                     <a :href="item.A02" :download="getDownload(item.A05)">DL_[[item.device]]</a> <br>
                      <div>
                       <input type="file" :id="'video' + key + user + 2" accept="video/*" @change="videoValidation(key, user, 2)"> </input> <button class="btn btn-secondary btn-sm"> Select </button>
                     </div>
@@ -69,12 +69,12 @@
                   </div>
                 </td>
 
-                <td style="width: 45px; word-wrap: break-word"> <div class="noScrollBar" style="overflow:scroll;width:210px;height:110px"><span> <b>[[getText(item.A06, 0)]]</b> <br> [[getText(item.A03, 1)]] </span> </div></td>
+                <td style="width: 45px; word-wrap: break-word"> <div class="noScrollBar" style="overflow:scroll;width:210px;height:110px"><span> <b>[[getText(item.A06, 0)]]</b> <br> [[getText(item.A06, 1)]] </span> </div></td>
 
                 <td> <button @click="play(item.A01)"> [[  getTag(item.A07) ]] </button> <br>
                   <button @click="playVideo(item.A02)"> [[  getTag(item.A08) ]] </button> <br>
                 <div v-if="item.A08">
-                  <a :href="item.A02" :download="getDownload(item.A02)">DL_[[item.device]]</a> <br>
+                  <a :href="item.A08" :download="getDownload(item.A08)">DL_[[item.device]]</a> <br>
                   <div>
                    <input type="file" :id="'video' + key + user + 2" accept="video/*" @change="videoValidation(key, user, 3)"> </input> <button class="btn btn-secondary btn-sm"> Select </button>
                  </div>
@@ -83,7 +83,7 @@
                  </div>
               </div>
              </td>
-                <td style="width: 45px; word-wrap: break-word"> <div class="noScrollBar" style="overflow:scroll;width:210px;height:110px"><span> <b>[[getText(item.A09, 0)]]</b> <br> [[getText(item.A03, 1)]] </span> </div></td>
+                <td style="width: 45px; word-wrap: break-word"> <div class="noScrollBar" style="overflow:scroll;width:210px;height:110px"><span> <b>[[getText(item.A09, 0)]]</b> <br> [[getText(item.A09, 1)]] </span> </div></td>
 
                 <td> [[  item.G  ]] </td>
                 <td> <textarea type="text" :style="commentStyle(item.C)" :id="user+key" v-model="item.C" required> </textarea></td>
