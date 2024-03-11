@@ -166,7 +166,7 @@ def dashboard():
 
 
 
-    if current_user.id != 1 and current_user.username != 'Cherry Wai':
+    if current_user.id != 1 and current_user.username != 'Cherry Mak':
         return abort(403)
 
     ## intro edit
@@ -231,6 +231,7 @@ def dashboard():
 
 
     return render_template('instructor/dashboard.html', ansString=json.dumps(totalDict), title='dashboard', SCHEMA=SCHEMA, att=att, MTFN=get_MTFN('grades'))
+
 
 @app.route ("/dashboardTest")
 def dashboardTest():

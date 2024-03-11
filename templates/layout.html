@@ -33,7 +33,7 @@
                       <div class="collapse navbar-collapse" id="navbarToggle" data-toggle="collapse" data-target=".navbar-collapse.show">
                       <!-- Navbar Right Side -->
                         <div class="navbar-nav">
-                        {% if current_user.username == 'Cherry Wai' and SCHEMA != 4  %}
+                        {% if current_user.username == 'Cherry Mak' and SCHEMA != 4  %}
                         <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('dashboard')}}", target="_blank">Dashboard</a>
                         {% endif %}
                         {% if current_user.id == 1 %}
@@ -54,10 +54,8 @@
 
                             {% elif SCHEMA == 9 %}
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('nme_dubdash', project=0)}}", target="_blank">Movie Dash</a>
-
-                            {% elif SCHEMA == 10 %}
-                            <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('write_dash') }}", target="_blank">Dashboard</a>
-                            <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('pCheck', mode='instructor') }}", target="_blank">Publish_Check</a>
+                            {% elif SCHEMA == 8 %}
+                              <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('dashboardpro', project=0)}}", target="_blank">Pro Dash</a>
                             {% endif %}
                           </div>
                         {% endif %}

@@ -47,6 +47,7 @@ from routesUser import *
 from routesPart import *
 from routesFOOD import *
 from routesWRITE import *
+from routesPRON import *
 from routesPENG import *
 from routesMDE import *
 
