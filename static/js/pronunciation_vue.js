@@ -310,6 +310,11 @@ function startVue(ansOBJ, device){
     },
     methods: {
       start_speak: function (task) {
+        let playVid = this.playVideo(task, 'video')
+
+        if (playVid == false) {
+          return false
+        }
         vue.echoBlock = task
         console.log('start', task)
         this.echoMessage = 'LISTEN....'
@@ -324,7 +329,7 @@ function startVue(ansOBJ, device){
           vue.showCapture[key] = false
         }
 
-        this.playVideo(task, 'video')
+
 
         document.getElementById('handlerVideo').addEventListener('ended', function(e) {
             vue.echoMessage = 'ECHO...'
@@ -824,6 +829,13 @@ function startVue(ansOBJ, device){
           player = document.getElementById('handlerVideo')
         } else {
           player = document.getElementById('handler')
+        }
+        console.log(this.device, playlist[arg].slice(-1))
+        if (this.device == 'I' && playlist[arg].slice(-1) == '4') { // .mp4
+          alert('Video not ready for iPhone yet, please wait or use a PC computer with microphone')
+          vue.echoBlock = null
+          this.showVideo = false
+          return false
         }
         console.log(playlist[arg], player)
         player.src = playlist[arg]
