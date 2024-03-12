@@ -1382,7 +1382,7 @@ def ass(unit):
 
     try:
         print(S3_LOCATION)
-        keyName1 = 'Chris/' + unit + '_1_A.mp3'
+        keyName1 = 'Chris/' + unit + '_1_A.m4a'
         speechModel1 = S3_LOCATION + keyName1
         s3_client.head_object(Bucket=S3_BUCKET_NAME, Key=keyName1)
         ansDict[1]['model'] = speechModel1
@@ -1393,7 +1393,7 @@ def ass(unit):
 
 
     try:
-        keyName2 = 'Chris/' + unit + '_2_A.mp3'
+        keyName2 = 'Chris/' + unit + '_2_A.m4a'
         speechModel2 = S3_LOCATION + keyName2
         s3_client.head_object(Bucket=S3_BUCKET_NAME, Key=keyName2)
         ansDict[2]['model'] = speechModel2
