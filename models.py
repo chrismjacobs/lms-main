@@ -430,6 +430,11 @@ admin.add_view(MyModelView(U012U_ICC, db.session))
 admin.add_view(MyModelView(U013U_ICC, db.session))
 admin.add_view(MyModelView(U014U_ICC, db.session))
 
+admin.add_view(MyModelView(U011U_PRON, db.session))
+admin.add_view(MyModelView(U012U_PRON, db.session))
+admin.add_view(MyModelView(U013U_PRON, db.session))
+admin.add_view(MyModelView(U014U_PRON, db.session))
+
 ##### U02
 
 admin.add_view(MyModelView(U021U_FRD1, db.session))
@@ -456,6 +461,11 @@ admin.add_view(MyModelView(U021U_ICC, db.session))
 admin.add_view(MyModelView(U022U_ICC, db.session))
 admin.add_view(MyModelView(U023U_ICC, db.session))
 admin.add_view(MyModelView(U024U_ICC, db.session))
+
+admin.add_view(MyModelView(U021U_PRON, db.session))
+admin.add_view(MyModelView(U022U_PRON, db.session))
+admin.add_view(MyModelView(U023U_PRON, db.session))
+admin.add_view(MyModelView(U024U_PRON, db.session))
 
 ## U03
 admin.add_view(MyModelView(U031U_FRD1, db.session))

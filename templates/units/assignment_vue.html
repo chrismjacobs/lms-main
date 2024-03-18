@@ -173,15 +173,15 @@
         <br>
       <b>Summary 1</b> WHO/WHAT is the video about (The video is about a .....  who/that.....   )
         <br>
-        <input class="textAss m-2" v-model="ws1" style="width:80%"></input>
+        <input class="textAss m-2" v-model="ws1" style="width:80%" @blur="wordCount(ws1)"></input>
         <br>
       <b>Summary 2</b> WHY/HOW is the video interesting/unique/special, what makes it a BIG STORY
         <br>
-        <input class="textAss m-2" v-model="ws2" style="width:80%"></input>
+        <input class="textAss m-2" v-model="ws2" style="width:80%" @blur="wordCount(ws2)"></input>
         <br>
       <b>Summary 3</b> Other details WHEN/WHERE (any place or time details you make into a sentence?)
         <br>
-        <input class="textAss m-2" v-model="ws3" style="width:80%"></input>
+        <input class="textAss m-2" v-model="ws3" style="width:80%" @blur="wordCount(ws3)"></input>
 
     <br>
     <br>

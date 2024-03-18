@@ -320,6 +320,13 @@ function startVue(ansOBJ, device){
         showWritingNotes : false,
     },
     methods: {
+      wordCount: function (part) {
+        console.log(part)
+        let words = part.split(' ')
+        if (words.length < 4 && part != '') {
+          alert('This is too short, please write a full sentence')
+        }
+      },
       checkLayout: function () {
         if (this.SCHEMA == this.altLayout) {
           return true

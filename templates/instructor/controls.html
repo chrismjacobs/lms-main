@@ -397,6 +397,9 @@ let vue = new Vue({
           }
         },
         idStyle: function(id) {
+          if (id == '321215009' || id == '121254012') {
+            return { background:'purple'}
+          }
           if (id.includes('1208')) {
             return { background:'pink'}
           }
