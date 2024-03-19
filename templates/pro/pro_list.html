@@ -1,0 +1,323 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<span id="projectDict" style="display:none">{{proDict}}</span>
+<span id="examDict" style="display:none">{{examDict}}</span>
+
+<div id="vue-app">
+
+<div class="content-section">
+        <h1> Exam Projects </h1>
+    </div>
+    <div class="content-section">
+    <div class="embed-responsive embed-responsive-4by3">
+            <iframe id="questions_embed" src="https://docs.google.com/presentation/d/e/2PACX-1vQuSADx9dRj20KZEzqEUqqCqEVzSkRARULETPFOeqc18S5IGhvU0uvzVxzjcdYQ7_HhbFTUyf6thdt2/embed"
+            allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
+	        </iframe>
+    </div>
+
+
+</div>
+
+<div class="content-section">
+
+<h3> Project Dash </h3>
+
+    <div style="overflow-x:auto;">
+      <table class="table table-sm">
+        <thead>
+            <tr>
+              <th scope="col" >U</th>
+              <th scope="col" >Title</th>
+              <th scope="col" >Team</th>
+              <th scope="col" >Q&A</th>
+              <th scope="col" >L&M</th>
+              <th scope="col" style="display:none">RP</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <template v-for="(proj, unit) in projectOBJ"  >
+                <tr>
+                  <td>
+                  {% if current_user.id == 1 %}
+                  <span @click="goTo(unit, 0, 'I')" class="unit-span" style="background:silver;padding:3px"> [[ unit ]] </span>
+                  {% else %}
+                  <span class="unit-span" style="background:coral;padding:3px"> [[ unit ]] </span>
+                  {% endif %}
+                  </td>
+                  <td> [[ proj.Title]] </td>
+                  <td> [[ proj.Team]] </td>
+                  <td>
+                      <span v-if="proj.Number == 0"> </span>  &nbsp;
+                      <span v-else @click="goTo(unit, proj.Number, 'Q')" class="unit-span" :style="buttonStyle(proj.QTotal, 'snl', 'edit')"> &nbsp;[[proj.QTotal]]/6&nbsp; </span>
+                       <br>
+                       <br>
+
+                      <span v-if="proj.QTotal >= 6 && false" @click="goToExam(unit, proj.Number, 'qna', proj.QTest)" class="unit-span" :style="buttonStyle(proj.QTest, 'qna', 'check')">ch/[[proj.QTest]]</span>
+                       <br>
+                  </td>
+                  <td>
+                      <span v-if="proj.Number == 0"> </span>  &nbsp;
+                      <span v-else @click="goTo(unit, proj.Number, 'S')" class="unit-span" :style="buttonStyle(proj.STotal, 'snl', 'edit')"> &nbsp;[[proj.STotal]]/6&nbsp; </span>
+                       <br>
+                       <br>
+
+                      <span v-if="proj.STotal >= 6 && false" @click="goToExam(unit, proj.Number, 'snl', proj.STest)" class="unit-span" :style="buttonStyle(proj.STest, 'snl', 'check')">ch/[[proj.STest]]</span>
+                       </td>
+                       <br>
+
+                  <td style='display:none'>
+                      <span v-if="proj.Number == 0"> </span>  &nbsp;
+                      <span v-else @click="goTo(unit, proj.Number, 'R')" class="unit-span" :style="buttonStyle(proj.RTotal, 'rp', 'edit')"> &nbsp;[[proj.RTotal]]/4&nbsp; </span>
+                       <br>
+                       <br>
+
+                      <span v-if="proj.RTotal >= 4" @click="goToExam(unit, proj.Number, 'rp', proj.RTest)" class="unit-span" :style="buttonStyle(proj.RTest, 'snl', 'check')">ch/[[proj.RTest]]</span>
+                  </td>
+                       <br>
+
+                </tr>
+            </template>
+        </tbody>
+
+      </table>
+    </div>
+
+</div>
+
+<div class="content-section" style="display:none">
+
+<h3> Exam Test Board </h3>
+
+<h4 style="background:blue;color:white;padding:10px"> QNA box 9 point - SNL box 8 points - RP box 6 points </h4>
+<h4 style="background:purple;color:white;padding:10px"> If you missed a unit then get more points </h4>
+
+    <div style="overflow-x:auto;">
+      <table class="table table-sm">
+        <thead>
+            <tr>
+              <th scope="col" >U</th>
+              <th scope="col" >Q&A</th>
+              <th scope="col" >Grade</th>
+              <th scope="col" >S&L</th>
+              <th scope="col" >Grade</th>
+             <th scope="col" >RP</th>
+              <th scope="col" >Grade</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <template v-for="(part, unit) in examOBJ"  >
+              <tr v-if="unit != '00'" style="background:grey">
+                  <td>
+                    <span class="unit-span" style="background:tomato;padding:3px"> [[ unit ]] </span>
+                  </td>
+                  <td>
+                  </td>
+                  <td :style="getTotal(part, 'Qscore')[1]" >
+                     [[  getTotal(part, 'Qscore')[0]  ]]/9
+                  </td>
+                  <td>
+                  </td>
+                  <td  :style="getTotal(part, 'Sscore')[1]" >
+                    [[  getTotal(part, 'Sscore')[0] ]]/8
+                  </td>
+                  <td>
+                  </td>
+                  <td :style="getTotal(part, 'Rscore')[1]" >
+                   [[  getTotal(part, 'Rscore')[0] ]]/6
+                  </td>
+              </tr>
+                <template v-if="unit != '00'"  v-for="(exam, team) in part" >
+
+                <tr>
+                  <td>
+                    <span class="unit-span" style="background:silver;padding:3px"> [[ team  ]] </span>
+                  </td>
+                  <td>
+                    <span v-if="exam.QTotal > 5" @click="goToExam(unit, team, 'qna', exam.Qscore)"  class="unit-span" :style="buttonStyle(exam.Qscore, 'qna', 'check')"> &nbsp;QNA&nbsp; </span>
+                    <span v-else @click="" class="unit-span" style="background:lightgrey;padding:3px"> N/A </span>
+                  </td>
+                  <td>
+                    <span :style="gradeStyle(exam.Qscore)">&nbsp;[[ exam.Qscore ]]&nbsp;</span>
+                  </td>
+                  <td>
+                    <span v-if="exam.STotal > 5"  @click="goToExam(unit, team, 'snl', exam.Sscore)"  class="unit-span" :style="buttonStyle(exam.Sscore, 'snl', 'check')"> &nbsp;SNL&nbsp; </span>
+                    <span v-else @click="" class="unit-span" style="background:lightgrey;padding:3px"> N/A </span>
+                  </td>
+                  <td>
+                    <span :style="gradeStyle(exam.Sscore)">&nbsp;[[ exam.Sscore ]]&nbsp;</span>
+                  </td>
+                  <td>
+                    <span v-if="exam.RTotal > 3"  @click="goToExam(unit, team, 'rp', exam.Rscore)"  class="unit-span" :style="buttonStyle(exam.Rscore, 'rp', 'check')"> &nbsp;RP&nbsp; </span>
+                    <span v-else @click="" class="unit-span" style="background:lightgrey;padding:3px"> N/A </span>
+                  </td>
+                  <td>
+                    <span :style="gradeStyle(exam.Rscore)">&nbsp;[[ exam.Rscore ]]&nbsp;</span>
+                  </td>
+
+                </tr>
+            </template>
+            </template>
+        </tbody>
+
+      </table>
+    </div>
+
+</div>
+
+
+</div> <!-- end of Vue app -->
+
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+
+<script type="text/javascript" >
+
+var projectDict = document.getElementById('projectDict').innerHTML
+var OBJ = JSON.parse(projectDict)
+console.log('projectOBJ', OBJ);
+
+var examDict = document.getElementById('examDict').innerHTML
+var examOBJ = JSON.parse(examDict)
+console.log('examOBJ', examOBJ);
+
+
+startVue(OBJ)
+
+function startVue(OBJ){
+
+  let vue = new Vue({
+
+    el: '#vue-app',
+    delimiters: ['[[', ']]'],
+    data: {
+        projectOBJ: OBJ
+
+    },
+    methods: {
+        getTotal: function (part, type) {
+          // console.log('getTotal', part, type)
+
+          let grades = {
+            Qscore : 9,
+            Sscore : 8,
+            Rscore : 6
+          }
+
+          let total = 0
+
+          if (part) {
+            for (let n in part) {
+              total += parseInt(part[n][type])
+              // console.log(parseInt(part[n][type]))
+              // console.log(total)
+            }
+          }
+
+          // console.log(total)
+
+          let background = 'color:white'
+
+          if (total >= (grades[type]*4)-4) {
+            background = 'background:aqua;color:black'
+          } else if (total >= grades[type]) {
+            background = 'background:mediumseagreen;color:white'
+          }
+          else if (total >= 3) {
+            background = 'background:gold;color:white'
+          }
+          else {
+            background = 'background:lightcoral;color:white'
+          }
+          return [total, background]
+        },
+        buttonStyle: function(total, mode, style) {
+          if (style == 'edit') {
+            if (parseInt(total) >= 4 && mode === 'rp'){
+              return { background: 'mediumseagreen', padding:'3px'}
+            }
+            else if (parseInt(total) >= 5) {
+              return { background: 'mediumseagreen', padding:'3px'}
+            }
+            else{
+              return { background: 'lightcoral', padding:'3px'}
+            }
+          }
+          else if (style == 'check'){
+            if (Number.isInteger(total) && total != 0){
+              return { background: 'mediumseagreen', padding:'3px'}
+            }
+            else{
+              return { background: 'lightcoral', padding:'3px'}
+            }
+          }
+        },
+        gradeStyle: function(grade) {
+          console.log(grade)
+          if (grade > 3) {
+              return { background: 'springgreen', padding:'3px'}
+            }
+            else if (grade == 0 &&　!Number.isInteger(grade)){
+              return { background: 'lightcoral', padding:'3px'}
+            }
+            else if (grade > 0){
+              return { background: 'darkseagreen', padding:'3px'}
+            } else {
+              return { color: 'white', padding:'3px'}
+            }
+
+        },
+        goTo: function(unit, team, mode) {
+          console.log(mode);
+          if (mode == 'Q') {
+            var link = '/qna/'
+          }
+          else if (mode == 'S') {
+            var link = '/snl/'
+          }
+          else if (mode == 'R') {
+            var link = '/rp/'
+          }
+          else {
+            var link = '/make_teams/'
+          }
+
+          // go to HTTPS version
+          var str = window.location.href
+          let url = (str).split('_list')[0] + link + unit + '/' + team
+          console.log('goTO', url);
+          window.location = url
+
+        },
+        goToExam: function(unit, team, mode, score) {
+          console.log(score)
+          if (score > 30 ){
+            return false
+          }
+          else{
+            var str = window.location.href
+            let url = (str).split('_list')[0] + '_exam/' + mode + '/' + unit + '/' + team
+            console.log('goTO', url);
+            window.location = url
+          }
+
+        }
+
+    }
+})// end NEW VUE
+
+
+
+}// endFunction
+
+</script>
+
+{% endblock %}
+
