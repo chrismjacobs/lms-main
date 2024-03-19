@@ -49,67 +49,77 @@
 
 <h6  v-if="item.user"> [[ item.user ]] </h6>
 
-<img v-if="item.imageLink" class="rounded img-fluid" alt="No file yet" style="width: 150px"  :src="item.imageLink">
-<h6  v-if="item.answer1"> [[ item.answer1 ]] </h6>
-<img v-if="item.imageLink2" class="rounded img-fluid" alt="No file yet" style="width: 150px"  :src="item.imageLink2">
-<h6  v-if="item.answer2"> [[ item.answer2 ]] </h6>
-
-
 <br>
-
 <audio v-if="item.audioLink" controls>
         <source :src="item.audioLink" type="audio/mpeg" >
         <source :src="item.audioLink" type="audio/x-m4a" >
 </audio>
+<audio :id="'audio'+ key" v-if="audio[key] == 3" controls autoplay></audio>
 <br>
 
-<audio :id="'audio'+ key" v-if="audio[key] == 3" controls autoplay>
+<table>
+<tr>
+ <td>
+  <img v-if="item.imageLink" class="rounded img-fluid" alt="No file yet" style="width: 150px"  :src="item.imageLink">
+  <h6  v-if="item.answer1"> [[ item.answer1 ]] </h6>
+ </td>
+ <td>
+   <img v-if="item.imageLink2" class="rounded img-fluid" alt="No file yet" style="width: 150px"  :src="item.imageLink2">
+   <h6  v-if="item.answer2"> [[ item.answer2 ]] </h6>
+ </td>
+</tr>
+</table>
 
-</audio>
 </div>
+
 <div>
 
 <br>
         <div v-if="marker[key] == 3">
                 User: <span :id="key + 'u'" name="writer"> {{current_user.username}} </span>
-                <br>
-                <br>
-                <br>
                 <textarea style="display:none" :id="key + 'q'" class="textAss"  v-model="testOBJ[key]['question']"></textarea>
-                <br>
-                Answer 1: <input :id="key + 'a1'" type="text" class="textAss" style="margin-left:5px" v-model="testOBJ[key]['answer1']" ></input>
-                <br>
-                <br>
-
-                Answer 2: <input :id="key + 'a2'" type="text" class="textAss" style="margin-left:5px" v-model="testOBJ[key]['answer2']" ></input>
                 <br>
                 <br>
                 <div>
-                <button  class="btn btn-warning btn-sm" @click="storeData(key)">Update Text</button>
+                        <button  class="btn btn-warning btn-sm" @click="storeData(key)">Update Text</button>
                 </div>
                 <br>
+                <table>
+                <tr>
+                        <td>
+                                A1: <input :id="key + 'a1'" type="text"  style="width:80%" v-model="testOBJ[key]['answer1']" ></input>
+                                <div v-if="item.answer1">
 
-                <div >
-                        Image 1:&nbsp&nbsp
-                        <div>
-                        <input type="file" id="image" accept="image/*" @change="imageValidation(1)" > </input> <button class="btn btn-secondary btn-sm"> Select </button>
-                        </div>
-                        <br>
-                        <div v-if="image64['fileType']">
-                        <button  class="btn btn-danger btn-sm" @click="storeB64(key, 'i1')">Update 1</button>
-                        </div>
+                                        Image 1:&nbsp&nbsp
+                                        <div>
+                                        <input type="file" id="image" accept="image/*" @change="imageValidation(1)" > </input> <button class="btn btn-secondary btn-sm"> Select </button>
+                                        </div>
+                                        <br>
+                                        <div v-if="image64['fileType']">
+                                        <button  class="btn btn-danger btn-sm" @click="storeB64(key, 'i1')">Update 1</button>
+                                        </div>
+                                </div>
 
-                </div>
-                <div >
-                        Image 2:&nbsp&nbsp
-                        <div>
-                        <input type="file" id="image2" accept="image/*" @change="imageValidation(2)" > </input> <button class="btn btn-secondary btn-sm"> Select </button>
-                        </div>
-                        <br>
-                        <div v-if="image64['fileType2']">
-                        <button  class="btn btn-danger btn-sm" @click="storeB64(key, 'i2')">Update 2</button>
-                        </div>
-                </div>
+                        </td>
+                        <td>    A2: <input :id="key + 'a2'" type="text" style="width:80%" v-model="testOBJ[key]['answer2']" ></input>
+
+                                <div v-if="item.answer2">
+                                        Image 2:&nbsp&nbsp
+                                        <div>
+                                        <input type="file" id="image2" accept="image/*" @change="imageValidation(2)" > </input> <button class="btn btn-secondary btn-sm"> Select </button>
+                                        </div>
+                                        <br>
+                                        <div v-if="image64['fileType2']">
+                                        <button  class="btn btn-danger btn-sm" @click="storeB64(key, 'i2')">Update 2</button>
+                                        </div>
+                                </div>
+
+
+
+                        </td>
+                </tr>
+                </table>
+
                <br>
                 <template id="Voice Record">
                         <div style="display:flex">
