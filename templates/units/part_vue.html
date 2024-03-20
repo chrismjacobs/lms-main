@@ -91,6 +91,36 @@
                 <br>
                 <button class="btn btn-outline-secondary btn-sm" style="border: 1px solid {{DESIGN['titleColor']}}" type="button" @click="shareMC(key)"> Share Answer </button>
             </div>
+            <div v-else-if="qn.t == 'gr' && write[key] == false">
+                <div v-for="x in qn.c">
+                    <input type="radio" :id="key + x" :name="'mc' + key" :value="x">
+                    <label v-for="key + x"><h5>[[x]]</h5></label>
+                </div>
+                <br>
+                <button class="btn btn-outline-secondary btn-sm" style="border: 1px solid {{DESIGN['titleColor']}}" type="button" @click="shareGR(key)"> Share Answer </button>
+            </div>
+            <div v-else-if="qn.t == 'gr'">
+                <div v-for="x in qn.a">
+                    <span style="font-size:20px"> <b>[[x]]</b> </span> <br>
+                    <input
+                        type="text"
+                        class="input2"
+                        :style="getBG(key, qn.a.indexOf(x))"
+                        :id="key + x"
+                        :name="'spAns'"
+                        v-model="spelling[qn.a.indexOf(x)]"
+                        autocapitalize="none"
+                        autocomplete="off"
+                        autocorrect="off"
+                        spellcheck="false"
+                        onpaste="return false"
+                    >
+                    </input>
+                    [[getCount(spelling[qn.a.indexOf(x)], x)]]
+                </div>
+                <br>
+                <button v-if="getSpellBTN(key)" class="btn btn-outline-secondary btn-sm" style="border: 1px solid {{DESIGN['titleColor']}}" type="button" @click="shareAnswer(key, 'redo')"> Share Answers </button>
+            </div>
             <div v-else-if="qn.t == 'set'">
                 <div v-for="x in qn.c">
                     <span style="font-size:20px"> <b>[[qn.c.indexOf(x) + 1]] &nbsp</b> </span>
@@ -109,7 +139,7 @@
             <div v-else-if="qn.t == 'in'">
                 <div v-for="x in qn.c">
                     <h4 style="background:{{DESIGN['titleColor']}}; color:{{DESIGN['bodyColor']}}; border: 1px solid white; border-radius:10px"> [[ x ]] </h4>
-                    <textarea class="input1" :id="key + x" :name="'input' + key" value=''> </textarea>
+                    <textarea class="input1" :id="key + x" :name="'input' + key" value='' onpaste="return false"> </textarea>
                 </div>
                 <br>
                 <button class="btn btn-outline-secondary btn-sm" style="border: 1px solid {{DESIGN['titleColor']}}" type="button" @click="shareInputs(key)"> Share Answers </button>
@@ -128,6 +158,7 @@
                         autocomplete="off"
                         autocorrect="off"
                         spellcheck="false"
+                        onpaste="return false"
                     >
                     </input>
                     [[getCount(spelling[qn.c.indexOf(x)], x)]]
@@ -152,7 +183,7 @@
 
             </div>
             <div v-else>
-                <textarea class="input1" :id="key"> </textarea>
+                <textarea class="input1" :id="key" onpaste="return false"> </textarea>
                 <br>
                 <button class="btn btn-outline-secondary btn-sm" style="border: 1px solid {{DESIGN['titleColor']}}" type="button" @click="shareAnswer(key)"> Share Answer </button>
             </div>

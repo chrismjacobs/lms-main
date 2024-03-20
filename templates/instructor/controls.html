@@ -19,7 +19,7 @@
 
 <button class="btn btn-info" @click="setAtt()"> Set </button>
 <button class="btn btn-warning" @click="clearAtt()"> &#9746 </button>
-Notice <input type="text" class="textAss" id="notice" style="margin-left:5px" v-model="setOBJ.Notice"></input>
+Notice <input type="text" class="textAss" id="notice" style="margin-left:5px" v-model="setOBJ.Notice" onpaste="return false"></input>
 &nbsp&nbsp&nbsp
 Unit
 <select id="unit" name="units" v-model="setOBJ.Unit">

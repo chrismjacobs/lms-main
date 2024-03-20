@@ -76,10 +76,19 @@ function startVue(qOBJ){
 
         // deal with choices arrays
         for (let q in qOBJ) {
-          if (qOBJ[q].t == 'mc') {
+          if (qOBJ[q].t == 'mc' || qOBJ[q].t == 'gr') {
             // deal with MC choices
             qOBJ[q]['b'] = qOBJ[q].c[0]
             this.shuffle(qOBJ[q].c)
+            var localKey = this.SCHEMA + this.unit + this.part + q
+
+            if (localStorage.getItem(localKey) == '100') {
+              const answer = qOBJ[q].a
+              this.qOBJ[q].a = answer.split('/')
+              this.qOBJ[q].b = answer.split('/')
+              this.write[q] = true
+            }
+            console.log(localKey, this.write)
           } else if (qOBJ[q].t == 'tf') {
             // deal with TF choices
             console.log('TF setting', qOBJ[q].c)
@@ -115,11 +124,14 @@ function startVue(qOBJ){
                 spList.push(this.shuffleSpell(word))
               }
             }
+
             qOBJ[q].c = spList
           }
 
           this.qOBJ = {...this.qOBJ}
+          this.write = {...this.write}
         }
+        console.log('write', this.write)
     },
     data: {
       SCHEMA : SCHEMA,
@@ -157,6 +169,7 @@ function startVue(qOBJ){
         6 : true,
         7 : true,
         8 : true,
+        9 : true,
       },
       show : {
         1 : false,
@@ -167,6 +180,18 @@ function startVue(qOBJ){
         6 : false,
         7 : false,
         8 : false,
+        9 : false,
+      },
+      write : {
+        1 : false,
+        2 : false,
+        3 : false,
+        4 : false,
+        5 : false,
+        6 : false,
+        7 : false,
+        8 : false,
+        9 : false,
       },
       spelling : {
         0 : '',
@@ -235,7 +260,7 @@ function startVue(qOBJ){
       },
       getSpellBTN: function (key) {
 
-        console.log('spell btn', this.spelling, this.qOBJ[key].b)
+        console.log('spell btn', this.spelling, this.qOBJ[key].b, this.qOBJ[key].r )
         var allow = true
 
         for (let b in this.qOBJ[key].b) {
@@ -252,7 +277,7 @@ function startVue(qOBJ){
 
       },
       getBG: function (key, s) {
-        console.log('getBG', key, s, this.spelling, this.qOBJ[key].b)
+        console.log('getBG', key, s, this.spelling, this.qOBJ[key].b, this.qOBJ[key].a)
 
         var entry = this.spelling[s].toLowerCase()
 
@@ -410,7 +435,7 @@ function startVue(qOBJ){
         }
       },
       shareAnswer: function (question, answer){
-        if (answer == 'perfect') {
+        if (answer == 'perfect' || answer == 'redo') {
           this.spelling = {
             0 : '',
             1 : '',
@@ -497,7 +522,7 @@ function startVue(qOBJ){
       },
       shareMC: function (key){
         // key is the question number
-        var localKey = this.unit + this.part + key
+        var localKey = this.SCHEMA + this.unit + this.part + key
         var mce = document.getElementsByName('mc' + key)
         console.log('shareMC', key, mce, this.qOBJ)
         var correctAns = this.qOBJ[key].b
@@ -526,6 +551,34 @@ function startVue(qOBJ){
           }
         }
       },
+      shareGR: function (key){
+        // key is the question number
+        var localKey = this.SCHEMA + this.unit + this.part + key
+        var mce = document.getElementsByName('mc' + key)
+        console.log('shareGR', key, mce, this.qOBJ)
+        var correctAns = this.qOBJ[key].b
+        for (let e in mce) {
+          if (mce[e].checked) {
+            if (mce[e].value ==  correctAns) {
+              alert('Correct! Well done')
+              if(!localStorage.getItem(localKey)) {
+                this.shareAnswer(key, ':) ' + this.qOBJ[key].b)
+              } else {
+                this.shareAnswer(key, parseInt(localStorage.getItem(localKey)) + 1)
+                localStorage.clear()
+              }
+            }
+            else {
+              localStorage.setItem(localKey, 100)
+              alert("Incorrect - Please type the correct answer")
+              const answer = this.qOBJ[key].a
+              this.qOBJ[key].a = answer.split('/')
+              this.qOBJ[key].b = answer.split('/')
+              this.write[key] = true
+            }
+          }
+        }
+      },
       shareInputs: function (key) {
         var answer = ''
         var gate = true
@@ -548,7 +601,7 @@ function startVue(qOBJ){
       },
       shareSet: function (key) {
 
-        var localKey = this.unit + this.part + key
+        var localKey = this.SCHEMA + this.unit + this.part + key
 
         var answerOBJ = this.qOBJ[key].b
 
