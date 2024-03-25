@@ -76,8 +76,7 @@ function startVue(qOBJ){
 
         // deal with choices arrays
         for (let q in qOBJ) {
-          console.log('TTT', qOBJ[q].t)
-          console.log('TTT', qOBJ[q].t)
+          console.log('Q Type', qOBJ[q].t)
           if (qOBJ[q].t != undefined && qOBJ[q].t.includes('mc')) {
             // deal with MC choices
             qOBJ[q]['b'] = qOBJ[q].c[0]
@@ -97,7 +96,7 @@ function startVue(qOBJ){
             const answer = qOBJ[q].c[0]
             qOBJ[q]['b'] = answer
             this.setTF(q, qOBJ[q].c[0])
-            if (localStorage.getItem(localKey) == '100') {
+            if (qOBJ[q].t.includes('r') && localStorage.getItem(localKey) == '100') {
               const answer = qOBJ[q].a
               this.qOBJ[q].a = answer.split('/')
               this.qOBJ[q].b = answer.split('/')
