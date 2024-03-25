@@ -76,7 +76,7 @@ function startVue(qOBJ){
 
         // deal with choices arrays
         for (let q in qOBJ) {
-          if (qOBJ[q].t == 'mc' || qOBJ[q].t == 'gr') {
+          if (qOBJ[q].t.includes('mc')) {
             // deal with MC choices
             qOBJ[q]['b'] = qOBJ[q].c[0]
             this.shuffle(qOBJ[q].c)
@@ -89,12 +89,18 @@ function startVue(qOBJ){
               this.write[q] = true
             }
             console.log(localKey, this.write)
-          } else if (qOBJ[q].t == 'tf') {
+          } else if (qOBJ[q].t.includes('tf')) {
             // deal with TF choices
             console.log('TF setting', qOBJ[q].c)
             const answer = qOBJ[q].c[0]
             qOBJ[q]['b'] = answer
             this.setTF(q, qOBJ[q].c[0])
+            if (localStorage.getItem(localKey) == '100') {
+              const answer = qOBJ[q].a
+              this.qOBJ[q].a = answer.split('/')
+              this.qOBJ[q].b = answer.split('/')
+              this.write[q] = true
+            }
           } else if (qOBJ[q].t == 'set') {
             // deal with matching choices
             var answer = {}
@@ -551,7 +557,7 @@ function startVue(qOBJ){
           }
         }
       },
-      shareGR: function (key){
+      shareRedo: function (key){
         // key is the question number
         var localKey = this.SCHEMA + this.unit + this.part + key
         var mce = document.getElementsByName('mc' + key)
