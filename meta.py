@@ -18,7 +18,8 @@ try:
 except:
     AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
     AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_ALT']  ## because databse must be postgresql:  not  postgres:
+    SQLALCHEMY_DATABASE_URL = os.environ['DATABASE_URL']  ## because databse must be postgresql:  not  postgres:
+    SQLALCHEMY_DATABASE_URI = 'postgresql://' + SQLALCHEMY_DATABASE_URL.split('://')[1]
     MAIL_PASSWORD = os.environ['MAIL_PASSWORD']
     SECRET_KEY = os.environ['SECRET_KEY']
     GS_KEY_ID = os.environ['GS_KEY_ID']
