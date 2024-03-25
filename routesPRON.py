@@ -1,4 +1,4 @@
-import json, time, base64, ast
+import json, time, base64, ast, random
 from sqlalchemy import asc, desc
 from datetime import datetime, timedelta
 from flask import render_template, url_for, flash, redirect, request, abort, jsonify
@@ -112,6 +112,7 @@ def dashboardpro():
         model = pr_assDict[int(unit)]
         answers = model.query.order_by(desc(model.Grade)).all()
         for item in answers:
+            print(item.username)
             device = User.query.filter_by(username=item.username).first().device
             if item.username in totalDict:
                 totalDict[item.username][unit] = {
@@ -136,7 +137,7 @@ def dashboardpro():
     att = getModels()['Attendance_'].query.filter_by(username="Chris").first().teamnumber
 
 
-    return render_template('instructor/dashboardpro.html', ansString=json.dumps(totalDict), title='dashboard', SCHEMA=SCHEMA, att=att, MTFN=get_MTFN('grades'))
+    return render_template('pro/dashboardpro.html', ansString=json.dumps(totalDict), title='dashboard', SCHEMA=SCHEMA, att=att, MTFN=get_MTFN('grades'))
 
 
 '''##### PRONUNCIATION Assignments ////////'''
@@ -178,6 +179,20 @@ def pr_assignment_list():
     return render_template('units/pr_assignment_list.html', legend='Assignments Dashboard',
     Dict=json.dumps(assDict), title='Assignments', theme=DESIGN)
 
+@app.route("/pr_commentSet", methods = ['POST'])
+def pr_commentSet():
+
+    newComment = request.form['comment']
+    unit = request.form['unit']
+    name = request.form['user']
+    model = pr_assDict[int(unit)]
+    print(unit, name, model)
+    studentAns = model.query.filter_by(username=name).first()
+
+    studentAns.Comment = newComment
+    db.session.commit()
+
+    return jsonify({'comment' : newComment})
 
 @app.route('/pr_audioUpload', methods=['POST', 'GET'])
 def pr_audioUpload():
@@ -1039,16 +1054,20 @@ def storeB64():
     aORi = ['a', 'i']
     if mode == 'snl':
         project_answers[question][link] = fileLink
+        project_answers[question]['user'] = current_user.username
         project_data.Ans02 = json.dumps(project_answers)
         project_data.Ans05 = countTotal(json.dumps(project_answers))
     elif mode == 'qna':
         project_answers[question][link] = fileLink
+        project_answers[question]['user'] = current_user.username
         project_data.Ans01 = json.dumps(project_answers)
         project_data.Ans04 = countTotal(json.dumps(project_answers))
     else:
         project_answers[link] = fileLink
+        project_answers[question]['user'] = current_user.username
         project_data.Ans03 = json.dumps(project_answers)
         project_data.Ans06 = countTotal(json.dumps(project_answers))
+
     db.session.commit()
 
     return jsonify({'question' : question})
@@ -1099,3 +1118,71 @@ def updateAnswers():
 
 
     return jsonify({'ansString' : ansString})
+
+
+'''Exam '''
+@app.route ("/pro_exam/<string:qORs>/<string:unit>/<string:team>", methods=['GET','POST'])
+@login_required
+def pro_exam(qORs, unit, team):
+
+    ## get_team_data will check if user is exam ready or not
+
+    team_data = get_team_data(unit, team)
+    teamMembers = team_data['teamMembers']
+
+    if current_user.extra == 3:
+        print('exam user')
+    elif current_user.username not in teamMembers:
+        flash('Exam not ready - Please see instructor', 'warning')
+        return redirect(url_for('pro_list'))
+
+    srcDict = get_projects()
+    meta = srcDict[unit]
+
+    print('exam', unit, team)
+
+
+    data = team_data['project_answers']
+    print(team_data)
+    source = meta['M1']
+    print(source)
+    qnaDict = json.loads(data.Ans01)
+    snlDict = json.loads(data.Ans02)
+    rpString = data.Ans03
+    rpDict = json.loads(data.Ans03)
+
+    orderList = ['1','2','3','4','5','6']
+    random.shuffle(orderList)
+    print('orderList', orderList)
+
+    count = 1
+    orderDict = {}
+    for number in orderList:
+        orderDict[count] = [number, snlDict[number]['audioLink']]
+        count +=1
+
+
+    count = 1
+    qnaDictNew = {}
+    for number in orderList:
+        qnaDictNew[count] = qnaDict[number]
+        count +=1
+
+    count = 1
+    snlDictNew = {}
+    for number in orderList:
+        snlDictNew[count] = snlDict[number]
+        count +=1
+
+
+
+    if qORs == 'qna':
+        html = 'pro/pro_exam_qna.html'
+    elif qORs == 'snl' :
+        html = 'pro/pro_exam_lnm.html'
+    else:
+        html = 'pro/pro_exam_rp.html'
+
+    return render_template(html, legend='PRO Exam', title=unit, meta=meta, orderDict=json.dumps(orderDict), qnaString=json.dumps(qnaDictNew), snlString=json.dumps(snlDictNew), rpString=rpString)
+
+# exam format

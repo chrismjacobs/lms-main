@@ -55,7 +55,7 @@
                        <br>
                        <br>
 
-                      <span v-if="proj.QTotal >= 6 && false" @click="goToExam(unit, proj.Number, 'qna', proj.QTest)" class="unit-span" :style="buttonStyle(proj.QTest, 'qna', 'check')">ch/[[proj.QTest]]</span>
+                      <span v-if="proj.QTotal >= 6" @click="goToExam(unit, proj.Number, 'qna', proj.QTest)" class="unit-span" :style="buttonStyle(proj.QTest, 'qna', 'check')">ch/[[proj.QTest]]</span>
                        <br>
                   </td>
                   <td>
@@ -64,7 +64,7 @@
                        <br>
                        <br>
 
-                      <span v-if="proj.STotal >= 6 && false" @click="goToExam(unit, proj.Number, 'snl', proj.STest)" class="unit-span" :style="buttonStyle(proj.STest, 'snl', 'check')">ch/[[proj.STest]]</span>
+                      <span v-if="proj.STotal >= 6" @click="goToExam(unit, proj.Number, 'snl', proj.STest)" class="unit-span" :style="buttonStyle(proj.STest, 'snl', 'check')">ch/[[proj.STest]]</span>
                        </td>
                        <br>
 

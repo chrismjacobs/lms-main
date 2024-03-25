@@ -19,22 +19,43 @@
         </thead>
 
         <tbody>
-        <template v-for="(q, key) in qnaOBJ" >
+        <template v-for="(q, key) in quizOBJ" >
 
             <tr>
-              <td :id="q.answer1">
-                [[  q.question  ]] <br><br>
-                <select  type="text" style="width: 50%" name="vocab" v-model="answerSet[key]">
+              <td :id="q.answer1" style="font-size: 34px">
+                <audio controls>
+                  <source :src="q.audioLink" type="audio/mpeg" >
+                  <source :src="q.audioLink" type="audio/x-m4a" >
+                </audio>
+                <select  type="text"  name="vocab" v-model="answerSet[key]">
                   <option v-for="option in ansShuffle[key]" :value="option.value">[[option.text]]</option>
                 </select>
                 <br>
                 <br>
               </td>
-              <td>
-                <audio controls style="width: 150px">
-                  <source :src="q.audioLink" type="audio/mpeg" >
-                  <source :src="q.audioLink" type="audio/x-m4a" >
-                </audio>
+              <td style="width: 150px;text-align:right">
+                <h1> 1 </h>
+              </td>
+              <td style="width: 150px">
+                <img class="rounded img-fluid" alt="No file yet" :src="ansShuffle[key][1]['image1']">
+              </td>
+              <td  style="width: 150px">
+                <img class="rounded img-fluid" alt="No file yet" :src="ansShuffle[key][1]['image2']">
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 150px">
+
+              </td>
+
+              <td style="width: 150px;text-align:right">
+                <h1> 2 </h>
+              </td>
+              <td style="width: 150px">
+                <img class="rounded img-fluid" alt="No file yet" :src="ansShuffle[key][2]['image1']">
+              </td>
+              <td  style="width: 150px">
+                <img class="rounded img-fluid" alt="No file yet" :src="ansShuffle[key][2]['image2']">
               </td>
             </tr>
 
@@ -68,11 +89,17 @@
 
 var qnaString = document.getElementById('qnaString').innerHTML
 var qnaOBJ = JSON.parse(qnaString)
-console.log('Dict', qnaOBJ);
+// console.log('Dict', quizOBJ);
 
+var snlString = document.getElementById('snlString').innerHTML
+var snlOBJ = JSON.parse(snlString)
+console.log('Dict', snlOBJ);
+
+let quizOBJ = snlOBJ
+let mode = 'snl'
 
 var str = window.location.href
-var browser_info = str.split('qna/')[1]
+var browser_info = str.split(mode+'/')[1]
 var unit = browser_info.split('/')[0]
 var team = browser_info.split('/')[1]
 console.log(unit, team);
@@ -96,11 +123,16 @@ function startVue(){
         5 : [{value: null, text: '---'}],
         6 : [{value: null, text: '---'}]
       }
-      for (let q in qnaOBJ) {
+      for (let q in quizOBJ) {
         console.log(q)
-        answers[q].push({value:qnaOBJ[q].answer1, text:qnaOBJ[q].answer1})
-        answers[q].push({value:qnaOBJ[q].answer2, text:qnaOBJ[q].answer2})
-        this.shuffle(answers[q])
+        let hold = []
+        hold.push({value:true, text:0, image1:quizOBJ[q]['imageLink'], image2:quizOBJ[q]['imageLink2']})
+        hold.push({value:false, text:0, image1:quizOBJ[q]['imageLink2'], image2:quizOBJ[q]['imageLink']})
+        this.shuffle(hold)
+        hold[0]['text'] = 1
+        hold[1]['text'] = 2
+        answers[q].push(hold[0])
+        answers[q].push(hold[1])
       }
 
       this.ansShuffle = answers
@@ -108,7 +140,7 @@ function startVue(){
 
     },
     data: {
-        qnaOBJ: qnaOBJ,
+        quizOBJ: quizOBJ,
         ansShuffle: null,
         display : false,
         answerSet: {
@@ -136,6 +168,7 @@ function startVue(){
           window.location = url
         },
         checkQNA: function() {
+
           console.log('answerSet', this.answerSet)
           for (let q in qnaOBJ) {
             console.log(this.answerSet[q])
@@ -145,12 +178,12 @@ function startVue(){
             }
           }
           let grade = 0
-          for (let q in qnaOBJ) {
-            if (this.answerSet[q] === qnaOBJ[q].answer1 ) {
-              document.getElementById(qnaOBJ[q].answer1).style.background = 'lightgreen'
+          for (let q in quizOBJ) {
+            if (this.answerSet[q] === true ) {
+              document.getElementById(quizOBJ[q].answer1).style.background = 'lightgreen'
               grade += 1
             } else {
-              document.getElementById(qnaOBJ[q].answer1).style.background = 'red'
+              document.getElementById(quizOBJ[q].answer1).style.background = 'red'
             }
           }
           this.updateGrades(grade)
@@ -159,7 +192,7 @@ function startVue(){
 
           $.ajax({
               data : {
-                qORs : 'qna',
+                qORs : mode,
                 unit : unit,
                 team : team,
                 grade : grade

@@ -86,11 +86,9 @@
                 <td style="width: 45px; word-wrap: break-word"> <div class="noScrollBar" style="overflow:scroll;width:210px;height:110px"><span> <b>[[getText(item.A09, 0)]]</b> <br> [[getText(item.A09, 1)]] </span> </div></td>
 
                 <td> [[  item.G  ]] </td>
-                <td> <textarea type="text" :style="commentStyle(item.C)" :id="user+key" v-model="item.C" required> </textarea></td>
-                <td> <button @click="commentSet(user,key)"> Up </button> <br>
+                <td> <textarea type="text" :style="commentStyle(item.C)" :id="user+key" v-model="item.C" required> </textarea>
+                <button @click="commentSet(user,key)"> Up </button> <br>
                   <button style="background:coral" @click="setComment(key, user), item.C = ''"> Cl </button>
-                  <button style="background:coral;display:none" @click="setComment(key, user)"> Set </button> <br>
-                  <button style="background:aqua" @click="showAss(key, user)"> ppt </button>
                 </td>
 
               </tr>
@@ -344,10 +342,10 @@ function startVue(){
         },
         commentSet: function(user, unit){
           var comment = document.getElementById(user+unit).value
-          if (this.instructor == 'Cherry Wai') {
+          if (this.instructor == 'Cherry Mak') {
             comment += ', thanks, Cherry'
           }
-          console.log(user, unit);
+          console.log(user, unit, comment);
           $.ajax({
           data : {
               comment : comment,
@@ -355,7 +353,7 @@ function startVue(){
               unit : unit,
           },
           type : 'POST',
-          url : '/commentSet'
+          url : '/pr_commentSet'
           })
           .done(function(data) {
            alert(data.comment);
