@@ -76,7 +76,7 @@ function startVue(qOBJ){
 
         // deal with choices arrays
         for (let q in qOBJ) {
-          if (qOBJ[q].t.includes('mc')) {
+          if (qOBJ[q].t && qOBJ[q].t.includes('mc')) {
             // deal with MC choices
             qOBJ[q]['b'] = qOBJ[q].c[0]
             this.shuffle(qOBJ[q].c)
@@ -89,7 +89,7 @@ function startVue(qOBJ){
               this.write[q] = true
             }
             console.log(localKey, this.write)
-          } else if (qOBJ[q].t.includes('tf')) {
+          } else if (qOBJ[q] && qOBJ[q].t.includes('tf')) {
             // deal with TF choices
             console.log('TF setting', qOBJ[q].c)
             const answer = qOBJ[q].c[0]

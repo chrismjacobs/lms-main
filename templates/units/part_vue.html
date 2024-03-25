@@ -91,7 +91,7 @@
                 <br>
                 <button class="btn btn-outline-secondary btn-sm" style="border: 1px solid {{DESIGN['titleColor']}}" type="button" @click="shareMC(key)"> Share Answer </button>
             </div>
-            <div v-else-if="qn.t.includes('r') && write[key] == false">
+            <div v-else-if="qn.t && qn.t.includes('r') && write[key] == false">
                 <div v-for="x in qn.c">
                     <input type="radio" :id="key + x" :name="'mc' + key" :value="x">
                     <label v-for="key + x"><h5>[[x]]</h5></label>
@@ -99,7 +99,7 @@
                 <br>
                 <button class="btn btn-outline-secondary btn-sm" style="border: 1px solid {{DESIGN['titleColor']}}" type="button" @click="shareRedo(key)"> Share Answer </button>
             </div>
-            <div v-else-if="qn.t.includes('r')">
+            <div v-else-if="qn.t && qn.t.includes('r')">
                 <div v-for="x in qn.a">
                     <span style="font-size:20px"> <b>[[x]]</b> </span> <br>
                     <input
