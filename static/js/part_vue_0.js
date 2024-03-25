@@ -76,20 +76,22 @@ function startVue(qOBJ){
 
         // deal with choices arrays
         for (let q in qOBJ) {
-          if (qOBJ[q].t && qOBJ[q].t.includes('mc')) {
+          console.log('TTT', qOBJ[q].t)
+          console.log('TTT', qOBJ[q].t)
+          if (qOBJ[q].t != undefined && qOBJ[q].t.includes('mc')) {
             // deal with MC choices
             qOBJ[q]['b'] = qOBJ[q].c[0]
             this.shuffle(qOBJ[q].c)
             var localKey = this.SCHEMA + this.unit + this.part + q
 
-            if (localStorage.getItem(localKey) == '100') {
+            if (qOBJ[q].t.includes('r') && localStorage.getItem(localKey) == '100') {
               const answer = qOBJ[q].a
               this.qOBJ[q].a = answer.split('/')
               this.qOBJ[q].b = answer.split('/')
               this.write[q] = true
             }
             console.log(localKey, this.write)
-          } else if (qOBJ[q] && qOBJ[q].t.includes('tf')) {
+          } else if (qOBJ[q].t != undefined && qOBJ[q].t.includes('tf')) {
             // deal with TF choices
             console.log('TF setting', qOBJ[q].c)
             const answer = qOBJ[q].c[0]
@@ -518,9 +520,9 @@ function startVue(qOBJ){
         var sStr = 'height:30px;width:100px;color:white;' + bg
 
         var answerOBJ = this.qOBJ[key].b
-        // console.log('set style', answerOBJ)
+        console.log('set style', answerOBJ)
 
-        if (Object.keys(answerOBJ).length > 5) {
+        if (answerOBJ != undefined && Object.keys(answerOBJ).length > 5) {
           sStr = 'height:30px;width:220px;color:white;' + bg
         }
 
