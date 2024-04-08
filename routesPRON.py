@@ -467,17 +467,19 @@ def project_teams(unit, number):
     #create a dictionary of teams
     attTeams = Attendance_PRON.query.all()
     teamsDict = {}
-    for att in attTeams:
-        if att.teamnumber in teamsDict:
-            teamsDict[att.teamnumber].append(att.username)
-        else:
-            teamsDict[att.teamnumber] = [att.username]
+    if DEBUG == False:
+        for att in attTeams:
+            if att.teamnumber in teamsDict:
+                teamsDict[att.teamnumber].append(att.username)
+            else:
+                teamsDict[att.teamnumber] = [att.username]
 
     print(teamsDict)
 
     manualTeams = {
 
-        1: ['Chris','Test'],
+        7: ['Brian', 'Harrison', 'Anson'],
+        #8: ['Chloe', 'Lou', 'Vivi']
         # 2:['Nora','Amy'],
         # 3:['Anita','Bly','T.Y','MAC'],
         # 4:['Clyde','James','Yuri','Linda'],
@@ -499,6 +501,7 @@ def project_teams(unit, number):
 
     # prepare answers for QNA
     qnaDict = {}
+    qnaNotes = {}
     for i in range (1, 7):
         qnaDict[i] = {
             'question' : None,
@@ -509,8 +512,13 @@ def project_teams(unit, number):
             'imageLink' : '----',
             'imageLink2' : '----',
         }
+        qnaNotes[i] = {
+            'status' : 0,
+            'note' : 0
+        }
 
     snlDict = {}
+    snlNotes = {}
     for i in range (1, 7):
         snlDict[i] = {
             'question' : '---',
@@ -521,13 +529,22 @@ def project_teams(unit, number):
             'imageLink' : None,
             'imageLink2' : None,
         }
+        snlNotes[i] = {
+            'status' : 0,
+            'note' : 0
+        }
 
     rpDict = {'rpAudio': None}
+    rpNotes = {}
     for i in range (1, 4):
         rpDict[i] = {
             'question' : None,
             'answer' : [ None, None, None ],
             'user' : None
+        }
+        rpNotes[i] = {
+            'status' : 0,
+            'note' : 0
         }
 
     #make a list of teams already set up
@@ -549,7 +566,10 @@ def project_teams(unit, number):
             username=str(team_dict[team]),
             Ans01=str(json.dumps(qnaDict)),
             Ans02=str(json.dumps(snlDict)),
-            Ans03=str(json.dumps(rpDict))
+            Ans03=str(json.dumps(rpDict)),
+            Ans07=str(json.dumps(qnaNotes)),
+            Ans08=str(json.dumps(snlNotes)),
+            Ans09=str(json.dumps(rpNotes))
             )
         db.session.add(teamStart)
         db.session.commit()
@@ -695,6 +715,8 @@ def pro_check(unit):
     title = srcDict[unit]['Title']
 
 
+
+
     checkDict = { }
 
     projects = unitDict[unit].query.all()
@@ -703,16 +725,19 @@ def pro_check(unit):
         checkDict[proj.teamnumber] = {
             'team' : ast.literal_eval(proj.username),
             'qna_list' : json.loads(proj.Ans01),
+            'qna_notes' : json.loads(proj.Ans07),
             'qna_score' : proj.Ans04,
             'snl_list' : json.loads(proj.Ans02),
+            'snl_notes' : json.loads(proj.Ans08),
             'snl_score' : proj.Ans05,
             'rp_list' : json.loads(proj.Ans03),
+            'rp_notes' : json.loads(proj.Ans09),
             'rp_score' : proj.Ans06,
             }
 
     pprint (checkDict)
 
-    return render_template('pro/pro_check.html', legend='QNA Check', proString = json.dumps(checkDict))
+    return render_template('pro/pro_check.html', legend='QNA Check', unit=unit, proString = json.dumps(checkDict))
 
 @app.route ("/pro_list", methods=['GET','POST'])
 @login_required
@@ -1071,6 +1096,30 @@ def storeB64():
     db.session.commit()
 
     return jsonify({'question' : question})
+
+@app.route('/pr_updateStatus', methods=['POST'])
+def pr_updateStatus():
+    unit = request.form ['unit']
+    team = request.form ['team']
+    mode = request.form ['mode']
+    notes = json.loads(request.form ['notes'])
+
+    proj = unitDict[unit].query.filter_by(teamnumber=team).first()
+
+    status = 'none'
+
+    if mode == 'qna':
+        proj.Ans07 = json.dumps(notes)
+    elif mode == 'snl':
+        proj.Ans08 = json.dumps(notes)
+    elif mode == 'rp':
+        proj.Ans09 = json.dumps(notes)
+
+    status = mode
+
+    db.session.commit()
+
+    return jsonify({'status' : status})
 
 
 @app.route('/prostoreAnswer', methods=['POST'])

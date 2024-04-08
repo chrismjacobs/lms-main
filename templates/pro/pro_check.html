@@ -2,12 +2,13 @@
 
 {% block content %}
 
-<span id="fseDict" style="display:none">{{proString}}</span>
+<span id="proDict" style="display:none">{{proString}}</span>
+<span id="unit" style="display:none">{{unit}}</span>
 
 <div id="vue-app">
 
 <div class="content-section">
-        <h1> Work: {{ title }}  </h1>
+        <h1> Work {{unit}}: {{ title }}  </h1>
 
 </div>
 
@@ -30,18 +31,21 @@
         </thead>
 
         <tbody>
-        <template v-for="(answerSet, key) in qnaOBJ" >
+        <template v-for="(answerSet, key) in ansOBJ" >
 
             <tr>
               <td>
-              <span class="unit-span" style="background:silver;padding:3px"> [[ key ]] </span>
+              <span class="unit-span" style="background:silver;padding:3px"> [[ key ]] </span><br>
+              [[ answerSet.team]]
               </td>
 
               <td>
-                [[ answerSet.team]]
+                QNA<br>
+                <span class="unit-span" style="background:silver;padding:3px" @click="updateStatus(key, 'qna')">notes</span>
               </td>
               <td>
                 [[ answerSet.qna_score]]
+
               </td>
 
               <td v-for="(set, num) in answerSet.qna_list">
@@ -53,6 +57,9 @@
                   <source :src="answerSet.qna_list[num]['audioLink']" type="audio/mpeg" >
                   <source :src="answerSet.qna_list[num]['audioLink']" type="audio/x-m4a" >
                  </audio>
+                <input :style="getNoteStyle(answerSet.qna_notes[num].status)" type="number" v-model="answerSet.qna_notes[num].status"></input>
+                <input v-if="answerSet.qna_notes[num].status == 1" type="text" v-model="answerSet.qna_notes[num].note"></input>
+
               </td>
             </tr>
 
@@ -63,6 +70,7 @@
 
               <td>
                 SNL
+                <span class="unit-span" style="background:silver;padding:3px" @click="updateStatus(key, 'snl')">notes</span>
               </td>
               <td>
                  [[ answerSet.snl_score]]
@@ -80,12 +88,14 @@
                  <source :src="answerSet.snl_list[num]['audioLink']" type="audio/mpeg" >
                  <source :src="answerSet.snl_list[num]['audioLink']" type="audio/x-m4a" >
                 </audio>
+                <input :style="getNoteStyle(answerSet.snl_notes[num].status)" type="number" v-model="answerSet.snl_notes[num].status"></input>
+                <input v-if="answerSet.snl_notes[num].status == 1" type="text" v-model="answerSet.snl_notes[num].note"></input>
               </div>
 
               </td>
             </tr>
 
-            <tr syle="display:none">
+            <tr style="display:none">
               <td>
               <span class="unit-span" style="background:silver;padding:3px"> [[ key ]] </span>
               </td>
@@ -151,24 +161,39 @@
 
 <script type="text/javascript" >
 
-var projectDict = document.getElementById('fseDict').innerHTML
+var projectDict = document.getElementById('proDict').innerHTML
 var OBJ = JSON.parse(projectDict)
-console.log('projecDict', OBJ);
 
+var unit = document.getElementById('unit').innerHTML
+console.log('unit', unit)
 
-startVue(OBJ)
+let vue = startVue(OBJ, unit)
 
-function startVue(OBJ){ new Vue({
+function startVue(OBJ, unit){ new Vue({
 
     el: '#vue-app',
     delimiters: ['[[', ']]'],
     mounted: function(){
-        console.log('projecDict', OBJ);
+        console.log('projectDict', OBJ);
     },
     data: {
-        qnaOBJ: OBJ,
+        ansOBJ: OBJ,
+        unit: unit
     },
     methods: {
+        getNoteStyle: function (status) {
+
+          colors = {
+            1 : 'background:orange',
+            2 : 'background:lime',
+            3 : 'background:aqua',
+            4 : 'background:pink',
+            5 : 'background:yellow'
+          }
+          let style = colors[status]
+          console.log(style)
+          return style
+        },
         goTo: function(key, state) {
 
           var str = window.location.href
@@ -177,7 +202,39 @@ function startVue(OBJ){ new Vue({
           console.log('goTO', url);
             window.location = url
             console.log('DONE');
-        }
+        },
+        updateStatus: function(team, mode){
+
+          let notes = {}
+          if (mode == 'qna') {
+            notes = this.ansOBJ[team]['qna_notes']
+          } else if (mode == 'snl') {
+            notes = this.ansOBJ[team]['snl_notes']
+          }
+
+          console.log(notes, team, unit, mode)
+
+
+          $.ajax({
+          data : {
+              team : team,
+              notes : JSON.stringify(notes),
+              mode : mode,
+              unit : this.unit,
+          },
+          type : 'POST',
+          url : '/pr_updateStatus'
+          })
+          .done(function(data) {
+           alert(data.status);
+           location.reload()
+
+          })
+          .fail(function(){
+            alert('Failed, check server')
+          });
+
+        },
 
     }
 })// end NEW VUE
