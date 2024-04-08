@@ -706,7 +706,7 @@ def get_projects():
 @app.route ("/pro_check/<string:unit>", methods=['GET','POST'])
 @login_required
 def pro_check(unit):
-    taList = ['Chris']
+    taList = ['Chris', 'Cherry Mak']
 
     if current_user.username not in taList:
         return redirect('home')
