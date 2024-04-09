@@ -33,7 +33,7 @@
         <tbody>
         <template v-for="(answerSet, key) in ansOBJ" >
 
-            <tr>
+            <tr :style="getNoteStyle(answerSet.qna_notes, 0)" >
               <td>
               <span class="unit-span" style="background:silver;padding:3px"> [[ key ]] </span><br>
               [[ answerSet.team]]
@@ -57,13 +57,13 @@
                   <source :src="answerSet.qna_list[num]['audioLink']" type="audio/mpeg" >
                   <source :src="answerSet.qna_list[num]['audioLink']" type="audio/x-m4a" >
                  </audio>
-                <input :style="getNoteStyle(answerSet.qna_notes[num].status)" type="number" v-model="answerSet.qna_notes[num].status"></input>
+                <input :style="getNoteStyle(answerSet.qna_notes, num)" type="number" v-model="answerSet.qna_notes[num].status"></input>
                 <input v-if="answerSet.qna_notes[num].status == 1" type="text" v-model="answerSet.qna_notes[num].note"></input>
 
               </td>
             </tr>
 
-            <tr>
+            <tr :style="getNoteStyle(answerSet.snl_notes, 0)">
               <td>
               <span class="unit-span" style="background:silver;padding:3px"> [[ key ]] </span>
               </td>
@@ -88,7 +88,7 @@
                  <source :src="answerSet.snl_list[num]['audioLink']" type="audio/mpeg" >
                  <source :src="answerSet.snl_list[num]['audioLink']" type="audio/x-m4a" >
                 </audio>
-                <input :style="getNoteStyle(answerSet.snl_notes[num].status)" type="number" v-model="answerSet.snl_notes[num].status"></input>
+                <input :style="getNoteStyle(answerSet.snl_notes, num)" type="number" v-model="answerSet.snl_notes[num].status"></input>
                 <input v-if="answerSet.snl_notes[num].status == 1" type="text" v-model="answerSet.snl_notes[num].note"></input>
               </div>
 
@@ -181,18 +181,30 @@ function startVue(OBJ, unit){ new Vue({
         unit: unit
     },
     methods: {
-        getNoteStyle: function (status) {
-
-          colors = {
+        getNoteStyle: function (obj, num) {
+          let colors = {
             1 : 'background:orange',
             2 : 'background:lime',
             3 : 'background:aqua',
             4 : 'background:pink',
             5 : 'background:yellow'
           }
-          let style = colors[status]
-          console.log(style)
-          return style
+
+          if (num == 0) {
+            let check = true
+            for(let n in obj) {
+              if (obj[n]['status'] != 2) {
+                check = false
+              }
+            }
+            if (check) {
+              return 'background:lightgreen'
+            }
+          } else {
+            status = obj[num]['status']
+            return colors[status]
+          }
+
         },
         goTo: function(key, state) {
 

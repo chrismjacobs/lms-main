@@ -37,6 +37,7 @@
                         <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('dashboard')}}", target="_blank">Dashboard</a>
                         <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('dashboardpro', project=0)}}", target="_blank">Pro Dash</a>
                         <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('pro_dash')}}", target="_blank">Pro Exam</a>
+
                         {% endif %}
                         {% if current_user.id == 1 %}
                           <div class="navbar-nav mr-auto">
@@ -59,6 +60,7 @@
                             {% elif SCHEMA == 8 %}
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('dashboardpro', project=0)}}", target="_blank">Pro Dash</a>
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('pro_dash')}}", target="_blank">Pro Exam</a>
+                              <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('pro_grades')}}", target="_blank">Pro Grades</a>
                             {% endif %}
                           </div>
                         {% endif %}
@@ -172,7 +174,7 @@
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
-      <script type="text/javascript" >
+      <script type="text/javascript">
 
       var str = window.location.href
       if ( str.includes('127')  ){

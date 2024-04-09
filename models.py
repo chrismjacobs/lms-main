@@ -699,6 +699,9 @@ admin.add_view(MyModelView(A08A_ICC, db.session))
 # admin.add_view(MyModelView(A09A_ICC, db.session))
 # admin.add_view(MyModelView(A10A_ICC, db.session))
 
+### WRITE PRESENTATION
+admin.add_view(MyModelView(U011U_WRITE, db.session))
+admin.add_view(MyModelView(U012U_WRITE, db.session))
 ### WRITE ASSIGNMENTS
 admin.add_view(MyModelView(A01A_WRITE, db.session))
 admin.add_view(MyModelView(A02A_WRITE, db.session))

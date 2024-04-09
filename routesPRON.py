@@ -478,7 +478,7 @@ def project_teams(unit, number):
 
     manualTeams = {
 
-        7: ['Brian', 'Harrison', 'Anson'],
+        7: ['Chole', 'Harrison', 'Wendy'],
         #8: ['Chloe', 'Lou', 'Vivi']
         # 2:['Nora','Amy'],
         # 3:['Anita','Bly','T.Y','MAC'],
@@ -1246,4 +1246,86 @@ def pro_exam(qORs, unit, team):
 
     return render_template(html, legend='PRO Exam', title=unit, meta=meta, orderDict=json.dumps(orderDict), qnaString=json.dumps(qnaDictNew), snlString=json.dumps(snlDictNew), rpString=rpString)
 
-# exam format
+
+
+@app.route ("/pro_grades", methods=['GET','POST'])
+@login_required
+def pro_grades():
+
+    gradesDict = {}
+
+    users = User.query.all()
+
+    units = ['13','14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24']
+
+    for user in users:
+        gradesDict[user.username] = {
+            'Student' : {
+                'name' :user.username,
+                'id' : user.studentID,
+                'Status' : user.extra
+             }
+        }
+        for u in units:
+            gradesDict[user.username][u] = {
+                'team' : 0,
+                'QNA' : 0,
+                'SNL' : 0,
+                'RP' : 0,
+                'QNA_check' : 0,
+                'SNL_check' : 0,
+                'RP_check' : 0,
+                'QNA_grades' : [],
+                'SNL_grades' : [],
+                'RP_grades' : []
+            }
+
+    exams = Exams_PRON.query.all()
+
+    models = unitDict # at top of page
+
+    for model in models:
+        if int(model) > 12:
+            projects = models[model].query.all()
+            for proj in projects:
+                team = ast.literal_eval(proj.username)
+                for stu in team:
+                    gradesDict[stu][model]['QNA'] = proj.Ans04
+                    gradesDict[stu][model]['SNL'] = proj.Ans05
+                    gradesDict[stu][model]['RP'] = proj.Ans06
+                    gradesDict[stu][model]['team'] = str(proj.teamnumber)
+
+    for exam in exams:
+        #break
+        #QNA = json.loads(exam.j1)
+        QNA = json.loads(exam.j3)
+        for record in QNA:
+            entry = QNA[record]
+            print(exam.username, entry)
+            if entry['team'] == gradesDict[exam.username][entry['unit']]['team']:
+                gradesDict[exam.username][entry['unit']]['QNA_check'] = 1
+            else:
+                gradesDict[exam.username][ entry['unit'] ]['QNA_grades'].append(entry['grade'])
+
+        #SNL = json.loads(exam.j2)
+        SNL = json.loads(exam.j4)
+        for record in SNL:
+            entry = SNL[record]
+            print(exam.username, entry)
+            if entry['team'] == gradesDict[exam.username][entry['unit']]['team']:
+                gradesDict[exam.username][entry['unit']]['SNL_check'] = 1
+            else:
+                gradesDict[exam.username][ entry['unit'] ]['SNL_grades'].append(entry['grade'])
+
+        #RP = json.loads(exam.j3)
+        RP = json.loads(exam.j6)
+        for record in RP:
+            entry = RP[record]
+            print(exam.username, entry)
+            if entry['team'] == gradesDict[exam.username][entry['unit']]['team']:
+                gradesDict[exam.username][entry['unit']]['RP_check'] = 1
+            else:
+                gradesDict[exam.username][ entry['unit'] ]['RP_grades'].append(entry['grade'])
+
+
+    return render_template('pro/pro_grades.html', ansString=json.dumps(gradesDict))
