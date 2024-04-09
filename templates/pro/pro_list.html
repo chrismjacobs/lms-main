@@ -87,12 +87,12 @@
 
 </div>
 
-<div class="content-section" style="display:none">
+<div class="content-section" style="display:visible">
 
 <h3> Exam Test Board </h3>
 
-<h4 style="background:blue;color:white;padding:10px"> QNA box 9 point - SNL box 8 points - RP box 6 points </h4>
-<h4 style="background:purple;color:white;padding:10px"> If you missed a unit then get more points </h4>
+<h4 style="background:blue;color:white;padding:10px"> QNA box 16 point - SNL box 16 points</h4>
+<h4 style="background:purple;color:white;padding:10px"> If you missed a unit then try to get more points </h4>
 
     <div style="overflow-x:auto;">
       <table class="table table-sm">
@@ -102,8 +102,6 @@
               <th scope="col" >Q&A</th>
               <th scope="col" >Grade</th>
               <th scope="col" >S&L</th>
-              <th scope="col" >Grade</th>
-             <th scope="col" >RP</th>
               <th scope="col" >Grade</th>
             </tr>
         </thead>
@@ -122,13 +120,9 @@
                   <td>
                   </td>
                   <td  :style="getTotal(part, 'Sscore')[1]" >
-                    [[  getTotal(part, 'Sscore')[0] ]]/8
+                    [[  getTotal(part, 'Sscore')[0] ]]/9
                   </td>
-                  <td>
-                  </td>
-                  <td :style="getTotal(part, 'Rscore')[1]" >
-                   [[  getTotal(part, 'Rscore')[0] ]]/6
-                  </td>
+
               </tr>
                 <template v-if="unit != '00'"  v-for="(exam, team) in part" >
 
@@ -137,25 +131,18 @@
                     <span class="unit-span" style="background:silver;padding:3px"> [[ team  ]] </span>
                   </td>
                   <td>
-                    <span v-if="exam.QTotal > 5" @click="goToExam(unit, team, 'qna', exam.Qscore)"  class="unit-span" :style="buttonStyle(exam.Qscore, 'qna', 'check')"> &nbsp;QNA&nbsp; </span>
+                    <span v-if="exam.QTotal == 12" @click="goToExam(unit, team, 'qna', exam.Qscore)"  class="unit-span" :style="buttonStyle(exam.Qscore, 'qna', 'check')"> &nbsp;QNA&nbsp; </span>
                     <span v-else @click="" class="unit-span" style="background:lightgrey;padding:3px"> N/A </span>
                   </td>
                   <td>
                     <span :style="gradeStyle(exam.Qscore)">&nbsp;[[ exam.Qscore ]]&nbsp;</span>
                   </td>
                   <td>
-                    <span v-if="exam.STotal > 5"  @click="goToExam(unit, team, 'snl', exam.Sscore)"  class="unit-span" :style="buttonStyle(exam.Sscore, 'snl', 'check')"> &nbsp;SNL&nbsp; </span>
+                    <span v-if="exam.STotal == 12"  @click="goToExam(unit, team, 'snl', exam.Sscore)"  class="unit-span" :style="buttonStyle(exam.Sscore, 'snl', 'check')"> &nbsp;SNL&nbsp; </span>
                     <span v-else @click="" class="unit-span" style="background:lightgrey;padding:3px"> N/A </span>
                   </td>
                   <td>
                     <span :style="gradeStyle(exam.Sscore)">&nbsp;[[ exam.Sscore ]]&nbsp;</span>
-                  </td>
-                  <td>
-                    <span v-if="exam.RTotal > 3"  @click="goToExam(unit, team, 'rp', exam.Rscore)"  class="unit-span" :style="buttonStyle(exam.Rscore, 'rp', 'check')"> &nbsp;RP&nbsp; </span>
-                    <span v-else @click="" class="unit-span" style="background:lightgrey;padding:3px"> N/A </span>
-                  </td>
-                  <td>
-                    <span :style="gradeStyle(exam.Rscore)">&nbsp;[[ exam.Rscore ]]&nbsp;</span>
                   </td>
 
                 </tr>
@@ -206,8 +193,8 @@ function startVue(OBJ){
           // console.log('getTotal', part, type)
 
           let grades = {
-            Qscore : 9,
-            Sscore : 8,
+            Qscore : 16,
+            Sscore : 16,
             Rscore : 6
           }
 
@@ -297,6 +284,11 @@ function startVue(OBJ){
 
         },
         goToExam: function(unit, team, mode, score) {
+          var report = navigator.userAgent
+          if (!report.includes('Windows')){
+            alert('You must use computer to do exam')
+            return false
+          }
           console.log(score)
           if (score > 30 ){
             return false

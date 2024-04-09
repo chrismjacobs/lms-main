@@ -794,18 +794,18 @@ def pro_list():
 
     examDict = {}
 
-
-    for src in srcDict:
-        if int(src) < 12 and int(src) > 16: # change to match number of units
+    eUnits = ['01','02']
+    for src in eUnits:
+        if int(src) > 16: # change to match number of units
             pass
         else:
             examDict[src] = {}
-            try:
-                teamCheck = int(proDict[src]['Number'])
-                selector = teamCheck % 2
-                #print('selector', selector)
-            except:
-                selector = 0
+            # try:
+            #     teamCheck = int(proDict[src]['Number'])
+            #     selector = teamCheck % 2
+            #     #print('selector', selector)
+            # except:
+            #     selector = 0
 
             if Units_PRON.query.filter_by(unit=src).count() == 1:
                 projects = unitDict[src].query.all()
@@ -816,15 +816,27 @@ def pro_list():
                         pass
                     elif proDict[src]['Number'] == proj.teamnumber:
                         pass
-                    elif selector == 0 and proj.teamnumber % 2 != 0:
-                        pass
-                    elif selector != 0 and proj.teamnumber % 2 == 0:
-                        pass
+                    # elif selector == 0 and proj.teamnumber % 2 != 0:
+                    #     pass
+                    # elif selector != 0 and proj.teamnumber % 2 == 0:
+                    #     pass
                     else:
+                        QTotal = 0
+                        RTotal = 0
+                        STotal = 0
+                        qNotes = json.loads(proj.Ans07)
+                        sNotes = json.loads(proj.Ans08)
+                        rNotes = json.loads(proj.Ans09)
+                        print(qNotes)
+                        for q in qNotes:
+                            QTotal += int(qNotes[q]['status'])
+                        for s in sNotes:
+                            STotal += int(sNotes[s]['status'])
+
                         examDict[src][proj.teamnumber] = {
-                            'QTotal' : proj.Ans04,
-                            'STotal' : proj.Ans05,
-                            'RTotal' : proj.Ans06,
+                            'QTotal' : QTotal,
+                            'STotal' : STotal,
+                            'RTotal' : RTotal,
                             'Qscore' : 0,
                             'Sscore' : 0,
                             'Rscore' : 0,
