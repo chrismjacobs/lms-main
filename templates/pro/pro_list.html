@@ -91,7 +91,7 @@
 
 <h3> Exam Test Board </h3>
 
-<h4 style="background:blue;color:white;padding:10px"> QNA box 16 point - SNL box 16 points</h4>
+<h4 style="background:blue;color:white;padding:10px"> QNA box 12 point - SNL box 12 points</h4>
 <h4 style="background:purple;color:white;padding:10px"> If you missed a unit then try to get more points </h4>
 
     <div style="overflow-x:auto;">
@@ -115,12 +115,12 @@
                   <td>
                   </td>
                   <td :style="getTotal(part, 'Qscore')[1]" >
-                     [[  getTotal(part, 'Qscore')[0]  ]]/9
+                     [[  getTotal(part, 'Qscore')[0]  ]]/12
                   </td>
                   <td>
                   </td>
                   <td  :style="getTotal(part, 'Sscore')[1]" >
-                    [[  getTotal(part, 'Sscore')[0] ]]/9
+                    [[  getTotal(part, 'Sscore')[0] ]]/12
                   </td>
 
               </tr>
@@ -193,8 +193,8 @@ function startVue(OBJ){
           // console.log('getTotal', part, type)
 
           let grades = {
-            Qscore : 16,
-            Sscore : 16,
+            Qscore : 12,
+            Sscore : 12,
             Rscore : 6
           }
 
