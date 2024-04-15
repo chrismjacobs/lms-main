@@ -418,6 +418,20 @@ def completeStatus(time, name):
 
     ICC = [6]
 
+    if SCHEMA == 8:
+        return [0,0]
+
+    elif SCHEMA not in ICC:
+        assignments = {
+            'FN': ['05', '06', '07', '08'],
+            'MT': ['01', '02', '03', '04']
+        }
+    else:
+        assignments = {
+            'FN': ['06', '07', '08', '09', '10'],
+            'MT': ['01', '02', '03', '04', '05']
+        }
+
     partList = []
 
     if time == 'MT':
@@ -430,17 +444,6 @@ def completeStatus(time, name):
             partList = getInfo()['unit_mods_list'][20:40]
         else:
             partList = getInfo()['unit_mods_list'][16:32]
-
-    if SCHEMA not in ICC:
-        assignments = {
-            'FN': ['05', '06', '07', '08'],
-            'MT': ['01', '02', '03', '04']
-        }
-    else:
-        assignments = {
-            'FN': ['06', '07', '08', '09', '10'],
-            'MT': ['01', '02', '03', '04', '05']
-        }
 
 
     aCount = 0
@@ -889,6 +892,8 @@ def grades_midterm ():
     if SCHEMA == 6 or SCHEMA == 3:
         midterm_unit_list = ['01', '02', '03', '04', '05']
 
+    elif SCHEMA == 8:
+        midterm_unit_list = []
     else:
         midterm_unit_list = ['01', '02', '03', '04']
 
@@ -904,7 +909,7 @@ def grades_midterm ():
             total_units += 1
         else:
             print('Midterm Term Set')## we are now in final mode so ...
-            if SCHEMA == 6 or SCHEMA == 3:
+            if SCHEMA == 6:
                 total_units = 5
                 maxU = 40
                 maxA = 10
@@ -996,7 +1001,7 @@ def grades_midterm ():
 
     print(gradesDict)
 
-    if MT_marker:
+    if MT_marker and SCHEMA != 8: ## escape logic for pronunciation class
         return gradesDict
     else:
         if current_user.id != 1:
