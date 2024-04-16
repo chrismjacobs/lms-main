@@ -92,7 +92,7 @@
 <h3> Exam Test Board </h3>
 <h6> [[ report ]] </h6>
 
-<h4 style="background:blue;color:white;padding:10px"> QNA box 12 point - SNL box 12 points</h4>
+<h4 style="background:blue;color:white;padding:10px"> QNA box [[qTotal]] point - SNL box [[sTotal]] points</h4>
 <h4 style="background:purple;color:white;padding:10px"> If you missed a unit then try to get more points </h4>
 
     <div style="overflow-x:auto;">
@@ -116,12 +116,12 @@
                   <td>
                   </td>
                   <td :style="getTotal(part, 'Qscore')[1]" >
-                     [[  getTotal(part, 'Qscore')[0]  ]]/12
+                     [[  getTotal(part, 'Qscore')[0]  ]]/[[qTotal]]
                   </td>
                   <td>
                   </td>
                   <td  :style="getTotal(part, 'Sscore')[1]" >
-                    [[  getTotal(part, 'Sscore')[0] ]]/12
+                    [[  getTotal(part, 'Sscore')[0] ]]/[[sTotal]]
                   </td>
 
               </tr>
@@ -189,7 +189,10 @@ function startVue(OBJ, report){
     delimiters: ['[[', ']]'],
     data: {
         projectOBJ: OBJ,
-        report: report
+        report: report,
+        qTotal: 10,
+        sTotal: 10,
+        rTotal: 10
 
     },
     methods: {
@@ -197,9 +200,9 @@ function startVue(OBJ, report){
           // console.log('getTotal', part, type)
 
           let grades = {
-            Qscore : 12,
-            Sscore : 12,
-            Rscore : 6
+            Qscore : this.qTotal,
+            Sscore : this.sTotal,
+            Rscore : this.rTotal
           }
 
           let total = 0
