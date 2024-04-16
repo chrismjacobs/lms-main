@@ -156,6 +156,8 @@ def pr_assignment_list():
     # maxA = grades['maxA']
     # print ('RECS', recs)
 
+
+
     assDict = {}
     units = getModels()['Units_'].query.all()
     print(units)
@@ -163,13 +165,15 @@ def pr_assignment_list():
     count = 0
     for unit in units:
         unitText = unitIndex[count]
+        ass = pr_assDict[int(unitText)]
+        studentWork = ass.query.filter_by(username = current_user.username).first()
         print(unitIndex[count])
         if unit.uA and unit.uA > 0:
             assDict[unitText] = {
                 'Deadline' : srcDict[unitText]['Deadline'],
                 'Title' : srcDict[unitText]['Title'],
-                'Grade' : 0, #recs[unit]['Grade'],
-                'Comment' : '' #: recs[unit]['Comment']
+                'Grade' : studentWork.Grade,
+                'Comment' : studentWork.Comment
             }
         count += 1
 
@@ -325,7 +329,7 @@ def pr_ass(unit):
             Ans03 = json.dumps(['','']),
             Ans06 = json.dumps(['','']),
             Ans09 = json.dumps(['','']),
-            Grade=0, Comment='ready')
+            Grade=0, Comment='')
         db.session.add(entry)
         db.session.commit()
     elif count == 1:
