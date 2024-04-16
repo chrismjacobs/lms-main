@@ -90,6 +90,7 @@
 <div class="content-section" style="display:visible">
 
 <h3> Exam Test Board </h3>
+<h6> [[ report ]] </h6>
 
 <h4 style="background:blue;color:white;padding:10px"> QNA box 12 point - SNL box 12 points</h4>
 <h4 style="background:purple;color:white;padding:10px"> If you missed a unit then try to get more points </h4>
@@ -175,17 +176,20 @@ var examDict = document.getElementById('examDict').innerHTML
 var examOBJ = JSON.parse(examDict)
 console.log('examOBJ', examOBJ);
 
+var report = navigator.userAgent
+console.log(report)
 
-startVue(OBJ)
+startVue(OBJ, report)
 
-function startVue(OBJ){
+function startVue(OBJ, report){
 
   let vue = new Vue({
 
     el: '#vue-app',
     delimiters: ['[[', ']]'],
     data: {
-        projectOBJ: OBJ
+        projectOBJ: OBJ,
+        report: report
 
     },
     methods: {
@@ -284,9 +288,9 @@ function startVue(OBJ){
 
         },
         goToExam: function(unit, team, mode, score) {
-          var report = navigator.userAgent
-          if (!report.includes('Windows')){
-            alert('You must use computer to do exam')
+
+          if (this.report.includes('iPhone')){
+            alert('Sound does not work with iPhone, please use a computer')
             return false
           }
           console.log(score)
