@@ -30,7 +30,7 @@
            [[ movie.title ]]
           </td>
          <template  v-for="(link, team) in examplesOBJ[key]" :key="team">
-            <td v-if="link['audio']">
+            <td v-if="link['audio'] || mode == 'examples'">
             <button class="btn btn-info" @click="playAudio(link, key, team, movie.subtitles)"> [[team]]</button>
             </td>
             <td v-else="movie[team]">
@@ -117,7 +117,7 @@ function startVue(){ new Vue({
                aws = arg['audio']
           }
 
-          //console.log(aws)
+          console.log(aws)
           // let test = "https://nme-lms.s3.ap-northeast-1.amazonaws.com/dubbing/2/28_Il.mp3"
           audio.src = aws
           audio.pause()
