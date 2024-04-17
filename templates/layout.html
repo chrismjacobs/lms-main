@@ -59,6 +59,7 @@
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('nme_dubdash', project=0)}}", target="_blank">Movie Dash</a>
                             {% elif SCHEMA == 8 %}
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('dashboardpro', project=0)}}", target="_blank">Pro Dash</a>
+                              <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('dashboardpro_samples', project=1)}}", target="_blank">Pro Samples</a>
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('pro_dash')}}", target="_blank">Pro Exam</a>
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('pro_grades')}}", target="_blank">Pro Grades</a>
                               <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('grades_midterm')}}", target="_blank">Grades</a>
@@ -90,7 +91,7 @@
                                 {% endif %}
 
                                 {% if SCHEMA == 9 %}
-                                <a class="nav-item nav-link" style="color:{{titleColor}};background:white; display:none" href="{{ url_for ('nme_dubs_sample') }}">Movies Samples</a>
+                                <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('nme_dubs_sample') }}">Movies Samples</a>
                                 <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('nme_dubs') }}"> Team Dubs</a>
                                 <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('nme_movies') }}">Movies</a>
                                 <a class="nav-item nav-link" style="color:{{titleColor}};background:white; display:none" href="{{ url_for ('nme_project') }}">Project</a>

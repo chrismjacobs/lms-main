@@ -86,9 +86,8 @@ mDict2 = {
 def getTable(movie):
 
     SCHEMA = getSchema()
-    models = modDictUnits_VTM
-    if SCHEMA == 6:
-         models = modDictUnits_VTM
+    models = modDictUnits
+
 
     ## list of tables for previous movies
     tableDict = {
@@ -292,7 +291,7 @@ def nme_dubs_sample():
     payloadDict = getPayloads()
 
 
-    return render_template('nme/nme_dubs.html', legend='NME Dubs', nmeString = json.dumps(nmeExamples), payString = json.dumps(payloadDict), schema=getSchema(), mode='examples')
+    return render_template('nme/nme_dubs_samples.html', legend='NME Dubs', nmeString = json.dumps(nmeExamples), payString = json.dumps(payloadDict), schema=getSchema(), mode='examples')
 
 
 def get_movieDict():

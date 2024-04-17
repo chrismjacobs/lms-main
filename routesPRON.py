@@ -72,8 +72,7 @@ def dashboardpro():
         return abort(403)
 
 
-    period = ['01', '02', '03', '04', '05','06', '07', '08']
-
+    period = ['01', '02', '03', '04', '05', '06']
 
 
     totalDict = {}
@@ -101,9 +100,7 @@ def dashboardpro():
             period[2] : example,
             period[3] : example,
             period[4] : example,
-            period[5] : example,
-            period[6] : example,
-            period[7] : example
+            period[5] : example
         }
 
     # print(totalDict)
@@ -139,6 +136,15 @@ def dashboardpro():
 
     return render_template('pro/dashboardpro.html', ansString=json.dumps(totalDict), title='dashboard', SCHEMA=SCHEMA, att=att, MTFN=get_MTFN('grades'))
 
+@app.route ("/dashboardpro_samples")
+@login_required
+def dashboardpro_samples():
+    SCHEMA = getSchema()
+
+
+
+    return render_template('pro/dashboardpro_samples.html', ansString=json.dumps({}), title='dashboard', SCHEMA=SCHEMA, att=False, MTFN=get_MTFN('grades'))
+
 
 '''##### PRONUNCIATION Assignments ////////'''
 
@@ -167,13 +173,19 @@ def pr_assignment_list():
         unitText = unitIndex[count]
         ass = pr_assDict[int(unitText)]
         studentWork = ass.query.filter_by(username = current_user.username).first()
+        grade = 0
+        comment = ''
+        if studentWork:
+            grade = studentWork.Grade
+            comment = studentWork.Comment
+
         print(unitIndex[count])
         if unit.uA and unit.uA > 0:
             assDict[unitText] = {
                 'Deadline' : srcDict[unitText]['Deadline'],
                 'Title' : srcDict[unitText]['Title'],
-                'Grade' : studentWork.Grade,
-                'Comment' : studentWork.Comment
+                'Grade' : grade,
+                'Comment' : comment
             }
         count += 1
 

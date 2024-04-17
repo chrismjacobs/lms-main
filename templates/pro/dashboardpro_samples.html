@@ -1,0 +1,1109 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<span id="ansString" style="display:none">{{ansString}}</span>
+<span id="att" style="display:none">{{att}}</span>
+<span id="MTFN" style="display:none">{{MTFN}}</span>
+<span id="name" style="display:none">{{current_user.username}}</span>
+
+<div id="vue-app">
+
+<span id="schema" style="display:none">{{SCHEMA}}</span>
+
+<div class="content-section sticky">
+    <div style="display:inline-block">
+      <audio controls autoplay id="instructorPlayer"></audio>
+
+    </div>
+</div>
+
+    <div style="overflow-x:auto;">
+      <table class="table table-sm">
+
+        <tbody>
+        <template v-for="(userList, user) in ansOBJ" >
+          <tr style="background:wheat">
+              <td style="font-weight:14pt" colspan=13> <span v-if="anon"> user </span><span v-else> [[ user ]]
+              </td>
+
+          </tr>
+
+            <template v-for="(item, key) in ansOBJ[user]">
+              <tr v-if="item.idNum && showAll(key)">
+                <td style="width: 100px; word-wrap: break-word"> <div class="noScrollBar" style=""><span> <b>[[key]]: [[getText(item.A03, 0)]]</b> <br> [[getText(item.A03, 1)]] </span> </div></td>
+
+                <td> <button @click="play(item.A01)" :class="getColor(item.A01)"> [[  getTag(item.A01) ]] </button> <br>
+                  <button @click="playVideo(item.A02, user, key)" :class="getColor(item.A02)"> [[  getTag(item.A02) ]] </button> <br>
+
+                </td>
+                <td>
+                  <video :style="videoDisplay(user, key)" :id="'handlerVideo' + user + key" ref="player" controls autoplay style="width:70%" playsinline></video> <button :style="videoDisplay(user, key)" class="btn btn-danger" @click="stop_video(user, key)" >Close</button>
+                </td>
+
+
+              </tr>
+            </template>
+
+
+
+         </template>
+
+        </tbody>
+
+      </table>
+    </div>
+
+</div>
+
+
+</div> <!-- end of Vue app -->
+
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+
+<script type="text/javascript" >
+
+var OBJ = {
+  "Luo": {
+      "01": {
+          "idNum": 31,
+          "user": "Luo",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Luo/01_3_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Luo/01_3.mov",
+          "A03": "[\"Tommy & Grace's first kiss | Peaky Blinders \\u2013 BBC\", \"You're washed up in a place you don't belong for whatever reason my good fortune\"]",
+          "C": "Good intonation on these",
+          "G": 1,
+          "device": "Apple"
+      }
+  },
+  "Max": {
+      "02": {
+          "idNum": 10,
+          "user": "Max",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Max/02_3_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Max/02_3.mov",
+          "A03": "[\"friends\", \"what are you talking about everybody love joseph\\n\"]",
+          "C": "Completed on time - Great!",
+          "G": 2,
+          "device": "Apple"
+      }
+  },
+  "Brian": {
+      "01": {
+          "idNum": 27,
+          "user": "Brian",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Brian/01_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Brian/01_1.mov",
+          "A03": "[\"NYU's 2022 Commencement Speaker Taylor Swift\", \"Part of growing up and moving into new chapters of your life is about catch and release.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Brian/01_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Brian/01_2.mov",
+          "A06": "[\"Self-Love | Sherry Tseng | TEDxTaipeiAmericanSchool\", \"If you wanna get better, you have to start opening yourself up to other people, you have to stop being so narrow-minded.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Brian/01_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Brian/01_3.mov",
+          "A09": "[\"When is anger justified? A philosophical inquiry - Delaney Thull\", \"Anger is a complicated emotion. It can feel reasonable and righteous or impulsive and uncontrollable.\"]",
+          "C": "Completed on time - Great!",
+          "G": 2,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 13,
+          "user": "Brian",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Brian/02_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Brian/02_1.mov",
+          "A03": "[\"The Devil Wears Prada Reunion at The 30th Annual SAG Awards\", \"By all means move at a glacial pace, you know how that thrills me.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Brian/02_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Brian/02_2.mov",
+          "A06": "[\"Why the FBI and the CIA Keep Lying to Each Other\", \"There is a reason for this, and it comes down to the fundamental kind of information each agency collects.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Brian/02_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Brian/02_3.mov",
+          "A09": "[\"The Key To Dealing With Social Anxiety\", \"What this experiment discovered is what's called \\\"the spotlight effect\\\".\"]",
+          "C": "Completed on time - Great!",
+          "G": 2,
+          "device": "Apple"
+      }
+  },
+  "Amy": {
+      "01": {
+          "idNum": 18,
+          "user": "Amy",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Amy/01_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Amy/01_1_capture.mp4",
+          "A03": "[\"The Avengers: Iron Man Vs. Thor- Subtitles (HD)\", \"You have no idea what you're dealing with.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Amy/01_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Amy/01_2_capture.mp4",
+          "A06": "[\"Learn English with Captain America: The First Avenger\", \"I thought I was signing up for the U.S. Army.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Amy/01_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Amy/01_3_capture.mp4",
+          "A09": "[\"Iron Man - I Am Iron Man (Full scene)\", \"He will not be taking any questions.Thank you.\"]",
+          "C": "Completed on time - Great!",
+          "G": 2,
+          "device": "Android"
+      },
+      "02": {
+          "idNum": 1,
+          "user": "Amy",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Amy/02_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Amy/02_1_capture.mp4",
+          "A03": "[\"Learn ENGLISH with Disney's TANGLED\", \"Who are you, and how did you find me?\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Amy/02_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Amy/02_2_capture.mp4",
+          "A06": "[\"Learn English with AVATAR: The Way of Water\", \"I cannot. You cannot ask this.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Amy/02_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Amy/02_3_capture.mp4",
+          "A09": "[\"Learn English with Kung Fu Panda [Intermediate Lesson]\", \"Go ahead,panda. Show us what you can do.\"]",
+          "C": "Very good assignments, ",
+          "G": 2,
+          "device": "Android"
+      }
+  },
+  "Nora": {
+      "01": {
+          "idNum": 23,
+          "user": "Nora",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/01_1_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/01_1_capture.mov",
+          "A09": "[\"  Emma Watson Once Mistook Jimmy Fallon for Jimmy Kimmel\", \"I died inside.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/01_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/01_2_capture.mov",
+          "A06": "[\"The Fox and the Crow\", \"It's a lovely day, isn't it \"]",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/01_3_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/01_3_capture.mov",
+          "A03": "[\"Jumanji The Next Level: Baboon Attack Bridge Scene (Kevin Hart, Jack Black 4K HD Clip) |\", \"You see? It's no big deal.\"]",
+          "C": "Completed on time - Great!",
+          "G": 2,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 4,
+          "user": "Nora",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/02_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/02_1.mov",
+          "A03": "[\"Learn English with Ratatouille | Describing an Extraordinary Dish\", \"Spit it that out right now\\nI have got to teach you about food. \"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/02_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/02_2.mov",
+          "A06": "[\"the Frightened Lion - UK English accent \", \"But you look busy.\\ni will come back later. See ya\\n.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/02_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/02_3.mov",
+          "A09": "[\"Rapunzel - UK English accent \", \"Who are you\\nWhat do you want\\nWhy did you climb my hair\\n\"]",
+          "C": "Completed on time - Great!",
+          "G": 2,
+          "device": "Apple"
+      }
+  },
+  "Oscar": {
+      "01": {
+          "idNum": 21,
+          "user": "Oscar",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Oscar/01_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Oscar/01_1.mov",
+          "A03": "[\"When Scottish People Speak English\", \"Scottish People like a wee drink.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Oscar/01_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Oscar/01_2.mov",
+          "A06": "[\"When Scottish People Speak English\", \"Are you going on a piss tonight?(means will you get some drink tonight ?)\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Oscar/01_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Oscar/01_3.mov",
+          "A09": "[\"When Scottish People Speak English\", \"Can you teach me one or two Weegie's slangs?\"]",
+          "C": "careful when transcibing scottish accent, actually he say \"are you going out on the piss tonight\"",
+          "G": 1,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 16,
+          "user": "Oscar",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Oscar/02_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Oscar/02_1.mov",
+          "A03": "[\"When Scottish People Speak English\", \"so how many drink do you have normally on a night out?\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Oscar/02_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Oscar/02_2.mov",
+          "A06": "[\"How smart Harvard students?\", \"Welcome to the smart world.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Oscar/02_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Oscar/02_3.mov",
+          "A09": "[\"How smart Harvard students?\", \"What are the first 10 digit of pi?\"]",
+          "C": "Completed on time - Great!",
+          "G": 2,
+          "device": "Apple"
+      }
+  },
+  "Vanessa": {
+      "01": {
+          "idNum": 6,
+          "user": "Vanessa",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Vanessa/01_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Vanessa/01_1_capture.mp4",
+          "A03": "[\"Twilight 4 {0:27}\", \"for better or for worse.\\nto love to cherish\\nas long as we both shall live.\\n\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Vanessa/01_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Vanessa/01_2_capture.mp4",
+          "A06": "[\"Twilight 1 clip{0:50}\", \"yeah. it was amazing.\\nI mean. he got to me so fast.\\nhe was nowhere near me.\\nsounds like you were very lucky.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Vanessa/01_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Vanessa/01_3_capture.mp4",
+          "A09": "[\"Harry Potter \\uff5b0:12\\uff5d\", \"excuse me.\\ndo you mind?\\nEverywhere else is full.\\nNot at all.\\n\\n\"]",
+          "C": "This assignment has been completed late",
+          "G": 1,
+          "device": "Android"
+      },
+      "02": {
+          "idNum": 9,
+          "user": "Vanessa",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Vanessa/02_1_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Vanessa/02_1_capture.mp4",
+          "A09": "[\"WONKA | Official Trailer {0:50}\", \"Do you have a pencil and paper?\\nUh huh.\\n I got an idea.\\nI know thing haven't been easy for you.\\nThey're gonna get better.\\nYou promise?\\nI pinkle promise.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Vanessa/02_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Vanessa/02_2_capture.mp4",
+          "A06": "[\"Severus Snapep {0:27}\", \"She's jealous\\nShe's ordinary and you're special that's me\"]",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Vanessa/02_3_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Vanessa/02_3_capture.mp4",
+          "A03": "[\"Wednesday Addams is The Queen of One-Liners | Wednesday | Netflix Philippines{0:33}\", \"Use \\\"little\\\" and \\\"girl\\\" to address me again and I can't guarantee your safety.\"]",
+          "C": "This assignment has been completed late",
+          "G": 1,
+          "device": "Android"
+      }
+  },
+  "Bobo Lau": {
+      "01": {
+          "idNum": 10,
+          "user": "Bobo Lau",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Bobo Lau/01_1_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Bobo Lau/01_1.mov",
+          "A06": "[\"Documentary - official trailer of Formula 1 Season 6 on Netflix\", \"A driver's career has a finite amount of time to it.\\nWe owe it to them to provide with a good car.\\nYou can be here for 20 more years, I can't.\"]",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Bobo Lau/01_2_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Bobo Lau/01_2.mov",
+          "A03": "[\"Drama - clips of Bridgerton on Netflix\", \"Oh, come and see the baby, Eloise.\\nWhy? Has he changed since I saw him last?\\nThere we go.\\nDo not mind your Auntie Eloise.\\nShe's too busy reading to notice anything else, as usual.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Bobo Lau/01_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Bobo Lau/01_3.mov",
+          "A09": "[\"Reaction - British Highschoolers react to British Memes\", \"Today we have collected some of the internet's favourite British Stereotypes.\\nOh Great.\\nI feel like there's a lot of stereotypes.\\nMost about our accent.\\nAnd our teeth.\"]",
+          "C": "good work",
+          "G": 1,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 5,
+          "user": "Bobo Lau",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Bobo Lau/02_1_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Bobo Lau/02_1.mov",
+          "A09": "[\"TOM HOLLAND Gets Vulnerable About Mental Health &amp;amp;amp; Overcoming Social Anxiety\", \"I decided to delete my Instagram because I just like I was so addicated to this kind of false version of my life that it was just taking over. \"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Bobo Lau/02_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Bobo Lau/02_2.mov",
+          "A06": "[\"Tom Felton vs. 'The Most Impossible Harry Potter Quiz' | PopBuzz Meets\", \"Question Two. What is the final word said on screen in the 19 years later epilogue? \\nAnd who says it?\"]",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Bobo Lau/02_3_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Bobo Lau/02_3.mov",
+          "A03": "[\"Drama - Friends\", \"Hey everybody, happy thanksgiving...\\nShhhhh. No no no no...\\nWhat are we keeping thanksgiving a secret this year or...?\"]",
+          "C": "good work ",
+          "G": 1,
+          "device": "Apple"
+      }
+  },
+  "Ling": {
+      "01": {
+          "idNum": 20,
+          "user": "Ling",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Ling/01_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Ling/01_1.mov",
+          "A03": "[\"Stray Kids speaking the English language *chaotic* | felixoxo  (1:40~1:50)\", \"How are you ? I' fine  Thank you and you \"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Ling/01_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Ling/01_2.mov",
+          "A06": "[\"MAX - STUPID IN LOVE (feat. HUH YUNJIN of LE SSERAFIM) [Official Lyric Video]\", \"Let\\u2019s get married in Vegas\\nWe don\\u2019t need a guest list\\nI don\\u2019t wanna think too much\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Ling/01_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Ling/01_3.mov",
+          "A09": "[\"10 Things Stray Kids Can't Live Without | GQ\", \"very simple but it's it's essential\"]",
+          "C": "Completed on time - Great!",
+          "G": 2,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 8,
+          "user": "Ling",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Ling/02_1_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Ling/02_1.mov",
+          "A09": "[\"Stray Kids Play \\\"I Dare You\\\" | Teen Vogue\", \"Don't do that !\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Ling/02_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Ling/02_2.mov",
+          "A06": "[\"Stray Kids Play \\\"I Dare You\\\" | Teen Vogue\", \"okey i will try my best\"]",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Ling/02_3_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Ling/02_3.mov",
+          "A03": "[\"Oh, hey Vogue Roses are red Violets are blue I\\u2019m in Paris and I love you\", \"Oh, hey Vogue Roses are red Violets are blue I\\u2019m in Paris and I love you\"]",
+          "C": "Great work, no more music videos thanks :)",
+          "G": 2,
+          "device": "Apple"
+      }
+  },
+  "Wendy": {
+      "01": {
+          "idNum": 30,
+          "user": "Wendy",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wendy/01_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wendy/01_1.mov",
+          "A03": "[\"Taylor Swift QnA\", \"Cheesebuger, fries, chocolate sake.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wendy/01_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wendy/01_2.mov",
+          "A06": "[\"Taylor Swift QnA\", \"A gluten free, dairy free chocolate cake.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wendy/01_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wendy/01_3.mov",
+          "A09": "[\"Taylor Swift QnA\", \"My boyfriend planted an olive tree in my yard for Christmas.\"]",
+          "C": "This assignment has been completed late",
+          "G": 1,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 25,
+          "user": "Wendy",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wendy/02_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wendy/02_1_capture.mp4",
+          "A03": "[\"BLACKPINK: LIGHT UP THE SKY \", \"All I wanted was people to see the potential in us.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wendy/02_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wendy/02_2_capture.mp4",
+          "A06": "[\"BLACKPINK: LIGHT UP THE SKY \", \"I had never even imagined myself living apart from my family.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wendy/02_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wendy/02_3_capture.mp4",
+          "A09": "[\"BLACKPINK: LIGHT UP THE SKY \", \"Lisa, give me your Leica. I'll take a picture.\"]",
+          "C": "Pretty good work so far, intonation is well matched, a few individua words need more practice, and listen carefully what is said, eg \"I'll\" not \"I will\"",
+          "G": 1,
+          "device": "Apple"
+      }
+  },
+  "Haoyuchan": {
+      "01": {
+          "idNum": 14,
+          "user": "Haoyuchan",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Haoyuchan/01_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Haoyuchan/01_1.mov",
+          "A03": "[\"GQ\", \"believe it into reality\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Haoyuchan/01_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Haoyuchan/01_2.mov",
+          "A06": "[\"Peaky Blinders - \\\"In The Bleak Midwinter\", \"The Bleak Midwinter\\nat some point in the near future \\nMr. Churchill will want to speak to you in person Mr. shelby\\nhe has a jib for you we will be in touch. \"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Haoyuchan/01_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Haoyuchan/01_3.mov",
+          "A09": "[\"Harvey Specter, Meet Mike Ross | Suits\", \"we should hire you, Jesus\\ni'd give you the 25Grand as a sining bonus.\\ni 'll take it.\\nunfortunately we only hire from Harvard.\"]",
+          "C": "Good work here, pace and intonation is well done, Irish accent is hard, lol",
+          "G": 1,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 11,
+          "user": "Haoyuchan",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Haoyuchan/02_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Haoyuchan/02_1.mov",
+          "A03": "[\" Breaking Bad \\\\ say my name\", \"who the hell are you. \\nyou all know, exctaly who i am,\\nsay my name\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Haoyuchan/02_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Haoyuchan/02_2.mov",
+          "A06": "[\"Nobody | The Bus Fight \", \"this girl's gonna get home safe tonight.\\ni hope these asshole like hsoptail food.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Haoyuchan/02_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Haoyuchan/02_3.mov",
+          "A09": "[\"\\\"Come On, Take My Gun From Me\\\"\", \"Take My Gun From Me\\nlet me see it\\nhere  i'll make it easy for you\"]",
+          "C": "This assignment has been completed late",
+          "G": 1,
+          "device": "Apple"
+      }
+  },
+  "Wing Chi": {
+      "01": {
+          "idNum": 12,
+          "user": "Wing Chi",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wing Chi/01_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wing Chi/01_1.mov",
+          "A03": "[\"SUHO's one and only interview in English I Datadrop\", \"even though i was wearing expensive brands,it looks so comfortable\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wing Chi/01_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wing Chi/01_2.mov",
+          "A06": "[\"kyo kaneko debut\", \"chaos? I call it fun\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wing Chi/01_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wing Chi/01_3.mov",
+          "A09": "[\"mysta rias debut\", \"how mysteriuos\"]",
+          "C": "Completed on time - Great!",
+          "G": 2,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 7,
+          "user": "Wing Chi",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wing Chi/02_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wing Chi/02_1.mov",
+          "A03": "[\"Matara And Kuro's \\\"Slip Up\\\"\", \"what do you mean always?\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wing Chi/02_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wing Chi/02_2.mov",
+          "A06": "[\"how high is Shu's kick?\\u3010NIJISANJI EN CLIP\\u3011\", \"I used to be able to kick really high \"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wing Chi/02_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Wing Chi/02_3.mov",
+          "A09": "[\"Life Advice with Auntie Aia &amp;amp; Uncle Ver \\u3010NIJISANJI EN | Aia Amare \\u3011\", \"your parents will never be proud you\"]",
+          "C": "Very good, even copying the Chinese accent, it's fun, I think next you can try longer models for a challenge :)",
+          "G": 2,
+          "device": "Apple"
+      }
+  },
+  "Chloe": {
+      "01": {
+          "idNum": 19,
+          "user": "Chloe",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Chloe/01_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Chloe/01_1_capture.mov",
+          "A03": "[\"I Survived 7 Days In An Abandoned City\", \"we just got dropped off in the middle of an abandoned city\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Chloe/01_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Chloe/01_2_capture.mov",
+          "A06": "[\"Minecraft Speedrunner VS 3 Hunters GRAND FINALE\", \"can they stop me from beating the ender dragon,or will I survive?\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Chloe/01_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Chloe/01_3_capture.mov",
+          "A09": "[\"Minecraft, But I Can NEVER Leave This Box (#9)\", \"but there's no more time to mess around\"]",
+          "C": "Completed on time - Great!",
+          "G": 2,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 23,
+          "user": "Chloe",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Chloe/02_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Chloe/02_1.mov",
+          "A03": "[\"I Built The Most Over The Top DIRT MANSION in Minecraft Hardcore\", \"a little dirt house that we all grew up in turned into like a 10 star Beverly Hills Mansion\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Chloe/02_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Chloe/02_2.mov",
+          "A06": "[\"Australian GP 2024 | Highlights | Formula 1 Comedy\", \"You want my overalls? I love the Aussie lifestyle. So I've put my overalls up for hire. You can have it for free. Cos' I'm very rich already.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Chloe/02_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Chloe/02_3.mov",
+          "A09": "[\"Max Verstappen Funny Moments (2022 Season Remix) | Formula 1 Animated Comedy\", \"So, we spent 2 million on Chef Adrian's spicy wings.\\nWhat wings are those?\\nIt's chicken wings with Adrian's secret sauce. Really spicy.\\nYes, gives you lots of downforce.\\nDownforce?\\nYeah he meant, it's really spicy. So we all had a lot of downforce in the loo the next morning. Hehe.\"]",
+          "C": "good assignments, some are a little long so hard to get a perfect model, if long at least try to keep to one speaking part, not a conversation",
+          "G": 1,
+          "device": "Apple"
+      }
+  },
+  "Jefferry": {
+      "01": {
+          "idNum": 11,
+          "user": "Jefferry",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jefferry/01_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jefferry/01_1.mov",
+          "A03": "[\"The Avengers\", \" \\\"And I.. Am... Iron Man\\\" (\\u6211\\u662f\\u92fc\\u9435\\u4eba)\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jefferry/01_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jefferry/01_2.mov",
+          "A06": "[\"Adele Gets Candid with Ellen\", \"When you already going through questioning what happened \"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jefferry/01_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jefferry/01_3.mov",
+          "A09": "[\"Anne Hathaway- The Tonight Show\", \"i did not know where this was going(\\u6211\\u4e0d\\u77e5\\u9053\\u9019\\u662f\\u600e\\u9ebc\\u56de\\u4e8b)\"]",
+          "C": "maybe practice 3 more , I did \"not\" know.....",
+          "G": 1,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 3,
+          "user": "Jefferry",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jefferry/02_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jefferry/02_1.mov",
+          "A03": "[\"Steven Universe Future\", \"PARADOT COME ON WE GOT TO STOP ARE YOU LISTENING TO ME\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jefferry/02_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jefferry/02_2.mov",
+          "A06": "[\"Steven Universe Future\", \"we were trying to be strong for you\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jefferry/02_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jefferry/02_3.mov",
+          "A09": "[\"Steven Universe\", \"wait there no reason to fight let me talk to her\"]",
+          "C": "practice number 3 a little more please",
+          "G": 1,
+          "device": "Apple"
+      }
+  },
+  "Hugo": {
+      "01": {
+          "idNum": 25,
+          "user": "Hugo",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Hugo/01_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Hugo/01_1_capture.mp4",
+          "A03": "[\"White Chicks: Hold my poodle.\", \"chief.hmm they're here.all right.the girls are yours stick with them .don't blow your cover. yes,sir.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Hugo/01_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Hugo/01_2_capture.mp4",
+          "A06": "[\"Teen Titans Go!\", \"Now listen so i can teach you how to listen. Huh...whatever. The keys to active listening  are eye contact and hand holding.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Hugo/01_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Hugo/01_3_capture.mp4",
+          "A09": "[\"You only live once... so play it safe\", \"Guys,what's going on.Darwin tied us up while he went to  make sure the rest of Elmore is safe. it's  for our own good.\"]",
+          "C": "very good, especially the effort to match intonation I like it",
+          "G": 1,
+          "device": "Android"
+      },
+      "02": {
+          "idNum": 21,
+          "user": "Hugo",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Hugo/02_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Hugo/02_1_capture.mp4",
+          "A03": "[\"The Cruise Ship Summer Holiday \\u2600\\ufe0f | Peppa Pig Official Full Episodes\", \"Uh, hello? who is this?\\nIt's me, Daddy!\\nI'm on holiday,remember?\\nOh,Peppa! How's the holiday?\\nIt is very nice.\\n\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Hugo/02_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Hugo/02_2_capture.mp4",
+          "A06": "[\"Toy Story (1995) - Woody's Plan\", \"All right.listen up!\\nI need Pump boy here.\\nDucky here.\\nLegs,you're with Ducky.\\nRoller Bob and I don't move till we get the signal clear.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Hugo/02_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Hugo/02_3_capture.mp4",
+          "A09": "[\"Sing Selection Scene\", \"I'll take you guys.\\nAnd which one of you is the girl.\\nVery funny.\\nloud and horrible but shows promise.\\nWelcome to the show.\"]",
+          "C": "Good assignments here, in the future choose monologues over conversation models, it's easy to pratice and match",
+          "G": 1,
+          "device": "Android"
+      }
+  },
+  "Eden": {
+      "01": {
+          "idNum": 17,
+          "user": "Eden",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Eden/01_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Eden/01_1.mov",
+          "A03": "[\"Steve Harvey Tests Ashanti's Lyrical Skills\", \"Listen, you're right. I'm not even gonna lie. I tried to make gluten-free pasta, like, you know, the noodles, the other day.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Eden/01_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Eden/01_2.mov",
+          "A06": "[\"Ellen Taught This Fan How to Speak English\", \"I didn't understand anything you were saying, literally. I'm sorry, but I didn't.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Eden/01_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Eden/01_3.mov",
+          "A09": "[\"Emma Watson Once Mistook Jimmy Fallon for Jimmy Kimmel\", \"But then I feel like this show had a great vibe, 'cause everyone was in hysterics and the energy was like-- And I was so keen to do a good job after having, you know...\"]",
+          "C": "But then I feel like this show had a great vibe, 'cause everyone was in hysterics and the energy was like\n\nfocus on 'vibe' 'energy' \n a little faster, need some practice",
+          "G": 1,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 14,
+          "user": "Eden",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Eden/02_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Eden/02_1.mov",
+          "A03": "[\"Every Time Taylor Swift Appeared on The Ellen Show In Order (Part 2)\", \"Yes this is which is sort of like I'm I'm pretty obnoxious the face that that's my lucky number so this us very exciting I know what are you gonna do\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Eden/02_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Eden/02_2.mov",
+          "A06": "[\"Raven's Personalities! | Teen Titans Go! | Cartoon Network\", \"Oh no we just split Raven into five versions of herself\\nyou okay Raven \"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Eden/02_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Eden/02_3.mov",
+          "A09": "[\"Lady Legasus! | Teen Titans Go! | Cartoon Network\", \"These legs along with the rest of me shall henceforth be known as lady legacies\"]",
+          "C": "Yes this is, which is sort of like, I'm pretty obnoxious about the fact that that's my lucky number so this is very exciting  --- practice again to imporve fluency",
+          "G": 1,
+          "device": "Apple"
+      }
+  },
+  "Anson": {
+      "01": {
+          "idNum": 8,
+          "user": "Anson",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Anson/01_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Anson/01_1.mov",
+          "A03": "[\"THE GANGSTERS \", \"amish its okay we're among friends come on  what have you got for me \"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Anson/01_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Anson/01_2.mov",
+          "A06": "[\"Kevin Costner In UNDERGROUND SPY\", \"Christ let's see we can jump start your memory \"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Anson/01_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Anson/01_3.mov",
+          "A09": "[\"FBI AGENT \", \"you're in way over your head boy you see we have an understanding with the police\"]",
+          "C": "what have you got for me - can be more fluent, listen carefully\n\nyou're in way over you head... boy... we have .... - try to match the pauses when repeating",
+          "G": 1,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 12,
+          "user": "Anson",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Anson/02_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Anson/02_1.mov",
+          "A03": "[\"CIA AGENT\", \"did you get these kind of grades in the states\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Anson/02_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Anson/02_2.mov",
+          "A06": "[\"ARMOUR OF GOD 3\", \"he doesn't like taking to me you better call him \"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Anson/02_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Anson/02_3.mov",
+          "A09": "[\"UNDERCOVER\", \"no you've done this before undercover if you have any advice\\n\"]",
+          "C": "check your videos for sound, so you can do the listen/echo/repeat",
+          "G": 1,
+          "device": "Apple"
+      }
+  },
+  "Henry": {
+      "01": {
+          "idNum": 32,
+          "user": "Henry",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Henry/01_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Henry/01_1.mov",
+          "A03": "[\"Kevin Hart's Underwear\", \"You know going to Rwanda, you have to make sure that you set yourself up to do things that you wouldn't normally do, but you have to have an open mind to doing it.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Henry/01_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Henry/01_2.mov",
+          "A06": "[\"The Rock &amp;amp; Kevin Hart Argue Over The Internets Biggest Debates\", \"I said disagree because i feel that just because i have a few leadership qualities, doesn't make me necessarily a good presidential candidate.\"]",
+          "A07": null,
+          "A08": null,
+          "A09": "[\"\", \"\"]",
+          "C": "ready",
+          "G": 0,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 24,
+          "user": "Henry",
+          "A01": null,
+          "A02": null,
+          "A03": "[\"\", \"\"]",
+          "A04": null,
+          "A05": null,
+          "A06": "[\"\", \"\"]",
+          "A07": null,
+          "A08": null,
+          "A09": "[\"\", \"\"]",
+          "C": "ready",
+          "G": 0,
+          "device": "Apple"
+      }
+  },
+  "Jolin": {
+      "01": {
+          "idNum": 24,
+          "user": "Jolin",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jolin/01_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jolin/01_1.mov",
+          "A03": "[\"The Ant and The Dove\", \"The ant climbed on the leaf. He thanked the Dove for saving his life.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jolin/01_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jolin/01_2.mov",
+          "A06": "[\"The Bear and the Bee \", \"Everybody knows that bears love honey. One day Mr.Bear looks in his cupboard and he can't fond any honey.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jolin/01_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jolin/01_3.mov",
+          "A09": "[\"Snow White\", \"Every day the queen looked at herself in the mirror, and asked: Magic mirror on the wall, who is the most beautiful of all?\"]",
+          "C": "This assignment has been completed late",
+          "G": 1,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 6,
+          "user": "Jolin",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jolin/02_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jolin/02_1.mov",
+          "A03": "[\"My Day | Improve your English | English Listening Skills - Speaking Skills | Daily Life\", \"Once i arrived, if teachers have given us homework, I do it first as I want to finish early.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jolin/02_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jolin/02_2.mov",
+          "A06": "[\"Learn English through Story - Anna and the Fighter - Level 1\", \"There was a cafe inside the hotel.It did not ioook vert clean.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jolin/02_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Jolin/02_3.mov",
+          "A09": "[\"The Lion and the Mouse in English | @EnglishFairyTales\", \"The lion over his big jaws to swallow him. The mouse was very scared.\"]",
+          "C": "good work, I like the stories, after midterm try to also find more natural speaking videos to practice, and sometime practice  a little more to match the fluency ",
+          "G": 1,
+          "device": "Apple"
+      }
+  },
+  "Harrison": {
+      "01": {
+          "idNum": 7,
+          "user": "Harrison",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Harrison/01_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Harrison/01_1.mov",
+          "A03": "[\"Back to the Future \", \"come here i will show you how it works first you turn the time  circuits on  this readout tells you where you are going this one tells you where you were you input you destination time on this keypad say you want to see the sign of the declaration of independence.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Harrison/01_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Harrison/01_2.mov",
+          "A06": "[\"THE GARFIELD MOVIE - New Trailer (HD)\", \"you've obviously never been in an olive garden that's run out of bread sticks.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Harrison/01_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Harrison/01_3.mov",
+          "A09": "[\"KUNG FU PANDA 4 | New Final Trailer\", \"When i possess the Kung FU of all i will have no Rivals not even you\"]",
+          "C": "This assignment has been completed late",
+          "G": 1,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 18,
+          "user": "Harrison",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Harrison/02_1_A.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Harrison/02_1.mov",
+          "A03": "[\"Migration | Official Trailer\", \"YOU SAID IT WITH YOUR EYES.\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Harrison/02_2_A.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Harrison/02_2.mov",
+          "A06": "[\"Orion and the Dark | Official Trailer | Netflix\", \"My name is Orion, and I am afraid.\"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Harrison/02_3_A.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Harrison/02_3.mov",
+          "A09": "[\"Baymax! | Official Trailer 2 | Disney+\", \"Let's go find Baymax!\"]",
+          "C": "Overall good, this models are short and you match them quite well, I notice your 'th' needs a bit more practice eg \"with your eyes\"",
+          "G": 1,
+          "device": "Apple"
+      }
+  },
+  "Dao Phuong Thao": {
+      "01": {
+          "idNum": 29,
+          "user": "Dao Phuong Thao",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Dao Phuong Thảo/01_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Dao Phuong Thảo/01_1.mov",
+          "A03": "[\"The Ant and The Dove \", \"\\\"help help help \\\" cried the ant. but no one could hear his cries\"]",
+          "A04": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Dao Phuong Thảo/01_2_I.mp3",
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Dao Phuong Thảo/01_2.mov",
+          "A06": "[\"My trip to india \", \"hello from india \"]",
+          "A07": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Dao Phuong Thảo/01_3_I.mp3",
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Dao Phuong Thảo/01_3.mov",
+          "A09": "[\"the magic pot story \", \"how is the possible ? the pot is full of hundreds of spade . I had left only one in it \"]",
+          "C": "Completed on time - Great!",
+          "G": 2,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 15,
+          "user": "Dao Phuong Thao",
+          "A01": null,
+          "A02": null,
+          "A03": "[\"\", \"\"]",
+          "A04": null,
+          "A05": null,
+          "A06": "[\"\", \"\"]",
+          "A07": null,
+          "A08": null,
+          "A09": "[\"\", \"\"]",
+          "C": "ready",
+          "G": 0,
+          "device": "Apple"
+      }
+  },
+
+  "Kelly": {
+      "01": {
+          "idNum": 13,
+          "user": "Kelly",
+          "A01": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Kelly/01_1_I.mp3",
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Kelly/01_1.mov",
+          "A03": "[\"sponge bob\", \"Easy, now you try, first get a jar.\"]",
+          "A04": null,
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Kelly/01_2.mov",
+          "A06": "[\"stray kids\", \"I made a mess.\"]",
+          "A07": null,
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Kelly/01_3.mov",
+          "A09": "[\"A New Old Friend\", \"A New Old Friend\"]",
+          "C": "ready",
+          "G": 0,
+          "device": "Apple"
+      },
+      "02": {
+          "idNum": 22,
+          "user": "Kelly",
+          "A01": null,
+          "A02": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Kelly/02_1_capture.mp4",
+          "A03": "[\"Stray Kids speaking english\", \"oh my god yeah wonderful\"]",
+          "A04": null,
+          "A05": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Kelly/02_2_capture.mp4",
+          "A06": "[\"stray kids aussie line being a mess\", \"Why are you gonna have in the arvo\"]",
+          "A07": null,
+          "A08": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Kelly/02_3_capture.mp4",
+          "A09": "[\"stray kids speaking English is kind of a chaotic mess\", \"I LOVE DAT SONG\\nDaT's So BeAtIFuL\"]",
+          "C": "ready",
+          "G": 0,
+          "device": "Apple"
+      }
+  },
+  "Vivi": {
+      "01": {
+          "idNum": null,
+          "user": null,
+          "A01": null,
+          "A02": null,
+          "A03": null,
+          "A04": null,
+          "A05": null,
+          "A06": null,
+          "A07": null,
+          "A08": null,
+          "A09": null,
+          "C": null,
+          "G": null,
+          "device": ""
+      },
+      "02": {
+          "idNum": null,
+          "user": null,
+          "A01": null,
+          "A02": null,
+          "A03": null,
+          "A04": null,
+          "A05": null,
+          "A06": null,
+          "A07": null,
+          "A08": null,
+          "A09": null,
+          "C": null,
+          "G": null,
+          "device": ""
+      }
+  }
+}
+console.log('unitOBJ', OBJ);
+var SCHEMA = document.getElementById('schema').innerHTML
+console.log('schema', SCHEMA);
+
+var MTFN = document.getElementById('MTFN').innerHTML
+console.log('MTFN', MTFN);
+
+var ATT = document.getElementById('att').innerHTML
+console.log('att', ATT);
+
+var name = document.getElementById('name').innerHTML
+console.log('name', name);
+
+startVue()
+
+function startVue(){
+
+  let vue = new Vue({
+
+    el: '#vue-app',
+    delimiters: ['[[', ']]'],
+    mounted: function(){
+      if (this.att == '97') {
+        this.anon = false
+      }
+
+    },
+    data: {
+        instructor: name,
+        showPPT: ['',''],
+        MTFN: MTFN,
+        showOld: true,
+        ansOBJ: OBJ,
+        att: ATT,
+        nComment: null,
+        anon: false,
+        showNotes: null,
+        comment: {
+          intro: null,
+          speak: null,
+          pron: null,
+          write: null,
+          extra: null
+        },
+        studentName: null,
+        studentUnit: null,
+        extra: '',
+        SCHEMA : parseInt(SCHEMA),
+        showVideo : '',
+        video64 : {
+          fileType : null,
+          base64 : null,
+      }
+
+    },
+    methods: {
+        videoDisplay: function (user, key) {
+          if (this.showVideo != user + key) {
+            return 'display:none'
+          } else {
+            return ''
+          }
+        },
+        getTag: function (link) {
+          if (link) {
+            return link.slice(-4) // + link.slice(-3) + link.slice(-2) + link.slice(-1)
+          } else {
+            return '---'
+          }
+        },
+        getColor: function (link) {
+          if (link && link.slice(-4) == '.mov') {
+            return 'btn btn-sm btn-success'
+          } else if (link && link.slice(-4) == '.mp4'){
+            return 'btn btn-sm btn-outline-info'
+          } else if (link && link.slice(-4) == '.mp3') {
+            return 'btn btn-sm btn-outline-dark'
+          } else {
+            return 'btn btn-sm btn-outline-warning'
+          }
+        },
+        getDevice: function (dev) {
+          if (dev == 'Apple') {
+            return 'background:lightgreen'
+          } else {
+            return 'background:lightblue'
+          }
+        },
+        getText: function (text, i) {
+
+          if (text) {
+            return JSON.parse(text)[i]
+          } else {
+            return '---'
+          }
+        },
+        getDownload: function (link) {
+          if (link) {
+            //console.log(link)
+            let string = link.split('assignments/')[1]
+            //console.log(string)
+            let st_arr = string.split('/')
+            user = st_arr[0]
+            title = st_arr[1].split('.')[0]
+            return title + '_' + user
+          }
+
+        },
+        playVideo: function (arg, user, key) {
+          player = document.getElementById('handlerVideo' + user + key)
+          this.showVideo = user + key
+
+          console.log(arg, player)
+          player.src = arg
+        },
+        stop_video: function (user, key) {
+          this.showVideo = ''
+          player = document.getElementById('handlerVideo' + user + key)
+          player.src = null
+        },
+        getList: function (arg) {
+          textJSON = [arg]
+          if (arg && arg.includes('["')) {
+            textJSON = JSON.parse(arg)
+          }
+          return textJSON
+
+        },
+        showAss: function (key, user) {
+          console.log(key, user, this.showPPT == ['',''])
+          if (this.showPPT[1] == user) {
+            this.showPPT = ['','']
+          } else {
+            this.showPPT = [key, user]
+          }
+
+        },
+        showAll: function (key) {
+
+          allList = ['01', '02', '03', '04']
+          if (this.SCHEMA == 6) {
+            allList.push('05')
+          }
+
+          if (this.showOld == false && allList.includes(key)) {
+            //console.log('showAll', key)
+            return false
+          } else {
+            return true
+          }
+
+        },
+        setComment: function(key, user){
+          this.studentName = user
+          this.studentUnit = key
+        },
+        addComment: function(key){
+          this.ansOBJ[this.studentName][this.studentUnit].C += this.comment[key]
+        },
+        addExtra: function(){
+          this.ansOBJ[this.studentName][this.studentUnit].C += (this.extra + ' ')
+        },
+        play: function(audio){
+          document.getElementById('instructorPlayer').src = audio
+        },
+        edit: function(key, unit){
+          //console.log(key, unit)
+          let tag = ''
+
+          unitList = {
+            1 : '091',
+            2 : '092',
+            3 : '093',
+            4 : '094',
+            5 : '101',
+            6 : '102',
+            7 : '103',
+            8 : '104',
+
+          }
+
+          tag = '_pron'
+
+          let url = (window.location.href).split('dashboard')[0] + 'admin/' + 'u' + unitList[parseInt(unit)] + 'u' + tag + '/edit/?id=' + key
+
+          console.log('goTO', url);
+          // go to new tab...........
+          window.location = url
+        },
+        commentStyle: function(comment){
+          //console.log(comment);
+          if(comment.includes("on time")){
+            return {width:'100%', 'background-color':'pink', height: '30px !important'}
+          }
+          else if(comment.includes("check..") || comment.includes("check-") || comment.includes("audio") ){
+            return {width:'100%', 'background-color':'thistle', height: '30px !important'}
+          }
+          else if(comment.includes("progress")){
+            return {width:'100%', 'background-color':'orange', height: '30px !important'}
+          }
+          else if(comment.includes("completed late")){
+            return {width:'100%', 'background-color':'yellow', height: '110px !important'}
+          }
+          else{
+            return {width:'100%', 'background-color':'lightgreen', height: '110px !important'}
+          }
+        },
+        commentSet: function(user, unit){
+          var comment = document.getElementById(user+unit).value
+          if (this.instructor == 'Cherry Mak') {
+            comment += ', thanks, Cherry'
+          }
+          console.log(user, unit, comment);
+          $.ajax({
+          data : {
+              comment : comment,
+              user : user,
+              unit : unit,
+          },
+          type : 'POST',
+          url : '/pr_commentSet'
+          })
+          .done(function(data) {
+           alert(data.comment);
+
+          })
+          .fail(function(){
+            alert('Failed, check server')
+          });
+
+        },
+        storeB64 : function(key) {
+
+          alert('data uploading, please wait')
+
+          var b64data = this.video64['base64']
+          var fileType = 'mov'
+
+
+          $.ajax({
+            data : {
+              b64data : b64data,
+              fileType : fileType,
+              fileName : key,
+            },
+            type : 'POST',
+            url : '/pronstoreB64',
+          })
+          .done(function(data) {
+              console.log(data);
+              alert('mov updated')
+              location.reload()
+          })
+          .fail(function(){
+              alert('error - see instructor')
+          });
+        },
+        videoValidation : function(key, user, int){
+          var fileInput = document.getElementById('video' + key + user + int);
+          console.log('file', fileInput)
+          var filePath = fileInput.value;
+          var allowedExtensions = /(\.mov)$/i;
+
+          if(!allowedExtensions.exec(filePath)){
+              alert('Please upload video file: .mov only.');
+              fileInput.value = '';
+              return false;
+          }
+          else{
+              console.dir( fileInput.files[0] );
+              var url = window.URL.createObjectURL(fileInput.files[0]);
+              fetch(url)
+              .then(function(res){
+                  return res.blob();
+                  })
+              .then(function(savedBlob){
+
+              var reader = new FileReader();
+              reader.readAsDataURL(savedBlob);
+              reader.onloadend = function() {
+                      vue.video64['base64'] = reader.result.split(',')[1];
+                      vue.video64['fileType'] = true
+                      vue.video64['key'] = key + user + int
+                  }
+              })
+          }//end else
+        },//end audioValidation
+    }
+})// end NEW VUE
+
+
+
+}// endFunction
+
+</script>
+
+{% endblock %}
+

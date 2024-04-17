@@ -25,7 +25,7 @@
         <template v-for="(userList, user) in ansOBJ" >
           <tr style="background:wheat">
               <td style="font-weight:14pt" colspan=13> <span v-if="anon"> user </span><span v-else> [[ user ]]
-                <video :style="videoDisplay(user)" :id="'handlerVideo' + user" ref="player" controls autoplay style="width:50%" playsinline></video> <button :style="videoDisplay(user)" class="btn btn-danger" @click="stop_video()" >Close</button>
+                <video :style="videoDisplay(user)" :id="'handlerVideo' + user" ref="player" controls autoplay style="width:50%" playsinline></video> <button :style="videoDisplay(user)" class="btn btn-danger" @click="stop_video(user)" >Close</button>
           </td>
 
           </tr>
@@ -120,6 +120,7 @@
 <script type="text/javascript" >
 
 var ansString = document.getElementById('ansString').innerHTML
+console.log(ansString)
 var OBJ = JSON.parse(ansString)
 console.log('unitOBJ', OBJ);
 var SCHEMA = document.getElementById('schema').innerHTML
@@ -214,7 +215,7 @@ function startVue(){
           }
         },
         getText: function (text, i) {
-          console.log(JSON.parse(text))
+
           if (text) {
             return JSON.parse(text)[i]
           } else {
@@ -223,9 +224,9 @@ function startVue(){
         },
         getDownload: function (link) {
           if (link) {
-            console.log(link)
+            //console.log(link)
             let string = link.split('assignments/')[1]
-            console.log(string)
+            //console.log(string)
             let st_arr = string.split('/')
             user = st_arr[0]
             title = st_arr[1].split('.')[0]
@@ -240,9 +241,9 @@ function startVue(){
           console.log(player)
           player.src = arg
         },
-        stop_video: function () {
+        stop_video: function (user) {
           this.showVideo = ''
-          player = document.getElementById('handlerVideo')
+          player = document.getElementById('handlerVideo' + user)
           player.src = null
         },
         getList: function (arg) {
@@ -291,7 +292,7 @@ function startVue(){
           document.getElementById('instructorPlayer').src = audio
         },
         edit: function(key, unit){
-          console.log(key, unit)
+          //console.log(key, unit)
           let tag = ''
 
           unitList = {
@@ -315,7 +316,7 @@ function startVue(){
           window.location = url
         },
         commentStyle: function(comment){
-          console.log(comment);
+          //console.log(comment);
           if(comment.includes("on time")){
             return {width:'100%', 'background-color':'pink', height: '30px !important'}
           }
