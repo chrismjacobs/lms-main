@@ -175,7 +175,7 @@ highDict = {
 @login_required
 def peng_list():
 
-    setup = 'MT'
+    setup = 'FN'
 
     if User.query.filter_by(username='Chris').first().condition == 2:
         setup = 'FN'
@@ -270,6 +270,7 @@ def peng_list():
             'Video Point' : None,
             'Warm Up Question' : None,
             'Your Answer' : None,
+            'Your Answer Key Words' : None,
             'Description' : None,
             'Description Key Words' : None,
             'Comments' : None,
@@ -315,16 +316,8 @@ def peng_dash():
             userDict = json.loads(user.Ans01)
             userDict['stage'] = user.Comment
             projDict[user.username] = userDict
-    if MTFN == 'FN':
-        html = 'peng/peng_dash_vv.html'
-        midterms = U021U_PENG.query.all()
-        for user in midterms:
-            userDict = json.loads(user.Ans01)
-            userDict['stage'] = user.Comment
-            projDict[user.username] = userDict
 
     ansString = json.dumps(projDict)
-
 
     return render_template(html, title=MTFN, ansString=ansString, source=source)
 
@@ -336,7 +329,7 @@ def peng_proj(page_stage):
     source = get_peng_projects()
     # midterm or final
 
-    MTFN = 'MT'
+    MTFN = 'FN'
     if User.query.filter_by(username='Chris').first().condition == 2:
         MTFN = 'FN'
 
@@ -505,7 +498,7 @@ def createPPT_VV():
     title.text = "Presentation English: Viral Video"
     subtitle.text = " Presentation by " + current_user.username
 
-        #intro
+    #intro
     bullet_slide_layout = prs.slide_layouts[3]
     # layout [3] is the two boxes next to each other
     slide = prs.slides.add_slide(bullet_slide_layout)
@@ -544,7 +537,7 @@ def createPPT_VV():
     body_shape = shapes.placeholders[1]
     tf = body_shape.text_frame
     p = tf.add_paragraph()
-    p.text = ansDict['Your Answer']
+    p.text = ansDict['Your Answer Key Words']
     pf = shapes.add_picture('static/images/add_image.png', Inches(6), Inches(2) )
 
     #description
