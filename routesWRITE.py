@@ -194,11 +194,13 @@ def write_projects():
 
 
     pprint(mtDict)
+    source = 'https://docs.google.com/presentation/d/e/2PACX-1vSX1RPIa4phQJsdYa-siNiC2W_by9LL_xKBMGsyLkFAFnN2eaCd7w3k9Svd9rv64J2c6u9NSSZMP6PS/embed'
+
 
 
 
     return render_template('work/write_projects.html', legend='Presentation Project',
-    source1='', source2='', ansString=json.dumps(mtDict)  )
+    source1=source, source2='', ansString=json.dumps(mtDict)  )
 
 @app.route ("/work_presentation_list", methods=['GET','POST'])
 @login_required
