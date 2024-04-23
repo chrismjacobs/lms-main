@@ -175,7 +175,7 @@ highDict = {
 @login_required
 def peng_list():
 
-    setup = 'FN'
+    setup = 'MT'
 
     if User.query.filter_by(username='Chris').first().condition == 2:
         setup = 'FN'
@@ -302,16 +302,16 @@ def peng_dash():
 
     projDict = {}
 
-    if MTFN == 'FS':
+    if MTFN == 'MT':
         midterms = U011U_PENG.query.all()
-        html = 'peng/peng_dash_fs.html'
+        html = 'peng/peng_dash.html'
         for user in midterms:
             userDict = json.loads(user.Ans01)
             userDict['stage'] = user.Comment
             projDict[user.username] = userDict
-    if MTFN == 'MT':
-        midterms = U011U_PENG.query.all()
-        html = 'peng/peng_dash.html'
+    if MTFN == 'FN':
+        midterms = U021U_PENG.query.all()
+        html = 'peng/peng_dash_vv.html'
         for user in midterms:
             userDict = json.loads(user.Ans01)
             userDict['stage'] = user.Comment
