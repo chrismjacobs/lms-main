@@ -1,0 +1,281 @@
+{% extends "layoutWriting.html" %}
+
+{% block content %}
+
+<span id="ansString" style="display:none">{{ansString}}</span>
+<span id="grade" style="display:none">{{grade}}</span>
+<span id="name" style="display:none">{{current_user.username}}</span>
+
+<div class="content-section">
+        <h1> Project: <br> {{title}} </h1>
+    </div>
+    <div class="content-section">
+    <div class="embed-responsive embed-responsive-4by3">
+            <iframe id="questions_embed" src="{{source}}"
+            allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true">
+	</iframe>
+    </div>
+
+</div>
+
+
+<div id="vue-app">
+
+
+    <div class="content-section">
+
+        <legend class="border-bottom mb-4"> {{title}} Set Up </legend>
+
+
+        <span :style="style('Intro')"> Title </span>
+        <input class="input1" type="text" class="textAss" style="margin-left:5px" v-model="ansOBJ['Title']"></input>
+        <br>
+
+        <span :style="style('Intro')"> Situation </span>
+        <textarea class="input3" type="text" class="textAss" style="margin-left:5px" v-model="ansOBJ['Situation']"></textarea>
+        <span :style="style('kw')"> Key words --> </span>
+        <input class="input1" type="text" class="textAss" style="margin-left:5px" v-model="ansOBJ['situation_kw']"></input>
+
+        <br>
+
+        <span  :style="style('Intro')"> Problem </span>
+        <textarea class="input3" type="text" class="textAss" style="margin-left:5px" v-model="ansOBJ['Problem']"></textarea>
+        <span :style="style('kw')"> Key words --> </span>
+        <input class="input1" type="text" class="textAss" style="margin-left:5px" v-model="ansOBJ['problem_kw']"></input>
+
+        <br>
+
+        <span  :style="style('Intro')"> Solution </span>
+        <textarea class="input3" type="text" class="textAss" style="margin-left:5px" v-model="ansOBJ['Solution']"></textarea>
+        <span :style="style('kw')"> Key words --> </span>
+        <input class="input1" type="text" class="textAss" style="margin-left:5px" v-model="ansOBJ['solution_kw']"></input>
+
+        <br>
+        <br>
+        <br>
+
+
+        <h4> 3 Reasons </h4>
+        <template v-for="(reason, num) in ansOBJ['Reasons']">
+            <span :style="style('Reasons')"> Reason [[num]] </span>
+            <input class="input1" type="text" class="textAss" style="margin-left:5px" v-model="ansOBJ['Reasons'][num]"></input>
+            <br>
+            <br>
+        </template>
+
+
+        <br>
+
+        <div>
+            <template v-for="(item, key) in ansOBJ['Parts']">
+            <h4> Part [[ key ]] - [[ ansOBJ['Reasons'][key] ]] </h4>
+
+            <div v-for="(point, order) in ansOBJ['Parts'][key]['kw']">
+                    <span :style="style('dt')"> Sentence [[order]] </span>
+                    <textarea class="input2" :id="point + key" type="text" class="textAss" style="margin-left:5px" v-model="ansOBJ['Parts'][key]['dt'][order]" @blur="wordCount(point + key)"></textarea>
+                    <br>
+                    <span :style="style('kw')"> Key words [[order]] --> </span>
+                    <input class="input1" type="text" class="textAss" style="margin-left:5px; width:80%" v-model="ansOBJ['Parts'][key]['kw'][order]"></input>
+                    <br>
+                    <br>
+            </div>
+
+            <br>
+            </template>
+
+        </div>
+
+
+            <h4> Closing </h4>
+            <span  :style="style('Intro')"> Closing </span>
+            <textarea class="input3" type="text" class="textAss" style="margin-left:5px" v-model="ansOBJ['Closing']"></textarea>
+            <span :style="style('kw')"> Key words --> </span>
+            <input class="input1" type="text" class="textAss" style="margin-left:5px" v-model="ansOBJ['closing_kw']"></input>
+
+            <br>
+            <br>
+
+            <div v-if="updateReady">
+                <button  class="btn btn-dark" style="margin-right:5px" @click="updatePlan()">Update Plan</button>
+            </div>
+            <br>
+
+
+
+            <div v-if="pptLink" style="display:none">
+                <a :href="pptLink" download>Download PPT</a>
+            </div>
+
+
+    </div>
+
+
+</div> <!-- end of Vue app -->
+
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+<script type="text/javascript" >
+
+var ansString = document.getElementById('ansString').innerHTML
+console.log(ansString)
+var grade = document.getElementById('grade').innerHTML
+var ansOBJ = JSON.parse(ansString)
+console.log('ansOBJ', ansOBJ);
+console.log('grade', grade);
+
+var name = document.getElementById('name').innerHTML
+
+
+startVue(ansOBJ)
+
+function startVue(ansOBJ){
+
+  let vue = new Vue({
+
+    el: '#vue-app',
+    delimiters: ['[[', ']]'],
+    mounted: function () {
+    },
+    data: {
+        ansOBJ: ansOBJ,
+        grade: parseInt(grade),
+        name : name,
+        updateReady : true,
+        pptLink : false,
+        blurblocker : null,
+        project: (window.location.href).split('work_presentation_')[1],
+        script: {
+            ND : {
+                1 : 'If Taiwan were going to vote for a national dish I would choose ',
+                2 : 'This is for three reasons',
+                3 : 'First of all,',
+                4 : 'The next reason is',
+                5 : 'The last point is',
+            },
+            CV : {
+                1 : 'Today I want to share with you a recipe for ',
+                2 : 'I choose this video because',
+                3 : 'Some important ingredients are...',
+                4 : 'To prepare this dish you will need...',
+                5 : 'This recipe is...',
+            },
+        },
+
+    },
+    methods: {
+        getClass: function () {
+            if (this.grade < 4) {
+                return 'btn btn-danger'
+            }
+            else if (this.grade == 4) {
+                return 'btn btn-info'
+            }
+            else {
+                return 'btn btn-success'
+            }
+
+        },
+        wordCount : function(mark) {
+            console.log(mark);
+            var wc = (document.getElementById(mark).value).split(' ')
+            console.log(wc.length);
+            if (wc.length < 8) {
+                if (vue.blurblocker == mark){
+                    console.log('blur');
+                }
+                else{
+                    alert('This sentence seems too short - try making it longer with conjunction phrases (but/so/when/if/because..)')
+                    vue.blurblocker = mark
+                }
+
+            }
+
+            return true
+        },
+        style : function(mark) {
+            if (mark.includes('kw')){
+                var bg = 'darkgrey'
+            }
+            else if (mark.includes('dt')){
+                var bg = 'darkorange'
+            }
+            else if (mark.includes('Rea')){
+                var bg = 'PALEVIOLETRED'
+            }
+            else if (mark.includes('Int')){
+                var bg = 'DARKCYAN'
+            }
+
+            return {padding:'4px', 'font-size':'15px', background:bg, color:'white', border:'1px sold white', 'border-radius':'5px', width:'20%'}
+
+        },
+        updatePlan : function() {
+            vue.ansOBJ['Writer'] = name
+            console.log('update via AJAX');
+            console.log(this.ansOBJ);
+            //return false
+
+            $.ajax({
+              data : {
+                proj : this.project,
+                ansOBJ : JSON.stringify(this.ansOBJ),
+                grade : this.grade
+              },
+              type : 'POST',
+              url : '/updateWritingPresentation',
+            })
+            .done(function(data) {
+                alert('Your FORM has been updated')
+            })
+            .fail(function(){
+                alert('error has occurred');
+            });
+        },
+        createPPT : function() {
+            console.log('CreatePPT', this.grade);
+            if (this.grade < 4) {
+                alert('Your work is not complete');
+                return false
+            } else if (this.grade == 4) {
+                alert('Your work must be checked by the instructor first, please contact for checking');
+                return false
+            }
+
+            $.ajax({
+              data : {
+                proj : this.project,
+                name : this.name,
+                ansOBJ : JSON.stringify(this.ansOBJ)
+              },
+              type : 'POST',
+              url : '/createPPT',
+            })
+            .done(function(data) {
+                if(data.error){
+                    alert('There has been an error. Please check that your FORM is complete or see your instructor');
+                }
+                else{
+                    alert('Your ppt has been created')
+                    vue.pptLink = data.pptLink
+                }
+
+            })
+            .fail(function(){
+                alert('There has been an error. Please check that your FORM is complete or see your instructor');
+            });
+        }
+    }, // end methods
+
+
+
+})// end NEW VUE
+
+}// endFunction
+</script>
+
+{% endblock %}
+

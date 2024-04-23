@@ -104,6 +104,167 @@ def getWriteUsers():
 
     return userList
 
+def get_all_values(nested_dictionary):
+    detected = 0
+    for key, value in nested_dictionary.items():
+        if type(value) is dict:
+            print ('DICT FOUND', value)
+            if get_all_values(value) != 0:
+                detected += get_all_values(value)
+        else:
+            if value == None or value == "":
+                print('CHECK', key, value)
+                detected += 1
+
+    return detected
+
+@app.route('/updateWritingPresentation', methods=['POST'])
+def updateWritingPresentation():
+
+
+    projectData = {
+        1 : U011U_WRITE,
+        2 : U012U_WRITE
+    }
+
+    setup = int(request.form ['proj'])
+    ansOBJ = request.form ['ansOBJ']
+
+    ansDict = json.loads(ansOBJ)
+    print(setup, ansDict)
+    try:
+        ## instructor update
+        grade = request.form ['grade']
+        name = request.form ['name']
+    except:
+        grade = int(request.form ['grade'])
+        name = current_user.username
+
+        if grade == 5:
+            grade = 5
+        elif get_all_values(ansDict) == 0:
+            grade = 1
+        else:
+            print ('GET_ALL', get_all_values(ansDict))
+            grade = 0
+
+    print('GRADE', grade)
+
+    project_answers = projectData[setup].query.filter_by(username=name).first()
+    project_answers.Ans01 = json.dumps(ansDict)
+
+    project_answers.Grade = grade
+    db.session.commit()
+
+    return jsonify({'grade' : grade})
+
+@app.route ("/work_presentation_list", methods=['GET','POST'])
+@login_required
+def work_presentation_list():
+
+
+    source = 'https://docs.google.com/presentation/d/e/2PACX-1vQmzC3mSJaWwaSZxN2O0iOvelYQCHmaoeH2cCTflVU4MJoDwAH6u6bshtzkIJpsXkEarJEKGkRVZf64/embed'
+    setup = 1
+
+    projectData = {
+        1 : U011U_WRITE,
+        2 : U012U_WRITE
+    }
+
+    startDict = {
+            'Title' : None,
+            'Situation' : None,
+            'situation_kw' : None,
+            'Problem' : None,
+            'problem_kw' : None,
+            'Solution' : None,
+            'solution_kw' : None,
+            'Closing' : None,
+            'closing_kw' : None,
+            'Reasons' : {
+                1 : None,
+                2 : None,
+                3 : None
+            },
+            'Parts' : {
+                1 : {
+                    'kw' : {
+                        1 : None,
+                        2 : None,
+                        3 : None,
+                    },
+                    'dt' : {
+                        1 : None,
+                        2 : None,
+                        3 : None,
+                    },
+                },
+                2 : {
+                    'kw' : {
+                        1 : None,
+                        2 : None,
+                        3 : None,
+                    },
+                    'dt' : {
+                        1 : None,
+                        2 : None,
+                        3 : None,
+                    },
+                },
+                3 : {
+                    'kw' : {
+                        1 : None,
+                        2 : None,
+                        3 : None,
+                    },
+                    'dt' : {
+                        1 : None,
+                        2 : None,
+                        3 : None,
+                    },
+                },
+            }
+        }
+
+
+    if projectData[setup].query.filter_by(username=current_user.username).first():
+        pass
+    else:
+        start = projectData[setup](username=current_user.username, Ans01=json.dumps(startDict), Grade=0, Comment='0')
+        db.session.add(start)
+        db.session.commit()
+
+
+    project = projectData[setup].query.filter_by(username=current_user.username).first()
+    ansDict = project.Ans01
+    grade = project.Grade
+    stage = project.Comment
+    print(source)
+
+    return render_template('work/work_list.html', legend='Presentation Projects', source=source, stage=stage, grade=grade, setup=setup)
+
+
+@app.route ("/work_presentation_1", methods=['GET','POST'])
+@login_required
+def work_presentation_1():
+
+
+    source = 'https://docs.google.com/presentation/d/e/2PACX-1vSX1RPIa4phQJsdYa-siNiC2W_by9LL_xKBMGsyLkFAFnN2eaCd7w3k9Svd9rv64J2c6u9NSSZMP6PS/embed'
+
+    project = U011U_WRITE.query.filter_by(username=current_user.username).first()
+    ansString = project.Ans01
+    grade = project.Grade
+    stage = project.Comment
+    print(ansString)
+    print(source)
+
+    return render_template('work/work_presentation_1.html', legend='Presentation Projects', ansString=ansString, source=source, stage=stage, grade=grade)
+
+
+
+
+
+
 @app.route("/tips", methods = ['GET', 'POST'])
 @login_required
 def tips():
