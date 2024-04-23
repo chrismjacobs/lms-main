@@ -192,7 +192,7 @@ def pr_assignment_list():
     SCHEMA = getSchema()
     DESIGN = schemaList[SCHEMA]['DESIGN']
 
-    return render_template('units/pr_assignment_list.html', legend='Assignments Dashboard',
+    return render_template('pro/pro_assignment_list.html', legend='Assignments Dashboard',
     Dict=json.dumps(assDict), title='Assignments', theme=DESIGN)
 
 @app.route("/pr_commentSet", methods = ['POST'])
@@ -402,7 +402,7 @@ def pr_ass(unit):
     }
     print(context)
 
-    return render_template('units/pr_assignment_vue.html', **context)
+    return render_template('pro/pro_assignment_vue.html', **context)
 
 
 @app.route('/pronstoreB64', methods=['POST'])

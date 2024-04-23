@@ -33,11 +33,11 @@
         <tbody>
         <template v-for="(unit, key) in assOBJ"  :key="key" >
             <tr>
-              <td style="background:whitesmoke;width:60%"> <span @click="goTo(key)" class="unit-span" style="background:{{theme}}; padding:3px">[[  key  ]]:[[  unit.Title  ]]</span> </td>
+              <td style="background:whitesmoke;width:60%"> <span @click="goTo(key)" class="unit-span" style="background:{{theme}}; padding:3px">____[[  key  ]]____</span> </td>
               <td> [[  unit.Deadline  ]] </td>
-              <td> [[  unit.Grade  ]] </td>
+              <td :bgcolor="bgStyle(unit.Grade)" > [[  unit.Grade  ]] </td>
             </tr>
-            <tr :bgcolor="bgStyle(unit.Grade)" style>
+            <tr>
               <td colspan ="3" :style="commentStyle(unit.Comment)"> [[  unit.Comment  ]] </td>
             </tr>
 
