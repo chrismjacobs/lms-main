@@ -48,7 +48,7 @@ ul
     font-size: 18px;
     border-radius: 5px;
     padding: 10px;
-    height: 80px !important;
+    height: 80px;
     width: 100%
 }
 
@@ -59,7 +59,7 @@ ul
     padding: 10px;
     font-size: 18px;
     border-radius: 15px;
-    height: 60px !important;
+    height: 60px;
     width: 100%
 }
 

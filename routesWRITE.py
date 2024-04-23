@@ -158,6 +158,48 @@ def updateWritingPresentation():
 
     return jsonify({'grade' : grade})
 
+
+@app.route ("/write_projects", methods=['GET','POST'])
+@login_required
+def write_projects():
+    SCHEMA = getSchema()
+
+    users = getUsers(SCHEMA)
+
+    mtDict = {}
+    for user in users:
+        mtDict[user.username] = {
+            'ID' : user.studentID,
+            'Grade' : 0,
+            'Data' : {}
+        }
+
+    project_answers = U011U_WRITE.query.all()
+
+    for answer in project_answers:
+        proj = None
+        projDict = json.loads(answer.Ans01)
+
+        # print(get_all_values(cvDict))
+
+        if answer.Grade == 0:
+            tGrade = 1
+        else:
+            tGrade = answer.Grade
+
+        mtDict[answer.username]['Proj'] = proj
+        mtDict[answer.username]['Grade'] = tGrade
+        mtDict[answer.username]['Data'] = projDict
+
+
+
+    pprint(mtDict)
+
+
+
+    return render_template('work/write_projects.html', legend='Presentation Project',
+    source1='', source2='', ansString=json.dumps(mtDict)  )
+
 @app.route ("/work_presentation_list", methods=['GET','POST'])
 @login_required
 def work_presentation_list():
