@@ -256,7 +256,7 @@ function startVue(){
         },
         updatePlan : function(name, grade) {
             nameOBJ = vue.mtOBJ[name]
-            console.log('update via AJAX');
+            console.log('update via AJAX', vue.mtOBJ);
             console.log(nameOBJ['Proj']);
             console.log(nameOBJ['Data']);
 
@@ -264,13 +264,13 @@ function startVue(){
 
             $.ajax({
               data : {
-                proj : nameOBJ['Proj'],
+                proj : 1,
                 ansOBJ : JSON.stringify(nameOBJ['Data']),
                 grade :  grade,
                 name : name
               },
               type : 'POST',
-              url : '/updateFood',
+              url : '/updateWritingPresentation',
             })
             .done(function(data) {
                 alert('Your FORM has been updated')
