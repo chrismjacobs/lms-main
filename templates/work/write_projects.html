@@ -72,7 +72,7 @@
 
                         <div v-for="(point, order) in nameOBJ.Data['Parts'][key]['kw']">
                                 <span :style="style('dt')"> Sentence [[order]] </span>
-                                <textarea class="input2" :id="point + key" type="text" class="textAss" style="margin-left:5px" v-model="nameOBJ.Data['Parts'][key]['dt'][order]" @blur="wordCount(point + key)"></textarea>
+                                <textarea class="input2" :id="point + key" type="text" class="textAss" style="margin-left:5px" v-model="nameOBJ.Data['Parts'][key]['dt'][order]"></textarea>
                                 <br>
                                 <span :style="style('kw')"> Key words [[order]] --> </span>
                                 <input class="input1" type="text" class="textAss" style="margin-left:5px; width:80%" v-model="nameOBJ.Data['Parts'][key]['kw'][order]"></input>
