@@ -98,6 +98,9 @@ def get_MTFN(t):
     MTFN = 'MT'
 
     try:
+        if SCHEMA == 5: #FOOD
+            if User.query.filter_by(username='Chris').first().condition == 2:
+                MTFN = 'FN'
 
         if SCHEMA in ICC:
             if getModels()['Units_'].query.filter_by(unit='06').first():
@@ -150,6 +153,107 @@ def get_grades(ass, unt):
     INFO = getInfo()
     SCHEMA = getSchema()
 
+
+    ### set max grades
+    total_units = 0
+    maxU = 0
+    maxA = 0
+    units = getModels()['Units_'].query.all()
+    for unit in units:
+        total = unit.u1 + unit.u2 + unit.u3 + unit.u4
+        maxU += total
+        if unit.uA and unit.uA > 0:
+            maxA += 1
+        total_units += 1
+    maxU = maxU*2
+    maxA = maxA*2
+
+    MTFN = get_MTFN('grades')
+
+    lessUnits = [1,2,3,4]
+    moreUnits = [6]
+
+
+    print('MTFN set = ', MTFN)
+    # set number for counting through the lists of units and asses
+    if MTFN == 'MT':
+        unit_start = 0
+        ass_start = 0
+        unit_check = total_units*4
+        ass_check = total_units
+    elif MTFN == 'FN' and SCHEMA in lessUnits:
+        unit_start = 16
+        ass_start = 4
+        unit_check = unit_start + total_units*4
+        ass_check = ass_start + total_units
+    elif MTFN == 'FN' and SCHEMA in moreUnits:
+        unit_start = 20
+        ass_start = 5
+        unit_check = unit_start + total_units*4
+        ass_check = ass_start + total_units
+    else:
+        unit_start = 0
+        ass_start = 0
+        unit_check = 0
+        ass_check = 0
+
+
+    unitGrade = 0
+    unitGradRec = {}
+    print ('check units: ', unt, 'maxUnits:', maxU)
+    if unt == True:
+        print('unit_list', INFO['unit_mods_list'])
+        for model in INFO['unit_mods_list'][unit_start:unit_check]: # a list of all units (so MT will be the first 4x4=16 units)
+            rows = model.query.all()
+            unit = str(model).split('U')[1]
+            unitGradRec[unit] = {
+                'Grade' : 0,
+                'Comment' : ''
+            }
+
+            for row in rows:
+                names = ast.literal_eval(row.username)
+                if current_user.username in names:
+                    unitGrade += row.Grade
+                    unitGradRec[unit] = {
+                        'Grade' : row.Grade,
+                        'Comment' : row.Comment
+                        }
+    assGrade = 0
+    assGradRec = {}
+
+    model_check = total_units
+    print('model check ', model_check, ass, ass_start, ass_check)
+    if ass == True:
+        for model in INFO['ass_mods_list'][ass_start:ass_check]:
+            unit = str(model).split('A')[1]
+            rec = model.query.filter_by(username=current_user.username).first()
+            if rec:
+                assGrade += rec.Grade
+                assGradRec[unit] = {
+                    'Grade' : rec.Grade,
+                    'Comment' : rec.Comment
+                }
+            else:
+                assGradRec[unit] = {
+                    'Grade' : 0,
+                    'Comment' : 'Open to start...'
+                }
+
+    return {
+        'unitGrade' : unitGrade,
+        'assGrade' : assGrade,
+        'assGradRec' :  assGradRec,
+        'unitGradRec' :  unitGradRec,
+        'maxU' : maxU,
+        'maxA' : maxA
+    }
+
+
+def pr_get_grades(ass, unt):
+
+    INFO = getInfo()
+    SCHEMA = getSchema()
 
     ### set max grades
     total_units = 0

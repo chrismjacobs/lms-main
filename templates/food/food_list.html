@@ -6,6 +6,7 @@
 <span id="link" style="display:none">{{link}}</span>
 <span id="grade" style="display:none">{{grade}}</span>
 <span id="MTFN" style="display:none">{{MTFN}}</span>
+<span id="setup" style="display:none">{{setup}}</span>
 
 <div id="vue-app">
 
@@ -25,100 +26,101 @@
 <div class="content-section">
 
 
-    {% if MTFN == 'FN' %}
+    <div v-if="setup='FN'">
 
+        <div>
+          <legend class="border-bottom mb-4"> Build Your Project: </legend>
 
-    <div>
+          <button  class="btn btn-danger" @click="goTo('RR')">Restaurant Review</button>
+
+        </div>
+
+    </div>
+
+    <div v-else>
+
+        <h5 style="color:red"> Update Part 1 (Mar 20)
+        <br>
+        <br>
+        Update Plan  (Mar 27)
+        <br>
+        <br>
+          Just meeting deadlines --> 15/30%
+          <br>
+          Choose ONE Topic for your presentation
+          <br>
+          <br>
+          </h5>
+
+          <div >
+            <button  class="btn btn-danger" @click="goTo('ND')">National Dish</button>
+          </div>
+
+          <br>
+          <br>
+
+          <div >
+            <button  class="btn btn-danger" @click="goTo('CV')">Cooking Video</button>
+          </div>
+
+    </div>
+
+    <div style="display:none">
+
       <legend class="border-bottom mb-4"> Build Your Project: </legend>
 
-      <button  class="btn btn-danger" @click="goTo('RR')">Restaurant Review</button>
+        <button  class="btn btn-danger" @click="goTo('RR')">Restaurant Review</button>
+
+        <br>
+        <br>
+
+        <legend class="border-bottom mb-4"> Project Guidelines: </legend>
+
+        <a href="https://drive.google.com/file/d/1o0ytGXkckthDF5_uM7BJrGY2WAZQ4s_n/view?usp=sharing" target="_blank"> How to use screen recorder on Windows </a>
+
+        <br>
+        <br>
+        Macbook use Quicktime
+
+        <br>
+        <br>
+
+        <a href="https://drive.google.com/file/d/1vFHY0kGLKFym69GICDxZOzaAfDOfmQyt/view?usp=sharing" target="_blank"> Example Student Video </a>
+
+        <br>
+        <br>
+        Note 1 : You can see the student and ppt with key words and pictures <br>
+        Note 2 : You hear the student clearly (check our microphone is loud enough) <br>
+        Note 3 : The student is presenting and not just reading <br>
+        <br>
+        * students who are reading will have their video rejected <br>
+        ** it is very easy to know who is just reading so practice more <br>
+        *** Any problems, contact instructor for help  <br>
+
+        <br>
+
+        <legend class="border-bottom mb-4"> Upload Video Presentation: </legend>
+
+
+        Youtube Link (Deadline Target June 10 - or send me message): <br>
+
+
+        <input type="text" id="fname" v-model="link" name="fname">
+        <br>
+        <br>
+        <button  class="btn btn-danger" @click="share()">Upload</button>
+
+        <br>
+        <br>
+
+        <div style="display:none">
+
+        <button  class="btn btn-info" @click="goTo('sharing')">Start Sharing</button>
+        </div>
 
     </div>
 
-    {% elif MTFN == 'MT' %}
 
-    <h5 style="color:red"> Update Part 1 (Mar 20)
-    <br>
-    <br>
-    Update Plan  (Mar 27)
-    <br>
-    <br>
-    Just meeting deadlines --> 15/30%
-    <br>
-    Choose ONE Topic for your presentation
-    <br>
-    <br>
-    </h5>
-
-    <div >
-      <button  class="btn btn-danger" @click="goTo('ND')">National Dish</button>
-    </div>
-
-    <br>
-    <br>
-
-    <div >
-      <button  class="btn btn-danger" @click="goTo('CV')">Cooking Video</button>
-    </div>
-
-    {% elif MTFN == 'EDIT' %}
-
-    <legend class="border-bottom mb-4"> Build Your Project: </legend>
-
-      <button  class="btn btn-danger" @click="goTo('RR')">Restaurant Review</button>
-
-      <br>
-      <br>
-
-      <legend class="border-bottom mb-4"> Project Guidelines: </legend>
-
-      <a href="https://drive.google.com/file/d/1o0ytGXkckthDF5_uM7BJrGY2WAZQ4s_n/view?usp=sharing" target="_blank"> How to use screen recorder on Windows </a>
-
-      <br>
-      <br>
-      Macbook use Quicktime
-
-      <br>
-      <br>
-
-      <a href="https://drive.google.com/file/d/1vFHY0kGLKFym69GICDxZOzaAfDOfmQyt/view?usp=sharing" target="_blank"> Example Student Video </a>
-
-      <br>
-      <br>
-      Note 1 : You can see the student and ppt with key words and pictures <br>
-      Note 2 : You hear the student clearly (check our microphone is loud enough) <br>
-      Note 3 : The student is presenting and not just reading <br>
-      <br>
-      * students who are reading will have their video rejected <br>
-      ** it is very easy to know who is just reading so practice more <br>
-      *** Any problems, contact instructor for help  <br>
-
-      <br>
-
-      <legend class="border-bottom mb-4"> Upload Video Presentation: </legend>
-
-
-      Youtube Link (Deadline Target June 10 - or send me message): <br>
-
-
-      <input type="text" id="fname" v-model="link" name="fname">
-      <br>
-      <br>
-      <button  class="btn btn-danger" @click="share()">Upload</button>
-
-      <br>
-      <br>
-
-      <div style="display:none">
-
-      <button  class="btn btn-info" @click="goTo('sharing')">Start Sharing</button>
-      </div>
-
-    {% else %}
-
-    Project not set yet
-
-    {% endif %}
 
 </div>
 
@@ -142,6 +144,9 @@ console.log('grade', grade);
 var MTFN = parseInt(document.getElementById('MTFN').innerHTML)
 console.log('MTFN', MTFN);
 
+var setup = parseInt(document.getElementById('setup').innerHTML)
+console.log('setup', setup);
+
 
 startVue()
 
@@ -153,7 +158,8 @@ function startVue(){ new Vue({
     },
     data: {
         link: link,
-        grade: grade
+        grade: grade,
+        setup: setup
     },
     methods: {
         goTo: function(proj) {

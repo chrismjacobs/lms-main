@@ -35,13 +35,18 @@ def food_list():
     link = ''
     grade = 0
 
+    setup = 'MT'
+
+    if User.query.filter_by(username='Chris').first().condition == 2:
+        setup = 'FN'
+
     project_answers = U021U_FOOD.query.filter_by(username=current_user.username).first()
     if project_answers:
         link = project_answers.Ans03
         grade = project_answers.Grade
 
 
-    return render_template('food/food_list.html', legend='Food Projects', source=source, link=link, grade=grade)
+    return render_template('food/food_list.html', legend='Food Projects', source=source, link=link, grade=grade, setup=setup)
 
 @app.route ("/build_presentation", methods=['GET','POST'])
 @login_required
