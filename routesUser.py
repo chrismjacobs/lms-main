@@ -1130,7 +1130,7 @@ def classwork():
 
     unitList = []
 
-    ICC = [6, 4, 3]
+    ICC = [6]
 
 
     if get_MTFN('grades') == 'MT':
