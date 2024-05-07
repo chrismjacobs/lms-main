@@ -67,6 +67,12 @@
             <input type="text" class="textAss" style="margin-left:5px;width:100%" v-model="ansOBJ['Your Answer']"></input>
             <span style="color:green">*this shows that can answer your own question</span>
             <br>
+            <span :style="style('kw')"> Key Words for Answer</span>
+            <h6> Use '/' to separate key words eg "word / another / last" <h6>
+            <input type="text" class="textAss" style="margin-left:5px;width:100%" v-model="ansOBJ['Your Answer Key Words']"></input>
+            <br>
+            <br>
+            <br>
             <br>
 
             <div class="content-section">
@@ -82,7 +88,7 @@
             <span :style="style('dt')"> more than 70 words</span>
             <textarea id="70" type="text" class="textAss" style="margin-left:5px;width:100%;height:200px" v-model="ansOBJ['Description']" @blur="wordCount(70)"></textarea>
             <br>
-            <span :style="style('kw')"> Key Words for Presentation</span>
+            <span :style="style('kw')"> Key Words for Description</span>
             <h6> Use '/' to separate key words eg "word / another / last" <h6>
             <input type="text" class="textAss" style="margin-left:5px;width:100%" v-model="ansOBJ['Description Key Words']"></input>
             <br>
@@ -108,7 +114,7 @@
                 <button  class="btn btn-dark" style="margin-right:5px;width:100%" @click="updatePlan()">Update Plan</button>
             </div>
             <br>
-            <div v-if="updateReady">
+            <div v-if="updateReady" style="display:none">
                 <button  class="btn btn-danger" style="margin-right:5px" @click="createPPT()">Create PPT</button>
             </div>
 
