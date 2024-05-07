@@ -100,10 +100,14 @@
             </div>
             <br>
 
+            <div v-if="updateReady" style="display:visible">
+                <button  :class="getClass()" style="margin-right:5px" @click="createPPT()">Create PPT [[grade]] </button>
+            </div>
 
 
-            <div v-if="pptLink" style="display:none">
-                <a :href="pptLink" download>Download PPT</a>
+
+            <div v-if="pptLink" style="display:visible">
+                <h3 style='color:white'> <a :href="pptLink" download>Download PPT</a> </h3>
             </div>
 
 
@@ -148,22 +152,6 @@ function startVue(ansOBJ){
         pptLink : false,
         blurblocker : null,
         project: (window.location.href).split('work_presentation_')[1],
-        script: {
-            ND : {
-                1 : 'If Taiwan were going to vote for a national dish I would choose ',
-                2 : 'This is for three reasons',
-                3 : 'First of all,',
-                4 : 'The next reason is',
-                5 : 'The last point is',
-            },
-            CV : {
-                1 : 'Today I want to share with you a recipe for ',
-                2 : 'I choose this video because',
-                3 : 'Some important ingredients are...',
-                4 : 'To prepare this dish you will need...',
-                5 : 'This recipe is...',
-            },
-        },
 
     },
     methods: {
@@ -177,7 +165,6 @@ function startVue(ansOBJ){
             else {
                 return 'btn btn-success'
             }
-
         },
         wordCount : function(mark) {
             console.log(mark);
@@ -237,7 +224,7 @@ function startVue(ansOBJ){
         },
         createPPT : function() {
             console.log('CreatePPT', this.grade);
-            if (this.grade < 4) {
+            if (this.grade == 4) {
                 alert('Your work is not complete');
                 return false
             } else if (this.grade == 4) {
@@ -252,7 +239,7 @@ function startVue(ansOBJ){
                 ansOBJ : JSON.stringify(this.ansOBJ)
               },
               type : 'POST',
-              url : '/createPPT',
+              url : '/createPPTwrite',
             })
             .done(function(data) {
                 if(data.error){

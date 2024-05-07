@@ -121,7 +121,6 @@ def get_all_values(nested_dictionary):
 @app.route('/updateWritingPresentation', methods=['POST'])
 def updateWritingPresentation():
 
-
     projectData = {
         1 : U011U_WRITE,
         2 : U012U_WRITE
@@ -201,6 +200,174 @@ def write_projects():
 
     return render_template('work/write_projects.html', legend='Presentation Project',
     source1=source, source2='', ansString=json.dumps(mtDict)  )
+
+
+@app.route('/createPPTwrite', methods=['POST'])
+def createPPTwrite():
+    SCHEMA = getSchema()
+    S3_LOCATION = schemaList[SCHEMA]['S3_LOCATION']
+    S3_BUCKET_NAME = schemaList[SCHEMA]['S3_BUCKET_NAME']
+
+    proj = request.form ['proj']
+    ansOBJ = request.form ['ansOBJ']
+
+    ansDict = json.loads(ansOBJ)
+    print(ansDict)
+
+    head = ansDict['Title'].title()
+
+    if get_all_values(ansDict) != 0:
+        print('ERROR')
+        return jsonify({'error' : 100})
+
+    from pptx import Presentation
+
+    prs = Presentation()
+    title_slide_layout = prs.slide_layouts[0]
+    slide = prs.slides.add_slide(title_slide_layout)
+    title = slide.shapes.title
+    subtitle = slide.placeholders[1]
+    title.text = "Workplace Presentation"
+    subtitle.text = head + "\nPresentation by "
+
+
+    intro = {
+        'Situation' : ansDict['situation_kw'],
+        'Problem' : ansDict['problem_kw'],
+        'Solution' : ansDict['solution_kw']
+    }
+
+    for i in intro:
+        bullet_slide_layout = prs.slide_layouts[1]
+        slide = prs.slides.add_slide(bullet_slide_layout)
+        shapes = slide.shapes
+        title_shape = shapes.title
+        body_shape = shapes.placeholders[1]
+        title_shape.text = i
+        tf = body_shape.text_frame
+        kw = intro[i].split(',')
+        print(kw)
+        for ckw in kw:
+            p = tf.add_paragraph()
+            p.text = ckw.title().strip()
+            p.level = 1
+
+    bullet_slide_layout = prs.slide_layouts[1]
+    slide = prs.slides.add_slide(bullet_slide_layout)
+    shapes = slide.shapes
+    title_shape = shapes.title
+    body_shape = shapes.placeholders[1]
+    tf = body_shape.text_frame
+    tf.text = 'Reasons'
+    for r in ansDict['Reasons']:
+        p = tf.add_paragraph()
+        p.text = ansDict['Reasons'][r]
+        p.level = 1
+
+    count = 1
+    for part in ansDict['Parts']:
+        bullet_slide_layout = prs.slide_layouts[1]
+        slide = prs.slides.add_slide(bullet_slide_layout)
+        shapes = slide.shapes
+        title_shape = shapes.title
+
+        title_shape.text = str(count) + ': ' + ansDict['Reasons'][part]
+
+        body_shape = shapes.placeholders[1]
+        tf = body_shape.text_frame
+        p_1 = tf.add_paragraph()
+        p_1.text = '1'
+        p_1.level = 1
+        idea_kw = ansDict['Parts'][part]['kw']['1'].split(',')
+        for i in idea_kw:
+            p = tf.add_paragraph()
+            p.text = i.title().strip()
+            p.level = 2
+
+        p_2 = tf.add_paragraph()
+        p_2.text = '2'
+        p_2.level = 1
+
+        idea_kw_2 = ansDict['Parts'][part]['kw']['2'].split(',')
+        for i in idea_kw_2:
+            p = tf.add_paragraph()
+            p.text = i.title().strip()
+            p.level = 2
+
+        p_3 = tf.add_paragraph()
+        p_3.text = '3'
+        p_3.level = 1
+        idea_kw_3 = ansDict['Parts'][part]['kw']['3'].split(',')
+        for i in idea_kw_3:
+            p = tf.add_paragraph()
+            p.text = i.title().strip()
+            p.level = 2
+
+        count +=1
+
+    slide = prs.slides.add_slide(bullet_slide_layout)
+    shapes = slide.shapes
+    title_shape = shapes.title
+    body_shape = shapes.placeholders[1]
+    title_shape.text = 'Conclusion'
+    tf = body_shape.text_frame
+    closing_kw = ansDict['closing_kw'].split(',')
+    print(closing_kw)
+    for ckw in closing_kw:
+        p = tf.add_paragraph()
+        p.text = ckw.strip().title()
+        p.level = 1
+
+    slide = prs.slides.add_slide(bullet_slide_layout)
+    shapes = slide.shapes
+    title_shape = shapes.title
+    body_shape = shapes.placeholders[1]
+    tf = body_shape.text_frame
+    script_1 = ['Welcome to our presentation, today we would like to discuss the topic of ____________',
+              "Let's introduce the situation",
+              ansDict['Situation'],
+              ansDict['Problem'],
+              ansDict['Solution']
+            ]
+    for part in script_1:
+        p = tf.add_paragraph()
+        p.text = part
+        p.level = 1
+
+    for part in ansDict['Parts']:
+        bullet_slide_layout = prs.slide_layouts[1]
+        slide = prs.slides.add_slide(bullet_slide_layout)
+        shapes = slide.shapes
+        title_shape = shapes.title
+
+        title_shape.text = str(count) + ': ' + ansDict['Reasons'][part]
+
+        body_shape = shapes.placeholders[1]
+        tf = body_shape.text_frame
+        p = tf.add_paragraph()
+        idea_dt = ansDict['Parts'][part]['dt']
+        for i in idea_dt:
+            p = tf.add_paragraph()
+            p.text = idea_dt[i]
+            p.level = 2
+
+
+    print('PROCESSING PPT')
+    filename = current_user.username + proj + '.pptx'
+    try:
+        os.remove(filename)
+    except:
+        print('No OS File')
+    prs.save(filename)
+    data = open(filename, 'rb')
+    aws_filename = 'projects/' + filename
+    pptLink = S3_LOCATION + aws_filename
+
+    s3_resource.Bucket(S3_BUCKET_NAME).put_object(Key=aws_filename, Body=data)
+    print(filename)
+
+    return jsonify({'pptLink' : pptLink})
+
 
 @app.route ("/work_presentation_list", methods=['GET','POST'])
 @login_required
