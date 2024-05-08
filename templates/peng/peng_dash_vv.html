@@ -35,10 +35,8 @@
 
         <template v-for="(item, key) in ansOBJ">
             <div v-if="ansOBJ['stage'] > 1">
-            <span v-if="item" :style="style(key)"> [[key]] </span>
-            <br v-if="item" >
-                <textarea v-if="item" type="text" class="textAss" :id="key" style="margin-left:5px" v-model="fullOBJ[student][key]" @blur="wordCount(key)"></textarea>
-            <br v-if="item" >
+            <span :style="style(key)"> [[key]] </span>
+                <textarea  type="text" class="textAss" :id="key" style="margin-left:5px" v-model="fullOBJ[student][key]"></textarea>
             </div>
         </template>
 
@@ -106,7 +104,7 @@ function startVue(){
             return true
         },
         style : function(mark) {
-            console.log(mark.substring(0,2));
+            //console.log(mark.substring(0,2));
 
             colorOBJ = {
                 ke : 'silver',
