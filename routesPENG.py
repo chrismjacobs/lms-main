@@ -537,7 +537,11 @@ def createPPT_VV():
     body_shape = shapes.placeholders[1]
     tf = body_shape.text_frame
     p = tf.add_paragraph()
-    p.text = ansDict['Your Answer Key Words']
+    for word in ansDict['Your Answer Key Words'].split('/'):
+        p = tf.add_paragraph()
+        p.text = word.strip().capitalize()
+        p.level = 1
+
     pf = shapes.add_picture('static/images/add_image.png', Inches(6), Inches(2) )
 
     #description
