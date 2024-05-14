@@ -343,7 +343,7 @@ def peng_proj(page_stage):
         project = U011U_PENG.query.filter_by(username=current_user.username).first()
         html = 'peng/peng_fuhsin'
     ansDict = project.Ans01
-    grade = project.Grade
+    ansDict['stage'] = project.Grade
     stage = project.Comment
 
     print(source)

@@ -114,7 +114,7 @@
                 <button  class="btn btn-dark" style="margin-right:5px;width:100%" @click="updatePlan()">Update Plan</button>
             </div>
             <br>
-            <div v-if="updateReady" style="display:none">
+            <div v-if="ansOBJ.stage == '4'" style="display:visible">
                 <button  class="btn btn-danger" style="margin-right:5px" @click="createPPT()">Create PPT</button>
             </div>
 
