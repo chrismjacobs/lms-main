@@ -342,15 +342,16 @@ def peng_proj(page_stage):
     elif MTFN == 'FH':
         project = U011U_PENG.query.filter_by(username=current_user.username).first()
         html = 'peng/peng_fuhsin'
-    ansDict = project.Ans01
-    ansDict['stage'] = project.Grade
-    stage = project.Comment
+    ansStr = project.Ans01
+    ansDict = json.loads(ansStr)
+    ansDict['stage'] = project.Comment
+
 
     print(source)
     print(page_stage)
 
     print(page_stage)
-    return render_template(html + page_stage + '.html', legend='Presentation Project', source=source, ansString=ansDict)
+    return render_template(html + page_stage + '.html', legend='Presentation Project', source=source, ansString=json.dumps(ansDict))
 
 
 def get_all_values(nested_dictionary):
