@@ -147,10 +147,10 @@ function startVue(){
       if (this.att == '97') {
         this.anon = false
       }
-      console.log('SHOW OLD', this.showOld)
-      if (MTFN == 'FN') {
-        this.showOld = false
-      }
+      //console.log('SHOW OLD', this.showOld)
+      //if (MTFN == 'FN') {
+        //this.showOld = false
+      //}
 
     },
     data: {
@@ -265,10 +265,8 @@ function startVue(){
         },
         showAll: function (key) {
 
-          allList = ['01', '02', '03', '04']
-          if (this.SCHEMA == 6) {
-            allList.push('05')
-          }
+          allList = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10']
+
 
           if (this.showOld == false && allList.includes(key)) {
             //console.log('showAll', key)

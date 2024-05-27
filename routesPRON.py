@@ -163,7 +163,6 @@ def pr_assignment_list():
     # print ('RECS', recs)
 
 
-
     assDict = {}
     units = getModels()['Units_'].query.all()
     print(units)
