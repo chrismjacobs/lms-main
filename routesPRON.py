@@ -167,7 +167,7 @@ def pr_assignment_list():
     assDict = {}
     units = getModels()['Units_'].query.all()
     print(units)
-    unitIndex = ['01', '02', '03', '04']
+    unitIndex = ['01', '02', '03', '04', '05']
     count = 0
     for unit in units:
         unitText = unitIndex[count]
