@@ -9,6 +9,7 @@
 
 <div class="content-section">
         <h1> Work {{unit}}: {{ title }}  </h1>
+        <h3 @click="showInputs = !showInputs"> Show Inputs </h3>
 
 </div>
 
@@ -42,6 +43,9 @@
               <td>
                 QNA<br>
                 <span class="unit-span" style="background:silver;padding:3px" @click="updateStatus(key, 'qna')">notes</span>
+                <br>
+                <br>
+                <span v-if="showInputs" class="unit-span" style="background:silver;padding:3px" @click="updateStudentWork(key, 'qna')">work</span>
               </td>
               <td>
                 [[ answerSet.qna_score]]
@@ -49,9 +53,16 @@
               </td>
 
               <td v-for="(set, num) in answerSet.qna_list">
-                <span style="color:white;background:green;font-style:bold"> [[ answerSet.qna_list[num]['answer1']  ]] </span> <br>
-                <span style="color:white;background:green;font-style:bold"> [[ answerSet.qna_list[num]['answer2']  ]] </span> <br>
-                [[ answerSet.qna_list[num]['question']  ]] <br>
+                <div v-if="!showInputs">
+                  <span style="color:white;background:green;font-style:bold"> [[ answerSet.qna_list[num]['answer1']  ]] </span> <br>
+                  <span style="color:white;background:green;font-style:bold"> [[ answerSet.qna_list[num]['answer2']  ]] </span> <br>
+                  [[ answerSet.qna_list[num]['question']  ]] <br>
+                </div>
+                <div v-else>
+                  <input style="color:white;background:green;font-style:bold" v-model="answerSet.qna_list[num]['answer1']"> </input> <br>
+                  <input style="color:white;background:green;font-style:bold" v-model="answerSet.qna_list[num]['answer2']"> </input> <br>
+                  <input v-model="answerSet.qna_list[num]['question']"> </input> <br>
+                </div>
                 [[ answerSet.qna_list[num]['user']  ]] <br>
                 <audio v-if="answerSet.qna_list[num]['audioLink']" controls style="width: 150px">
                   <source :src="answerSet.qna_list[num]['audioLink']" type="audio/mpeg" >
@@ -71,6 +82,9 @@
               <td>
                 SNL
                 <span class="unit-span" style="background:silver;padding:3px" @click="updateStatus(key, 'snl')">notes</span>
+                <br>
+                <br>
+                <span v-if="showInputs" class="unit-span" style="background:silver;padding:3px" @click="updateStudentWork(key, 'snl')">work</span>
               </td>
               <td>
                  [[ answerSet.snl_score]]
@@ -78,9 +92,22 @@
 
               <td v-for="(set, num) in answerSet.snl_list">
                 <img v-if="answerSet.snl_list[num]['imageLink']" class="rounded img-fluid" id="final_image" alt="No file yet" style="width: 150px"  :src="answerSet.snl_list[num]['imageLink']">
-                <span style="color:white;background:green;font-style:bold"> [[ answerSet.snl_list[num]['answer1']  ]]  </span> <br>
+
+                <div v-if="!showInputs">
+                  <span style="color:white;background:green;font-style:bold"> [[ answerSet.snl_list[num]['answer1']  ]]  </span> <br>
+                </div>
+                <div v-else>
+                  <input style="color:white;background:green;font-style:bold" v-model="answerSet.snl_list[num]['answer1']"> </input> <br>
+                </div>
+
                 <img v-if="answerSet.snl_list[num]['imageLink2']" class="rounded img-fluid" id="final_image" alt="No file yet" style="width: 150px"  :src="answerSet.snl_list[num]['imageLink2']">
-                <span style="color:white;background:green;font-style:bold"> [[ answerSet.snl_list[num]['answer2']  ]]  </span> <br>
+                <div v-if="!showInputs">
+                  <span style="color:white;background:green;font-style:bold"> [[ answerSet.snl_list[num]['answer2']  ]]  </span> <br>
+                </div>
+                <div v-else>
+                  <input style="color:white;background:green;font-style:bold" v-model="answerSet.snl_list[num]['answer2']"> </input> <br>
+                </div>
+
                 [[ answerSet.snl_list[num]['user']  ]] <br>
                <br>
                <div>
@@ -178,7 +205,8 @@ function startVue(OBJ, unit){ new Vue({
     },
     data: {
         ansOBJ: OBJ,
-        unit: unit
+        unit: unit,
+        showInputs: false
     },
     methods: {
         getNoteStyle: function (obj, num) {
@@ -236,6 +264,38 @@ function startVue(OBJ, unit){ new Vue({
           },
           type : 'POST',
           url : '/pr_updateStatus'
+          })
+          .done(function(data) {
+           alert(data.status);
+           location.reload()
+
+          })
+          .fail(function(){
+            alert('Failed, check server')
+          });
+
+        },
+        updateStudentWork: function(team, mode){
+
+          let work = {}
+          if (mode == 'qna') {
+            work = this.ansOBJ[team]['qna_list']
+          } else if (mode == 'snl') {
+            work = this.ansOBJ[team]['snl_list']
+          }
+
+          console.log(work, team, unit, mode)
+
+
+          $.ajax({
+          data : {
+              team : team,
+              work : JSON.stringify(work),
+              mode : mode,
+              unit : this.unit,
+          },
+          type : 'POST',
+          url : '/pr_updateStudentWork'
           })
           .done(function(data) {
            alert(data.status);

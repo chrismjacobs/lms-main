@@ -1148,6 +1148,30 @@ def pr_updateStatus():
 
     return jsonify({'status' : status})
 
+@app.route('/pr_updateStudentWork', methods=['POST'])
+def pr_updateStudentWork():
+    unit = request.form ['unit']
+    team = request.form ['team']
+    mode = request.form ['mode']
+    work = json.loads(request.form ['work'])
+
+    proj = unitDict[unit].query.filter_by(teamnumber=team).first()
+
+    status = 'none'
+
+    if mode == 'qna':
+        proj.Ans01 = json.dumps(work)
+    elif mode == 'snl':
+        proj.Ans02 = json.dumps(work)
+    elif mode == 'rp':
+        proj.Ans03 = json.dumps(work)
+
+    status = mode
+
+    db.session.commit()
+
+    return jsonify({'status' : status})
+
 
 @app.route('/prostoreAnswer', methods=['POST'])
 def storeAnswer():
