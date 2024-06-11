@@ -809,7 +809,8 @@ def pro_list():
 
     examDict = {}
 
-    eUnits = ['01','02']
+    # eUnits = ['01','02']
+    eUnits = ['03','04', '05']
     for src in eUnits:
         if int(src) > 16: # change to match number of units
             pass
