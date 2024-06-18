@@ -209,6 +209,33 @@ def pr_commentSet():
 
     return jsonify({'comment' : newComment})
 
+
+
+@app.route('/pr_textUpload', methods=['POST', 'GET'])
+def pr_textUpload():
+    unit = request.form ['unit']
+    type = request.form ['type']
+    task = request.form ['task']
+    ansDict = request.form ['ansDict']
+    model = pr_assDict[int(unit)]
+    user = model.query.filter_by(username=current_user.username).first()
+
+    answers = json.loads(ansDict)
+    print(answers)
+    textStr = answers[task]['TextData']
+    if task == '1':
+        user.Ans03 = json.dumps(textStr)
+    if task == '2':
+        user.Ans06 = json.dumps(textStr)
+    if task == '3':
+        user.Ans09 = json.dumps(textStr)
+
+    db.session.commit()
+
+    return jsonify({'text' : textStr})
+
+
+
 @app.route('/pr_audioUpload', methods=['POST', 'GET'])
 def pr_audioUpload():
 

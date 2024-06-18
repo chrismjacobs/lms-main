@@ -69,7 +69,8 @@
 
         <div style="display:flex">
                 <div  v-if="capture1.capture">
-                    <button  class="btn btn-dark" @click="setup_capture(i)" >Set Up</button>
+                    <button  class="btn btn-dark" @click="setup_capture(i)" >Set Up Capture</button>
+                    <button  v-if="video[i] == 2 && capture1.play" class="btn btn-dark m-3" @click="save_text(i)" >Update Text</button>
                 </div>
                 <div  v-if="capture1.start">
                     <button  class="btn btn-success" @click="start_capture(i)" >Start Capture</button>
@@ -98,8 +99,8 @@
             <button type="button" class="btn btn-outline-danger" style="margin-right:5px" disable > 0 secs </button>
             </div>
             <div  v-if="audio[i] == 2 && checkShow(i, 'capture')">
-                <button type="button" class="btn btn-primary" style="margin-right:5px" @click="playAudio(i)">
-                    <span >Saved Record</span>
+                <button type="button" class="btn btn-warning" style="margin-right:5px" @click="playAudio(i)">
+                    <span >Listen Saved Record</span>
                 </button>
             </div>
             <div  v-if="audio[i] == 3" >
@@ -117,7 +118,7 @@
                     <button  class="btn btn-danger" @click="stop(i)" >Stop</button>
                 </div>
                 <div  v-if="rec1.save" style="float: left;">
-                    <button  class="btn btn-info" style="margin-right:5px" @click="save(i)">Upload</button>
+                    <button  class="btn btn-info" style="margin-right:5px" @click="save_record(i)">Upload</button>
                 </div>
                 <div  v-if="rec1.cancel" flex="0.5">
                     <button  class="btn btn-secondary" @click="cancel(i)">Cancel/Redo</button>

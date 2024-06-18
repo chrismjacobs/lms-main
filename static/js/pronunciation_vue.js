@@ -332,6 +332,8 @@ function startVue(ansOBJ, device){
 
 
         document.getElementById('handlerVideo').addEventListener('ended', function(e) {
+            player = document.getElementById('handlerVideo')
+            player.src = null
             vue.echoMessage = 'ECHO...'
             vue.echoCount = 3
             vue.echoTimer = setInterval(function() {
@@ -577,7 +579,31 @@ function startVue(ansOBJ, device){
           });
           console.log(vue.ansOBJ);
       },
-      save : function (task, mark){
+      save_text : function (task, mark){
+
+        $.ajax({
+          data : {
+              type : 'text',
+              task : task,
+              unit : vue.ansOBJ.Unit,
+              title : '',
+              base64 : '',
+              ansDict : JSON.stringify(vue.ansOBJ)
+          },
+          type : 'POST',
+          url : '/pr_textUpload'
+          })
+          .done(function(data) {
+              vue.cancel()
+              alert('Text Updated')
+              location.reload()
+          })
+          .fail(function(){
+            alert('Upload Failed, there has been an error. Reload the page and if it happens again please tell you instructor')
+          });
+          console.log(vue.ansOBJ);
+      },
+      save_record : function (task, mark){
         if (this.device == 'I'){
           vue.base64data = b64d
         }
@@ -842,6 +868,8 @@ function startVue(ansOBJ, device){
 
       },
       stop_video: function () {
+        this.echoMessage = ''
+        this.echoCount = ''
         vue.echoBlock = null
         this.showVideo = false
         player = document.getElementById('handlerVideo')
@@ -904,17 +932,12 @@ function startVue(ansOBJ, device){
             .then((messages) => {
                 console.log(messages)
                 alert ('Your assignment will be updated, please wait')
-                vue.save(task)
+                vue.save_record(task)
                 })
             })
         }//end else
       },//end fileValidation
-      saveLink : function(task){
-          vue.base64data = document.getElementById('uplink' + task).value
-          vue.rec1.count = 1
-          console.log( 'link stored for task ' + task)
-          this.save(task, 'link')
-      }
+
     } // end methods
 
 
