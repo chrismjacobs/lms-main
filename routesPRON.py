@@ -944,7 +944,7 @@ def get_team_data(unit, team):
         try:
             teamDict[member] = S3_LOCATION + User.query.filter_by(username=member).first().image_file
         except:
-            teamDict[member] = None
+            teamDict[member] = {}
 
     project_answers = unitDict[unit].query.filter_by(teamnumber=team).first()
 
@@ -999,16 +999,21 @@ def pro_setup(qs, unit, team):
     srcDict = get_projects()
     meta = srcDict[unit]
     #print(meta['M1'])
+    if current_user.username == 'Test':
+        project_answers = {}
+        teamMembers = []
+        ansDict = {}
+        current_score = 0
+    else:
+        data = get_team_data(unit, team)
+        project_answers = data['project_answers']
+        teamMembers = data['teamMembers']
 
-    data = get_team_data(unit, team)
-    project_answers = data['project_answers']
-    teamMembers = data['teamMembers']
-
-    if current_user.username == "Chris":
+    if current_user.username == "Chris" or current_user.username == "Test":
         pass
     elif current_user.username not in teamMembers:
         flash('You are not on the team for this project', 'warning')
-        return (redirect (url_for('pro_dash')))
+        return (redirect (url_for('home')))
 
     if qs == 'qna':
         testDict = {}
@@ -1023,8 +1028,9 @@ def pro_setup(qs, unit, team):
                 'imageLink2' : '-----',
             }
         html = 'pro/pro_qna.html'
-        ansDict = project_answers.Ans01
-        current_score = project_answers.Ans04
+        if current_user.username != 'Test':
+            ansDict = project_answers.Ans01
+            current_score = project_answers.Ans04
 
     if qs == 'snl':
         testDict = {}
@@ -1039,8 +1045,9 @@ def pro_setup(qs, unit, team):
                 'imageLink2' : None,
             }
         html = 'pro/pro_snl.html'
-        ansDict = project_answers.Ans02
-        current_score = project_answers.Ans05
+        if current_user.username != 'Test':
+            ansDict = project_answers.Ans02
+            current_score = project_answers.Ans05
 
     if qs == 'rp':
         testDict = {'audio': None}
@@ -1051,8 +1058,9 @@ def pro_setup(qs, unit, team):
             'user' : None
             }
         html = 'pro/pro_rp.html'
-        ansDict = project_answers.Ans03
-        current_score = project_answers.Ans06
+        if current_user.username != 'Test':
+            ansDict = project_answers.Ans03
+            current_score = project_answers.Ans06
 
 
     return render_template(html, legend='Questions & Answers',
