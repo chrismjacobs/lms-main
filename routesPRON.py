@@ -68,7 +68,7 @@ def dashboardpro():
 
 
 
-    if current_user.id != 1 and current_user.username != 'Cherry Mak':
+    if current_user.id != 1 and current_user.username != 'Test':
         return abort(403)
 
 
@@ -325,7 +325,7 @@ def pr_ass(unit):
 
     setting =  getModels()['Units_'].query.filter_by(unit=unit).first().uA
 
-    iList = ['Chris', 'Cherry Wai']
+    iList = ['Chris', 'Test']
 
     notInstructor = current_user.username not in iList
     if setting != 1 and notInstructor:
@@ -748,7 +748,7 @@ def get_projects():
 @app.route ("/pro_check/<string:unit>", methods=['GET','POST'])
 @login_required
 def pro_check(unit):
-    taList = ['Chris', 'Cherry Mak']
+    taList = ['Chris', 'Test']
 
     if current_user.username not in taList:
         return redirect('home')
@@ -957,7 +957,7 @@ def get_team_data(unit, team):
 @app.route ("/pro_dash", methods=['GET','POST'])
 @login_required
 def pro_dash():
-    taList = ['Chris', 'Cherry Mak']
+    taList = ['Chris', 'Test']
 
     if current_user.username not in taList:
         return redirect('home')
@@ -980,7 +980,10 @@ def pro_dash():
                 proDict[src]['Teams'][proj.teamnumber] = {'team' : proj.username,
                                                           'QNA' : proj.Ans04,
                                                           'SNL' : proj.Ans05,
-                                                          'RP' : proj.Ans06
+                                                          'RP' : proj.Ans06,
+                                                          'QNA_Ans' : proj.Ans01,
+                                                          'SNL_Ans' : proj.Ans02,
+                                                          'RP_Ans' : proj.Ans03
                                                           }
 
     pprint (proDict)

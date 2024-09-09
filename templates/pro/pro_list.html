@@ -169,11 +169,252 @@
 <script type="text/javascript" >
 
 var projectDict = document.getElementById('projectDict').innerHTML
-var OBJ = JSON.parse(projectDict)
+// var OBJ = JSON.parse(projectDict)
+var OBJ = {
+  "01": {
+      "Title": "American vs British English",
+      "Team": "['Ling', 'Wing Chi', 'Nora']",
+      "Number": 3,
+      "QTotal": "6",
+      "STotal": "6",
+      "RTotal": null,
+      "QTest": 1,
+      "STest": 1,
+      "RTest": 0
+  },
+  "02": {
+      "Title": "Short Vowels",
+      "Team": "['Nora', 'Nina Chen', 'Haoyuchan']",
+      "Number": 2,
+      "QTotal": "6",
+      "STotal": "6",
+      "RTotal": null,
+      "QTest": 1,
+      "STest": 1,
+      "RTest": 0
+  },
+  "03": {
+      "Title": "th sound",
+      "Team": "['Wing Chi', 'Jolin', 'Nora']",
+      "Number": 2,
+      "QTotal": "6",
+      "STotal": "6",
+      "RTotal": null,
+      "QTest": 1,
+      "STest": 1,
+      "RTest": 0
+  },
+  "04": {
+      "Title": "ending sounds",
+      "Team": "['Nora', 'Vanessa', 'Harrison']",
+      "Number": 2,
+      "QTotal": "6",
+      "STotal": "6",
+      "RTotal": null,
+      "QTest": 1,
+      "STest": 1,
+      "RTest": 0
+  },
+  "05": {
+      "Title": "Heteronyms",
+      "Team": "['Nora', 'Mandy', 'Harrison']",
+      "Number": 2,
+      "QTotal": "6",
+      "STotal": "6",
+      "RTotal": null,
+      "QTest": 1,
+      "STest": 1,
+      "RTest": 0
+  }
+}
 console.log('projectOBJ', OBJ);
 
 var examDict = document.getElementById('examDict').innerHTML
-var examOBJ = JSON.parse(examDict)
+//var examOBJ = JSON.parse(examDict)
+var examOBJ = {
+  "03": {
+      "1": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": "6",
+          "Sscore": "2",
+          "Rscore": 0
+      },
+      "3": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": "5",
+          "Sscore": "5",
+          "Rscore": 0
+      },
+      "4": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": 0,
+          "Sscore": 0,
+          "Rscore": 0
+      },
+      "5": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": "5",
+          "Sscore": "5",
+          "Rscore": 0
+      },
+      "6": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": 0,
+          "Sscore": 0,
+          "Rscore": 0
+      },
+      "7": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": 0,
+          "Sscore": 0,
+          "Rscore": 0
+      },
+      "8": {
+          "QTotal": 12,
+          "STotal": 9,
+          "RTotal": 0,
+          "Qscore": 0,
+          "Sscore": 0,
+          "Rscore": 0
+      },
+      "9": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": 0,
+          "Sscore": 0,
+          "Rscore": 0
+      }
+  },
+  "04": {
+      "1": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": "3",
+          "Sscore": "4",
+          "Rscore": 0
+      },
+      "3": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": "5",
+          "Sscore": "3",
+          "Rscore": 0
+      },
+      "4": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": "5",
+          "Sscore": "6",
+          "Rscore": 0
+      },
+      "5": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": 0,
+          "Sscore": 0,
+          "Rscore": 0
+      },
+      "6": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": 0,
+          "Sscore": 0,
+          "Rscore": 0
+      },
+      "7": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": 0,
+          "Sscore": 0,
+          "Rscore": 0
+      },
+      "8": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": 0,
+          "Sscore": 0,
+          "Rscore": 0
+      }
+  },
+  "05": {
+      "1": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": "3",
+          "Sscore": "4",
+          "Rscore": 0
+      },
+      "3": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": "4",
+          "Sscore": "4",
+          "Rscore": 0
+      },
+      "4": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": "5",
+          "Sscore": "3",
+          "Rscore": 0
+      },
+      "5": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": 0,
+          "Sscore": "2",
+          "Rscore": 0
+      },
+      "6": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": 0,
+          "Sscore": 0,
+          "Rscore": 0
+      },
+      "7": {
+          "QTotal": 12,
+          "STotal": 8,
+          "RTotal": 0,
+          "Qscore": 0,
+          "Sscore": 0,
+          "Rscore": 0
+      },
+      "8": {
+          "QTotal": 12,
+          "STotal": 12,
+          "RTotal": 0,
+          "Qscore": 0,
+          "Sscore": 0,
+          "Rscore": 0
+      }
+  }
+}
 console.log('examOBJ', examOBJ);
 
 var report = navigator.userAgent

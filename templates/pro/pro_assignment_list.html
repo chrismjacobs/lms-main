@@ -63,12 +63,44 @@
 <script type="text/javascript" >
 
 var Table = document.getElementById('Table').innerHTML
-var OBJ = JSON.parse(Table)
-console.log('unitOBJ', OBJ);
+
 var max = parseInt(document.getElementById('max').innerHTML)
 var Grade = parseInt(document.getElementById('Grade').innerHTML)
 
+var OBJ = {
+  "01": {
+      "Deadline": "2024-04-09",
+      "Title": "American vs British English",
+      "Grade": 2,
+      "Comment": "Completed on time - Great!"
+  },
+  "02": {
+      "Deadline": "2024-04-23",
+      "Title": "Short Vowels",
+      "Grade": 2,
+      "Comment": "Completed on time - Great!"
+  },
+  "03": {
+      "Deadline": "2024-05-14",
+      "Title": "th sound",
+      "Grade": 1,
+      "Comment": "This assignment has been completed late"
+  },
+  "04": {
+      "Deadline": "2024-05-28",
+      "Title": "ending sounds",
+      "Grade": 1,
+      "Comment": "Good variety here, and well modelled"
+  },
+  "05": {
+      "Deadline": "2024-06-11",
+      "Title": "Heteronyms",
+      "Grade": 2,
+      "Comment": "Completed on time - Great!"
+  }
+}
 
+console.log('unitOBJ', OBJ);
 console.log(navigator.userAgent);
 
 if (Grade > 0){

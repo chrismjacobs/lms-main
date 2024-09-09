@@ -19,11 +19,7 @@ from modelsPENG import *
 from modelsPRON import *
 from modelsWRITE import *
 from modelsNME import *
-
-# from modelsWRITE import *
-# from modelsNME import *
-# from modelsPENG import *
-# from modelsLNC import *
+from modelsLNC import *
 
 def getSchema():
     SCHEMA = 0
@@ -115,6 +111,14 @@ dicts = {
             Exams_WRITE,
             Errors_WRITE,
         ],
+        11 : [
+            ChatBox_LNC,
+            Attendance_LNC,
+            AttendLog_LNC,
+            Units_LNC,
+            Exams_LNC,
+            Errors_LNC,
+        ],
     }
 
 infoDict = {
@@ -128,7 +132,8 @@ infoDict = {
                  modDictAss_PENG,
                  modDictAss_PRON,
                  modDictAss_NME,
-                 modDictAss_WRITE
+                 modDictAss_WRITE,
+                 modDictAss_LNC
                  ],
         'mdu' : [{},
                  modDictUnits_FRD1,
@@ -141,6 +146,7 @@ infoDict = {
                  modDictUnits_PRON,
                  modDictUnits_NME,
                  modDictUnits_WRITE,
+                 modDictUnits_LNC,
                  ]
     }
 
@@ -261,6 +267,7 @@ class User(db.Model, UserMixin):
     prn = db.Column(db.Integer, default=0)
     png = db.Column(db.Integer, default=0)
     nme = db.Column(db.Integer, default=0)
+    #lnc = db.Column(db.Integer, default=0)
     semester = db.Column(db.Integer)
     schema = db.Column(db.Integer)
     extra = db.Column(db.Integer)

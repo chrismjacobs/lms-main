@@ -1,17 +1,197 @@
 var ansString = document.getElementById('ansDict').innerHTML
-var ansOBJ = JSON.parse(ansString)
+
+// var ansOBJ = JSON.parse(ansString)
+var ansOBJsnl = {
+    "1": {
+        "question": "---",
+        "answer1": "tack",
+        "answer2": "tech",
+        "user": "Haoyuchan",
+        "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/1_4906_audioLink.mp3",
+        "imageLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/1_3403_imageLink.jpg",
+        "imageLink2": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/1_3414_imageLink2.jpg"
+    },
+    "2": {
+        "question": "---",
+        "answer1": "axe",
+        "answer2": "ex",
+        "user": "Haoyuchan",
+        "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/2_4958_audioLink.mp3",
+        "imageLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/2_3536_imageLink.jpg",
+        "imageLink2": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/2_3547_imageLink2.jpg"
+    },
+    "3": {
+        "question": "---",
+        "answer1": "bag",
+        "answer2": "beg",
+        "user": "Nina Chen",
+        "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/3_0459_audioLink.mp3",
+        "imageLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/3_5211_imageLink.jpg",
+        "imageLink2": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/3_5301_imageLink2.jpg"
+    },
+    "4": {
+        "question": "---",
+        "answer1": "cup",
+        "answer2": "cop",
+        "user": "Nina Chen",
+        "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/4_0705_audioLink.mp3",
+        "imageLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/4_5835_imageLink.jpg",
+        "imageLink2": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/4_0804_imageLink2.jpg"
+    },
+    "5": {
+        "question": "---",
+        "answer1": "caught",
+        "answer2": "cut",
+        "user": "Nora",
+        "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/5_4457_audioLink.mp3",
+        "imageLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/5_4941_imageLink.jpg",
+        "imageLink2": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/5_4137_imageLink2.jpg"
+    },
+    "6": {
+        "question": "---",
+        "answer1": "boss",
+        "answer2": "bus",
+        "user": "Nora",
+        "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/6_5955_audioLink.mp3",
+        "imageLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/6_4919_imageLink.jpg",
+        "imageLink2": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/6_4855_imageLink2.png"
+    }
+}
+
+var ansOBJ = {
+    "1": {
+        "question": "Could you cut the _______ off the pizza, Please?",
+        "answer1": "Crust",
+        "answer2": "Crossed",
+        "user": "Haoyuchan",
+        "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/1_4726_audioLink.mp3",
+        "imageLink": "----",
+        "imageLink2": "----"
+    },
+    "2": {
+        "question": "A ___ lay under the table, gnawing on a bone.",
+        "answer1": "dog",
+        "answer2": "dug",
+        "user": "Nina Chen",
+        "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/2_2648_audioLink.mp3",
+        "imageLink": "----",
+        "imageLink2": "----"
+    },
+    "3": {
+        "question": "The party is not ____  yet.",
+        "answer1": "Done",
+        "answer2": "Dawn",
+        "user": "Haoyuchan",
+        "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/3_4817_audioLink.mp3",
+        "imageLink": "----",
+        "imageLink2": "----"
+    },
+    "4": {
+        "question": "Does she remember to bring her ____________ ?",
+        "answer1": "axe",
+        "answer2": "ex",
+        "user": "Nora",
+        "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/4_1936_audioLink.mp3",
+        "imageLink": "----",
+        "imageLink2": "----"
+    },
+    "5": {
+        "question": "She looked through all the drawers, looking for a _____.",
+        "answer1": "pen",
+        "answer2": "pan",
+        "user": "Nina Chen",
+        "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/5_3143_audioLink.mp3",
+        "imageLink": "----",
+        "imageLink2": "----"
+    },
+    "6": {
+        "question": "What are the benefits of owning a ________ ?",
+        "answer1": "kettle",
+        "answer2": "cattle",
+        "user": "Nora",
+        "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/02/2/6_5403_audioLink.mp3",
+        "imageLink": "----",
+        "imageLink2": "----"
+    }
+}
+
 console.log('ansOBJ', ansOBJ);
 
 // ablank obj version of ansstring
 var testString = document.getElementById('testDict').innerHTML
-var testOBJ = JSON.parse(testString)
+// var testOBJ = JSON.parse(testString)
+var testOBJ = {
+    "1": {
+        "question": null,
+        "answer1": null,
+        "answer2": null,
+        "user": null,
+        "audioLink": null,
+        "imageLink": "-----",
+        "imageLink2": "-----"
+    },
+    "2": {
+        "question": null,
+        "answer1": null,
+        "answer2": null,
+        "user": null,
+        "audioLink": null,
+        "imageLink": "-----",
+        "imageLink2": "-----"
+    },
+    "3": {
+        "question": null,
+        "answer1": null,
+        "answer2": null,
+        "user": null,
+        "audioLink": null,
+        "imageLink": "-----",
+        "imageLink2": "-----"
+    },
+    "4": {
+        "question": null,
+        "answer1": null,
+        "answer2": null,
+        "user": null,
+        "audioLink": null,
+        "imageLink": "-----",
+        "imageLink2": "-----"
+    },
+    "5": {
+        "question": null,
+        "answer1": null,
+        "answer2": null,
+        "user": null,
+        "audioLink": null,
+        "imageLink": "-----",
+        "imageLink2": "-----"
+    },
+    "6": {
+        "question": null,
+        "answer1": null,
+        "answer2": null,
+        "user": null,
+        "audioLink": null,
+        "imageLink": "-----",
+        "imageLink2": "-----"
+    }
+}
 console.log('testOBJ', testOBJ);
 
 var teamMembers = document.getElementById('teamMembers').innerHTML
-var teamOBJ = JSON.parse(teamMembers)
+// var teamOBJ = JSON.parse(teamMembers)
+var teamOBJ = {
+    "Nora": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/profiles/default.PNG",
+    "Nina Chen": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/profiles/default.PNG",
+    "Haoyuchan": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/profiles/default.PNG"
+}
 console.log('teamOBJ', teamOBJ);
 
 const mode = (window.location.href).split('/pro/')[1].split('/')[0]
+
+if (mode == 'snl') {
+    ansOBJ = ansOBJsnl
+}
 const unit = (window.location.href).split('/pro/')[1].split('/')[1]
 const team = (window.location.href).split('/pro/')[1].split('/')[2]
 console.log(mode, unit, team);

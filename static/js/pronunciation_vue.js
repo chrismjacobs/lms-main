@@ -2,9 +2,38 @@ var name = document.getElementById('name').innerHTML
 var SCHEMA = parseInt(document.getElementById('SCHEMA').innerHTML)
 console.log(name, SCHEMA)
 
-var ansString = document.getElementById('ansString').innerHTML
-console.log(ansString);
-var ansOBJ = JSON.parse(ansString)
+// var ansString = document.getElementById('ansString').innerHTML
+var ansString = {"Unit": "05", "1": {"AudioData": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/05_1_A.mp3", "VideoData": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/05_1_capture.mp4", "TextData": ["Learn English with President Obama and Mark Zuckerberg at Facebook Town Hall ", "so when it comes to energy, when it come to immigration, when it comes to getting our deficit under control in a balanced and smart way."]}, "2": {"AudioData": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/05_2_A.mp3", "VideoData": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/05_2_capture.mp4", "TextData": ["ENGLISH SPEECH | DONALD TRUMP: Never, Ever Give Up ", "you'll be a leaders in your communities, stewards of great institutions and defenders of liberty."]}, "3": {"AudioData": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/05_3_A.mp3", "VideoData": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/05_3_capture.mp4", "TextData": ["ENGLISH SPEECH | JACK MA: We Never Give Up", "because the internet at that time was new to any government.\nand if you convince somebody and you have a chance"]}}
+
+console.log('ansString', ansString);
+// var ansOBJ = JSON.parse(ansString)
+var ansOBJ = {
+  "1": {
+      "AudioData": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/05_1_A.mp3",
+      "VideoData": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/05_1_capture.mp4",
+      "TextData": [
+          "Learn English with President Obama and Mark Zuckerberg at Facebook Town Hall ",
+          "so when it comes to energy, when it come to immigration, when it comes to getting our deficit under control in a balanced and smart way."
+      ]
+  },
+  "2": {
+      "AudioData": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/05_2_A.mp3",
+      "VideoData": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/05_2_capture.mp4",
+      "TextData": [
+          "ENGLISH SPEECH | DONALD TRUMP: Never, Ever Give Up ",
+          "you'll be a leaders in your communities, stewards of great institutions and defenders of liberty."
+      ]
+  },
+  "3": {
+      "AudioData": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/05_3_A.mp3",
+      "VideoData": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/assignments/Nora/05_3_capture.mp4",
+      "TextData": [
+          "ENGLISH SPEECH | JACK MA: We Never Give Up",
+          "because the internet at that time was new to any government.\nand if you convince somebody and you have a chance"
+      ]
+  },
+  "Unit": "05"
+}
 console.log('ansOBJ', ansOBJ);
 
 var report = navigator.userAgent

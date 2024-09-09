@@ -42,7 +42,7 @@ s3_client = boto3.client('s3',
          aws_access_key_id=AWS_ACCESS_KEY_ID,
          aws_secret_access_key= AWS_SECRET_ACCESS_KEY)
 
-
+### because of schema list this might defunct
 jList = ['None',
         'reading-lms',
         'reading-lms',
@@ -53,7 +53,7 @@ jList = ['None',
         'peng-lms',
         'culture-lms',
         'nme-lms',
-        'write-lms'
+        'write-lms',
         ]
 
 schemaList = {
@@ -193,6 +193,18 @@ schemaList = {
             "headLogo": "https://writing-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
         }
     },
+    11 : {
+        "Course": "Culture",
+        "S3_BUCKET_NAME": "culture-lms",
+        "courseCode" : "lnc",
+        "S3_LOCATION" : "https://writing-lms.s3.ap-northeast-1.amazonaws.com/",
+        "DESIGN": {
+            "titleColor": "MEDIUMPURPLE",
+            "bodyColor": "LAVENDER",
+            "headTitle": "LNC",
+            "headLogo": "https://culture-lms.s3-ap-northeast-1.amazonaws.com/profiles/logo.png"
+        }
+    },
 
 }
 
@@ -208,7 +220,7 @@ class BaseConfig:
     s3_resource = s3_resource
     s3_client = s3_client
 
-    jList = jList
+    #jList = jList
 
 
     # IDLIST = META['C']

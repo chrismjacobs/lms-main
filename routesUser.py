@@ -92,6 +92,7 @@ def home():
 
 
     ''' deal with attendance '''
+    print(current_user.username)
     attLog = getModels()['AttendLog_'].query.filter_by(username=current_user.username).all()
 
     context = {
