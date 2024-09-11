@@ -1304,25 +1304,27 @@ def pro_exam(qORs, unit, team):
     orderList = ['1','2','3','4','5','6']
     random.shuffle(orderList)
     print('orderList', orderList)
-
-    count = 1
     orderDict = {}
-    for number in orderList:
-        orderDict[count] = [number, snlDict[number]['audioLink']]
-        count +=1
-
-
-    count = 1
     qnaDictNew = {}
-    for number in orderList:
-        qnaDictNew[count] = qnaDict[number]
-        count +=1
-
-    count = 1
     snlDictNew = {}
-    for number in orderList:
-        snlDictNew[count] = snlDict[number]
-        count +=1
+
+    if qnaDict != {}:
+
+        count = 1
+        for number in orderList:
+            orderDict[count] = [number, snlDict[number]['audioLink']]
+            count +=1
+
+
+        count = 1
+        for number in orderList:
+            qnaDictNew[count] = qnaDict[number]
+            count +=1
+
+        count = 1
+        for number in orderList:
+            snlDictNew[count] = snlDict[number]
+            count +=1
 
 
 

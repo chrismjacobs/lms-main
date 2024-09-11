@@ -344,7 +344,7 @@ def loginTest():
         user = User.query.filter_by(username='Test').first()
         login_user (user)
         current_user.schema = 8
-        db.session.commit()/
+        db.session.commit()
         flash (f'Test Login', 'warning')
         return redirect (url_for('home'))
 
