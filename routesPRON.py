@@ -937,7 +937,11 @@ def pro_list():
 def get_team_data(unit, team):
     project = unitDict[unit]
     questions = project.query.filter_by(teamnumber=team).first()
-    teamMembers = ast.literal_eval(questions.username)
+    try:
+        teamMembers = ast.literal_eval(questions.username)
+    except:
+        print('NO TEAM MEMBERS')
+        teamMembers = []
 
     teamDict = {}
     for member in teamMembers:
@@ -1285,10 +1289,17 @@ def pro_exam(qORs, unit, team):
     print(team_data)
     source = meta['M1']
     print(source)
-    qnaDict = json.loads(data.Ans01)
-    snlDict = json.loads(data.Ans02)
-    rpString = data.Ans03
-    rpDict = json.loads(data.Ans03)
+    try:
+        qnaDict = json.loads(data.Ans01)
+        snlDict = json.loads(data.Ans02)
+        rpString = data.Ans03
+        rpDict = json.loads(data.Ans03)
+    except:
+        print('NO TEAM DATA')
+        qnaDict = {}
+        snlDict = {}
+        rpString = ''
+        rpDict = {}
 
     orderList = ['1','2','3','4','5','6']
     random.shuffle(orderList)

@@ -20,6 +20,7 @@ from modelsPRON import *
 from modelsWRITE import *
 from modelsNME import *
 from modelsLNC import *
+from modelsNEWS import *
 
 def getSchema():
     SCHEMA = 0
@@ -119,11 +120,19 @@ dicts = {
             Exams_LNC,
             Errors_LNC,
         ],
+        12 : [
+            ChatBox_NEWS,
+            Attendance_NEWS,
+            AttendLog_NEWS,
+            Units_NEWS,
+            Exams_NEWS,
+            Errors_NEWS,
+        ],
     }
 
 infoDict = {
         'mda' : [{},
-                 modDictAss_FRD1,
+                  #modDictAss_FRD1,
                  modDictAss_FRD2,
                  modDictAss_WPE1,
                  modDictAss_WPE2,
@@ -133,10 +142,11 @@ infoDict = {
                  modDictAss_PRON,
                  modDictAss_NME,
                  modDictAss_WRITE,
-                 modDictAss_LNC
+                 modDictAss_LNC,
+                 modDictAss_NEWS
                  ],
         'mdu' : [{},
-                 modDictUnits_FRD1,
+                  #modDictUnits_FRD1,
                  modDictUnits_FRD2,
                  modDictUnits_WPE1,
                  modDictUnits_WPE2,
@@ -147,14 +157,13 @@ infoDict = {
                  modDictUnits_NME,
                  modDictUnits_WRITE,
                  modDictUnits_LNC,
+                 modDictUnits_NEWS
                  ]
     }
 
 def getModels():
     SCHEMA = getSchema()
     # print('getModels', SCHEMA)
-
-
 
     chatbox = [None]
     attend = [None]
@@ -240,8 +249,6 @@ def getInfo():
 
 
 
-
-
 #login manager
 @login_manager.user_loader
 def load_user(user_id):
@@ -267,7 +274,8 @@ class User(db.Model, UserMixin):
     prn = db.Column(db.Integer, default=0)
     png = db.Column(db.Integer, default=0)
     nme = db.Column(db.Integer, default=0)
-    #lnc = db.Column(db.Integer, default=0)
+    lnc = db.Column(db.Integer, default=0)
+    news = db.Column(db.Integer, default=0)
     semester = db.Column(db.Integer)
     schema = db.Column(db.Integer)
     extra = db.Column(db.Integer)
@@ -408,14 +416,14 @@ for mdu in infoDict['mdu']:
 
 ### U01
 
-admin.add_view(MyModelView(U011U_FOOD, db.session))
-admin.add_view(MyModelView(U021U_FOOD, db.session))
+# admin.add_view(MyModelView(U011U_FOOD, db.session))
+# admin.add_view(MyModelView(U021U_FOOD, db.session))
 
 
-admin.add_view(MyModelView(U011U_FRD1, db.session))
-admin.add_view(MyModelView(U012U_FRD1, db.session))
-admin.add_view(MyModelView(U013U_FRD1, db.session))
-admin.add_view(MyModelView(U014U_FRD1, db.session))
+ #admin.add_view(MyModelView(U011U_FRD1, db.session))
+ #admin.add_view(MyModelView(U012U_FRD1, db.session))
+ #admin.add_view(MyModelView(U013U_FRD1, db.session))
+ #admin.add_view(MyModelView(U014U_FRD1, db.session))
 
 admin.add_view(MyModelView(U011U_FRD2, db.session))
 admin.add_view(MyModelView(U012U_FRD2, db.session))
@@ -442,12 +450,17 @@ admin.add_view(MyModelView(U012U_PRON, db.session))
 admin.add_view(MyModelView(U013U_PRON, db.session))
 admin.add_view(MyModelView(U014U_PRON, db.session))
 
+admin.add_view(MyModelView(U011U_NEWS, db.session))
+admin.add_view(MyModelView(U012U_NEWS, db.session))
+admin.add_view(MyModelView(U013U_NEWS, db.session))
+admin.add_view(MyModelView(U014U_NEWS, db.session))
+
 ##### U02
 
-admin.add_view(MyModelView(U021U_FRD1, db.session))
-admin.add_view(MyModelView(U022U_FRD1, db.session))
-admin.add_view(MyModelView(U023U_FRD1, db.session))
-admin.add_view(MyModelView(U024U_FRD1, db.session))
+ #admin.add_view(MyModelView(U021U_FRD1, db.session))
+ #admin.add_view(MyModelView(U022U_FRD1, db.session))
+ #admin.add_view(MyModelView(U023U_FRD1, db.session))
+ #admin.add_view(MyModelView(U024U_FRD1, db.session))
 
 admin.add_view(MyModelView(U021U_FRD2, db.session))
 admin.add_view(MyModelView(U022U_FRD2, db.session))
@@ -475,10 +488,10 @@ admin.add_view(MyModelView(U023U_PRON, db.session))
 admin.add_view(MyModelView(U024U_PRON, db.session))
 
 ## U03
-admin.add_view(MyModelView(U031U_FRD1, db.session))
-admin.add_view(MyModelView(U032U_FRD1, db.session))
-admin.add_view(MyModelView(U033U_FRD1, db.session))
-admin.add_view(MyModelView(U034U_FRD1, db.session))
+ #admin.add_view(MyModelView(U031U_FRD1, db.session))
+ #admin.add_view(MyModelView(U032U_FRD1, db.session))
+ #admin.add_view(MyModelView(U033U_FRD1, db.session))
+ #admin.add_view(MyModelView(U034U_FRD1, db.session))
 
 admin.add_view(MyModelView(U031U_FRD2, db.session))
 admin.add_view(MyModelView(U032U_FRD2, db.session))
@@ -506,10 +519,10 @@ admin.add_view(MyModelView(U033U_PRON, db.session))
 admin.add_view(MyModelView(U034U_PRON, db.session))
 
 ## U04
-admin.add_view(MyModelView(U041U_FRD1, db.session))
-admin.add_view(MyModelView(U042U_FRD1, db.session))
-admin.add_view(MyModelView(U043U_FRD1, db.session))
-admin.add_view(MyModelView(U044U_FRD1, db.session))
+ #admin.add_view(MyModelView(U041U_FRD1, db.session))
+ #admin.add_view(MyModelView(U042U_FRD1, db.session))
+ #admin.add_view(MyModelView(U043U_FRD1, db.session))
+ #admin.add_view(MyModelView(U044U_FRD1, db.session))
 
 admin.add_view(MyModelView(U041U_FRD2, db.session))
 admin.add_view(MyModelView(U042U_FRD2, db.session))
@@ -532,10 +545,10 @@ admin.add_view(MyModelView(U043U_ICC, db.session))
 admin.add_view(MyModelView(U044U_ICC, db.session))
 
 ## U05
-admin.add_view(MyModelView(U051U_FRD1, db.session))
-admin.add_view(MyModelView(U052U_FRD1, db.session))
-admin.add_view(MyModelView(U053U_FRD1, db.session))
-admin.add_view(MyModelView(U054U_FRD1, db.session))
+ #admin.add_view(MyModelView(U051U_FRD1, db.session))
+ #admin.add_view(MyModelView(U052U_FRD1, db.session))
+ #admin.add_view(MyModelView(U053U_FRD1, db.session))
+ #admin.add_view(MyModelView(U054U_FRD1, db.session))
 
 admin.add_view(MyModelView(U051U_FRD2, db.session))
 admin.add_view(MyModelView(U052U_FRD2, db.session))
@@ -558,10 +571,10 @@ admin.add_view(MyModelView(U053U_ICC, db.session))
 admin.add_view(MyModelView(U054U_ICC, db.session))
 
 ## U06
-admin.add_view(MyModelView(U061U_FRD1, db.session))
-admin.add_view(MyModelView(U062U_FRD1, db.session))
-admin.add_view(MyModelView(U063U_FRD1, db.session))
-admin.add_view(MyModelView(U064U_FRD1, db.session))
+ #admin.add_view(MyModelView(U061U_FRD1, db.session))
+ #admin.add_view(MyModelView(U062U_FRD1, db.session))
+ #admin.add_view(MyModelView(U063U_FRD1, db.session))
+ #admin.add_view(MyModelView(U064U_FRD1, db.session))
 
 admin.add_view(MyModelView(U061U_FRD2, db.session))
 admin.add_view(MyModelView(U062U_FRD2, db.session))
@@ -584,10 +597,10 @@ admin.add_view(MyModelView(U063U_ICC, db.session))
 admin.add_view(MyModelView(U064U_ICC, db.session))
 
 ## U07
-admin.add_view(MyModelView(U071U_FRD1, db.session))
-admin.add_view(MyModelView(U072U_FRD1, db.session))
-admin.add_view(MyModelView(U073U_FRD1, db.session))
-admin.add_view(MyModelView(U074U_FRD1, db.session))
+ #admin.add_view(MyModelView(U071U_FRD1, db.session))
+ #admin.add_view(MyModelView(U072U_FRD1, db.session))
+ #admin.add_view(MyModelView(U073U_FRD1, db.session))
+ #admin.add_view(MyModelView(U074U_FRD1, db.session))
 
 admin.add_view(MyModelView(U071U_FRD2, db.session))
 admin.add_view(MyModelView(U072U_FRD2, db.session))
@@ -610,10 +623,10 @@ admin.add_view(MyModelView(U073U_ICC, db.session))
 admin.add_view(MyModelView(U074U_ICC, db.session))
 
 ## U08
-admin.add_view(MyModelView(U081U_FRD1, db.session))
-admin.add_view(MyModelView(U082U_FRD1, db.session))
-admin.add_view(MyModelView(U083U_FRD1, db.session))
-admin.add_view(MyModelView(U084U_FRD1, db.session))
+ #admin.add_view(MyModelView(U081U_FRD1, db.session))
+ #admin.add_view(MyModelView(U082U_FRD1, db.session))
+ #admin.add_view(MyModelView(U083U_FRD1, db.session))
+ #admin.add_view(MyModelView(U084U_FRD1, db.session))
 
 admin.add_view(MyModelView(U081U_FRD2, db.session))
 admin.add_view(MyModelView(U082U_FRD2, db.session))
@@ -659,49 +672,49 @@ admin.add_view(MyModelView(U103U_PRON, db.session))
 admin.add_view(MyModelView(U104U_PRON, db.session))
 
 
-admin.add_view(MyModelView(A01A_FRD1, db.session))
+ #admin.add_view(MyModelView(A01A_FRD1, db.session))
 admin.add_view(MyModelView(A01A_FRD2, db.session))
 admin.add_view(MyModelView(A01A_WPE1, db.session))
 admin.add_view(MyModelView(A01A_WPE2, db.session))
 admin.add_view(MyModelView(A01A_ICC, db.session))
 
-admin.add_view(MyModelView(A02A_FRD1, db.session))
+ #admin.add_view(MyModelView(A02A_FRD1, db.session))
 admin.add_view(MyModelView(A02A_FRD2, db.session))
 admin.add_view(MyModelView(A02A_WPE1, db.session))
 admin.add_view(MyModelView(A02A_WPE2, db.session))
 admin.add_view(MyModelView(A02A_ICC, db.session))
 
-admin.add_view(MyModelView(A03A_FRD1, db.session))
+ #admin.add_view(MyModelView(A03A_FRD1, db.session))
 admin.add_view(MyModelView(A03A_FRD2, db.session))
 admin.add_view(MyModelView(A03A_WPE1, db.session))
 admin.add_view(MyModelView(A03A_WPE2, db.session))
 admin.add_view(MyModelView(A03A_ICC, db.session))
 
-admin.add_view(MyModelView(A04A_FRD1, db.session))
+ #admin.add_view(MyModelView(A04A_FRD1, db.session))
 admin.add_view(MyModelView(A04A_FRD2, db.session))
 admin.add_view(MyModelView(A04A_WPE1, db.session))
 admin.add_view(MyModelView(A04A_WPE2, db.session))
 admin.add_view(MyModelView(A04A_ICC, db.session))
 
-admin.add_view(MyModelView(A05A_FRD1, db.session))
+ #admin.add_view(MyModelView(A05A_FRD1, db.session))
 admin.add_view(MyModelView(A05A_FRD2, db.session))
 admin.add_view(MyModelView(A05A_WPE1, db.session))
 admin.add_view(MyModelView(A05A_WPE2, db.session))
 admin.add_view(MyModelView(A05A_ICC, db.session))
 
-admin.add_view(MyModelView(A06A_FRD1, db.session))
+ #admin.add_view(MyModelView(A06A_FRD1, db.session))
 admin.add_view(MyModelView(A06A_FRD2, db.session))
 admin.add_view(MyModelView(A06A_WPE1, db.session))
 admin.add_view(MyModelView(A06A_WPE2, db.session))
 admin.add_view(MyModelView(A06A_ICC, db.session))
 
-admin.add_view(MyModelView(A07A_FRD1, db.session))
+ #admin.add_view(MyModelView(A07A_FRD1, db.session))
 admin.add_view(MyModelView(A07A_FRD2, db.session))
 admin.add_view(MyModelView(A07A_WPE1, db.session))
 admin.add_view(MyModelView(A07A_WPE2, db.session))
 admin.add_view(MyModelView(A07A_ICC, db.session))
 
-admin.add_view(MyModelView(A08A_FRD1, db.session))
+ #admin.add_view(MyModelView(A08A_FRD1, db.session))
 admin.add_view(MyModelView(A08A_FRD2, db.session))
 admin.add_view(MyModelView(A08A_WPE1, db.session))
 admin.add_view(MyModelView(A08A_WPE2, db.session))
@@ -710,22 +723,22 @@ admin.add_view(MyModelView(A08A_ICC, db.session))
 # admin.add_view(MyModelView(A09A_ICC, db.session))
 # admin.add_view(MyModelView(A10A_ICC, db.session))
 
-### WRITE PRESENTATION
-admin.add_view(MyModelView(U011U_WRITE, db.session))
-admin.add_view(MyModelView(U012U_WRITE, db.session))
-### WRITE ASSIGNMENTS
-admin.add_view(MyModelView(A01A_WRITE, db.session))
-admin.add_view(MyModelView(A02A_WRITE, db.session))
-admin.add_view(MyModelView(A03A_WRITE, db.session))
-admin.add_view(MyModelView(A04A_WRITE, db.session))
-admin.add_view(MyModelView(A05A_WRITE, db.session))
-admin.add_view(MyModelView(A06A_WRITE, db.session))
-admin.add_view(MyModelView(A07A_WRITE, db.session))
-admin.add_view(MyModelView(A08A_WRITE, db.session))
+# ### WRITE PRESENTATION
+# admin.add_view(MyModelView(U011U_WRITE, db.session))
+# admin.add_view(MyModelView(U012U_WRITE, db.session))
+# ### WRITE ASSIGNMENTS
+# admin.add_view(MyModelView(A01A_WRITE, db.session))
+# admin.add_view(MyModelView(A02A_WRITE, db.session))
+# admin.add_view(MyModelView(A03A_WRITE, db.session))
+# admin.add_view(MyModelView(A04A_WRITE, db.session))
+# admin.add_view(MyModelView(A05A_WRITE, db.session))
+# admin.add_view(MyModelView(A06A_WRITE, db.session))
+# admin.add_view(MyModelView(A07A_WRITE, db.session))
+# admin.add_view(MyModelView(A08A_WRITE, db.session))
 
 ## PENG PROJECTS
-admin.add_view(MyModelView(U011U_PENG, db.session))
-admin.add_view(MyModelView(U021U_PENG, db.session))
+# admin.add_view(MyModelView(U011U_PENG, db.session))
+# admin.add_view(MyModelView(U021U_PENG, db.session))
 
 
 # for d in mList2:

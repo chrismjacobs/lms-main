@@ -343,6 +343,8 @@ def loginTest():
     else:
         user = User.query.filter_by(username='Test').first()
         login_user (user)
+        current_user.schema = 8
+        db.session.commit()/
         flash (f'Test Login', 'warning')
         return redirect (url_for('home'))
 
@@ -394,6 +396,10 @@ def loginSet(user, data):
     if schema == 9 and user.nme == 1:
         allow = True
     if schema == 10 and user.app == 1:
+        allow = True
+    if schema == 11 and user.lnc == 1:
+        allow = True
+    if schema == 12 and user.news == 1:
         allow = True
 
     if allow:
