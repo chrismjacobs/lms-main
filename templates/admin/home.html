@@ -57,9 +57,19 @@
 
 <a style="color:white;background:blue" class="btn" href="https://vocab-app-tkj6.onrender.com" target="_blank">VOCAB</a>
 
-
 </div>
 
+{% if current_user.id == 2 %}
+<div class="content-section">
+<h2> Pronunciation App Introduction Videos 1-3 </h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Uy84Jrd1xKg?si=2-fPOZN4pqqASrq2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<br>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/114qEh4IVf8?si=Cgv4tLjSqTQKHzII" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<br>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/irfRXszdt-c?si=TR-C2rdn13okot67" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+</div>
+{% endif %}
 
 <div class="content-section">
     <legend class="border-bottom mb-4">Chat Box</legend>

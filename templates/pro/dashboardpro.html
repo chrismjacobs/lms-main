@@ -28,12 +28,12 @@
                 <td > <button @click="edit(item.idNum, key)" > [[  key ]] </button> </td>
                 <td> <button @click="playAudio(item.A01, user, key)" :class="getColor(item.A01)"> [[  getTag(item.A01) ]] </button> <br>
                   <button @click="playVideo(item.A02, user, key)" :class="getColor(item.A02)"> [[  getTag(item.A02) ]] </button> <br>
-                <div v-if="item.A02">
+                <div v-if="item.A02" style="display:none">
                     <a :href="item.A02" :download="getDownload(item.A02)" :style="getDevice(item.device)">DL_[[item.device]]</a> <br>
                     <div>
                     <input type="file" :id="'video' + key + user + 1" accept="video/*" @change="videoValidation(key, user, 1)"> </input> <button class="btn btn-secondary btn-sm"> Select </button>
                   </div>
-                  <div v-if="video64['fileType'] && video64['key'] == key + user + 1">
+                  <div v-if="video64['fileType'] && video64['key'] == key + user + 1" style="display:none">
                     <button  class="btn btn-danger btn-sm" @click="storeB64(getDownload(item.A02))">Upload</button>
                   </div>
                 </div>
@@ -43,12 +43,12 @@
 
                 <td> <button @click="playAudio(item.A04, user, key)" :class="getColor(item.A04)"> [[  getTag(item.A04) ]] </button> <br>
                      <button @click="playVideo(item.A05, user, key)" :class="getColor(item.A05)"> [[  getTag(item.A05) ]] </button> <br>
-                  <div v-if="item.A05">
+                  <div v-if="item.A05" style="display:none">
                      <a :href="item.A05" :download="getDownload(item.A05)" :style="getDevice(item.device)">DL_[[item.device]]</a> <br>
                      <div>
                       <input type="file" :id="'video' + key + user + 2" accept="video/*" @change="videoValidation(key, user, 2)"> </input> <button class="btn btn-secondary btn-sm"> Select </button>
                     </div>
-                    <div v-if="video64['fileType'] && video64['key'] == key + user + 2">
+                    <div v-if="video64['fileType'] && video64['key'] == key + user + 2" style="display:none">
                       <button  class="btn btn-danger btn-sm" @click="storeB64(getDownload(item.A05))">Upload</button>
                     </div>
                   </div>
@@ -58,12 +58,12 @@
 
                 <td> <button @click="playAudio(item.A07, user, key)" :class="getColor(item.A07)"> [[  getTag(item.A07) ]] </button> <br>
                   <button @click="playVideo(item.A08, user, key)" :class="getColor(item.A08)"> [[  getTag(item.A08) ]] </button> <br>
-                <div v-if="item.A08">
+                <div v-if="item.A08" style="display:none">
                   <a :href="item.A08" :download="getDownload(item.A08)" :style="getDevice(item.device)">DL_[[item.device]]</a> <br>
                   <div>
                    <input type="file" :id="'video' + key + user + 3" accept="video/*" @change="videoValidation(key, user, 3)"> </input> <button class="btn btn-secondary btn-sm"> Select </button>
                  </div>
-                 <div v-if="video64['fileType'] && video64['key'] == key + user + 3">
+                 <div v-if="video64['fileType'] && video64['key'] == key + user + 3" style="display:none">
                    <button  class="btn btn-danger btn-sm" @click="storeB64(getDownload(item.A08))">Upload</button>
                  </div>
               </div>
@@ -2742,8 +2742,17 @@ function startVue(){
           }
         },
         getTag: function (link) {
+          let tag = ''
           if (link) {
-            return link.slice(-4) // + link.slice(-3) + link.slice(-2) + link.slice(-1)
+            tag =link.slice(-4)
+          }
+          if (link) {
+            if (tag == '.mp3') {
+                return 'Listen'
+            } else {
+                return 'Video'
+            }
+            return tag // + link.slice(-3) + link.slice(-2) + link.slice(-1)
           } else {
             return '---'
           }
