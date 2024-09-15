@@ -8,8 +8,6 @@ from app import bcrypt
 import json
 
 
-
-
 class Attend(FlaskForm):
     attend = RadioField('Attendance', choices = [('On time', 'On time'), ('Late', 'Late')])
     name =  StringField ('Name in English', validators=[DataRequired(), Length(min=2, max=20)])
@@ -50,7 +48,7 @@ def getCourseRadios():
 
     radioList = [
         #('1', 'Freshman Reading'),
-        ('2', 'Freshman Reading II'),
+        ('2', 'Freshman Reading'),
         ('3', 'Workplace English'),
         #('4', 'Workplace English II'),
         ('4', 'GE Sophomore'),
@@ -60,7 +58,8 @@ def getCourseRadios():
         #('8', 'Pronunciation'),
         # #('9', 'Movies'),
         #('10', 'Writing'),
-        ('11', 'Culture')
+        #('11', 'Culture'),
+        ('12', 'News English')
         ]
 
     return radioList
