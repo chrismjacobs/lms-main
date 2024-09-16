@@ -491,14 +491,15 @@ def master_controls():
         uDict['studentID'] = u.studentID
         # uDict['frd1'] = u.frd1
         uDict['frd2'] = u.frd2
-        # uDict['wpe1'] = u.wpe1
+        uDict['wpe1'] = u.wpe1
         uDict['wpe2'] = u.wpe2
-        uDict['food'] = u.food
-        # uDict['icc'] = u.icc
-        uDict['pron'] = u.prn
-        uDict['write'] = u.app
-        uDict['peng'] = u.png
+        # uDict['food'] = u.food
+        uDict['icc'] = u.icc
+        # uDict['pron'] = u.prn
+        # uDict['write'] = u.app
+        # uDict['peng'] = u.png
         # uDict['nme'] = u.nme
+        uDict['news'] = u.news
         uDict['extra'] = u.extra
         uDict['new'] = 0
 
