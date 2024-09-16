@@ -21,14 +21,13 @@
               <th scope="col" >userID</th>
               <th scope="col" >Name</th>
               <th scope="col" >ID</th>
-              <th scope="col" >FRD1</th>
               <th scope="col" >WPE1</th>
               <th scope="col" >FRD2</th>
               <th scope="col" >WPE2</th>
-              <th scope="col" >FOOD</th>
               <th scope="col" >ICC</th>
+              <th scope="col" >NEWS</th>
               <th scope="col" >EX</th>
-              <th scope="col" >NEW</th>
+              <th scope="col" >ADD</th>
             </tr>
         </thead>
 
@@ -95,14 +94,15 @@ let vue = new Vue({
               username : '---',
               studentID : studentID,
               //frd1 : 0,
-              frd2 : 0,
-              //wpe1 : 0,
+              //frd2 : 0,
+              wpe1 : 0,
               wpe2 : 0,
-              food : 0,
-              //icc : 0,
-              pron : 0,
-              write : 0,
-              peng : 0,
+              //food : 0,
+              icc : 0,
+              //pron : 0,
+              //write : 0,
+              //peng : 0,
+              news : 0,
               //nme : 0,
               extra : 0
 
@@ -129,7 +129,9 @@ let vue = new Vue({
           7 : 'peng',
           8 : 'pron',
           9 : 'nme',
-          10 : 'write'
+          10 : 'write',
+          11 : 'lnc',
+          12 : 'news'
         },
         total : {
           wpe : ['100000000']
@@ -163,6 +165,8 @@ let vue = new Vue({
             8 : '_pron',
             9 : '_nme',
             10 : '_write',
+            11 : '_lnc',
+            12 : '_news'
           }
 
           if (target != 'user') {
@@ -211,6 +215,7 @@ let vue = new Vue({
             'peng' :　'pink',
             'pron' :　'blue',
             'write' :　'purple',
+            'news' : 'pink'
           }
 
           if (status == 1 && p[course].includes('1'|'2')) {
