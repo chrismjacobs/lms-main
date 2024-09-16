@@ -53,13 +53,13 @@ def getCourseRadios():
         # #('4', 'Workplace English II'),
         # ('4', 'GE Sophomore'),
         # #('5', 'Food English'),
-        # ('6', 'Intercultural Communication'),
+        ('6', 'Intercultural Communication'),
         #('7', 'Presentations'),
         #('8', 'Pronunciation'),
         # #('9', 'Movies'),
         #('10', 'Writing'),
         #('11', 'Culture'),
-        ('12', 'News English')
+        #('12', 'News English')
         ]
 
     return radioList
