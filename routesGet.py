@@ -43,6 +43,10 @@ def getUsers(schema):
         userList = User.query.filter_by(nme=1).order_by(asc(User.studentID)).all()
     if schema == 10:
         userList = User.query.filter_by(app=1).order_by(asc(User.studentID)).all()
+    if schema == 11:
+        userList = User.query.filter_by(lnc=1).order_by(asc(User.studentID)).all()
+    if schema == 12:
+        userList = User.query.filter_by(news=1).order_by(asc(User.studentID)).all()
 
 
 
