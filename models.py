@@ -132,7 +132,7 @@ dicts = {
 
 infoDict = {
         'mda' : [{},
-                  #modDictAss_FRD1,
+                 modDictAss_FRD1,
                  modDictAss_FRD2,
                  modDictAss_WPE1,
                  modDictAss_WPE2,
@@ -146,7 +146,7 @@ infoDict = {
                  modDictAss_NEWS
                  ],
         'mdu' : [{},
-                  #modDictUnits_FRD1,
+                 modDictUnits_FRD1,
                  modDictUnits_FRD2,
                  modDictUnits_WPE1,
                  modDictUnits_WPE2,
@@ -720,8 +720,8 @@ admin.add_view(MyModelView(A08A_WPE1, db.session))
 admin.add_view(MyModelView(A08A_WPE2, db.session))
 admin.add_view(MyModelView(A08A_ICC, db.session))
 
-# admin.add_view(MyModelView(A09A_ICC, db.session))
-# admin.add_view(MyModelView(A10A_ICC, db.session))
+admin.add_view(MyModelView(A09A_ICC, db.session))
+admin.add_view(MyModelView(A10A_ICC, db.session))
 
 # ### WRITE PRESENTATION
 # admin.add_view(MyModelView(U011U_WRITE, db.session))
@@ -737,8 +737,8 @@ admin.add_view(MyModelView(A08A_ICC, db.session))
 # admin.add_view(MyModelView(A08A_WRITE, db.session))
 
 ## PENG PROJECTS
-# admin.add_view(MyModelView(U011U_PENG, db.session))
-# admin.add_view(MyModelView(U021U_PENG, db.session))
+admin.add_view(MyModelView(U011U_PENG, db.session))
+admin.add_view(MyModelView(U021U_PENG, db.session))
 
 
 # for d in mList2:
