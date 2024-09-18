@@ -6,7 +6,7 @@
 <div id="vue-app">
 
 
-<div class="content-section" v-for="(week, key ) in course">
+<div class="content-section" v-for="(week, key ) in course" :style="getStyle(week)">
 
     <template v-for="(val, name) in week">
 
@@ -58,6 +58,17 @@ let app =  new Vue({
         date : date
     },
     methods: {
+        getStyle: function (week) {
+            if (week.Unit == 'RR') {
+                return { background : '#f8f9f9'}
+            }
+            if (week.Unit == 'HH') {
+                return { background : 'OldLace'}
+            }
+            if (week.Unit == 'MT' || week.Unit == 'FN' ) {
+                return { background : '#fdedec'}
+            }
+        },
         style: function(name, val){
 
             let styles = {
