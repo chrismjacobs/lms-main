@@ -271,6 +271,12 @@ function startVue(ansOBJ, device){
 
     },
     data: {
+        summary1 : "WHO/WHAT is the video about (The video is about a .....  who/that.....   )",
+        summary2 : "WHY/HOW is the video interesting/unique/special, what makes it a BIG STORY",
+        summary3 : "Other details WHEN/WHERE (any place or time details you can make into a sentence?)",
+        test1 : "WHO/WHAT  Who is someone who inspires you? What is something your teacher should know about you?",
+        test2 : "WHY/HOW  Why do you want to imporve your English skills?   How can you do it?",
+        test3 : "Other details WHEN/WHERE When or where do you like to read?",
         title: {
           1 : 'Task 1 Pronunciation Practice',
           2 : 'Task 2 Speaking Practice'
