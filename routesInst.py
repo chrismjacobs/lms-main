@@ -433,7 +433,12 @@ def updateCourse():
         if u.app == 0:
             u.app = 1
         else:
-            u.app= 0
+            u.app = 0
+    if course == 'news':
+        if u.news == 0:
+            u.news = 1
+        else:
+            u.news = 0
 
     db.session.commit()
 

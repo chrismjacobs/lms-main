@@ -305,12 +305,13 @@ def register():
         elif course == 10:
             user.app = 1
             chatModel = ChatBox_WRITE
-        # elif course == 7:
-        #     user.nme = 1
-        #     chatModel = ChatBox_NME
-        # elif course == 8:
-        #     user.app = 1
-        #     chatModel = ChatBox_WRITE
+        elif course == 11:
+            user.lnc = 1
+            chatModel = ChatBox_LNC
+        elif course == 12:
+            user.news = 1
+            chatModel = ChatBox_NEWS
+
 
         db.session.commit()
 
