@@ -209,7 +209,7 @@ schemaList = {
         "Course": "News Media",
         "S3_BUCKET_NAME": "news-lms",
         "courseCode" : "news",
-        "S3_LOCATION" : "https://writing-lms.s3.ap-northeast-1.amazonaws.com/",
+        "S3_LOCATION" : "https://news-lms.s3.ap-northeast-1.amazonaws.com/",
         "DESIGN": {
             "titleColor": "black",
             "bodyColor": "gray",

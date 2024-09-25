@@ -94,7 +94,7 @@ let vue = new Vue({
               username : '---',
               studentID : studentID,
               //frd1 : 0,
-              //frd2 : 0,
+              frd2 : 0,
               wpe1 : 0,
               wpe2 : 0,
               //food : 0,
@@ -115,7 +115,6 @@ let vue = new Vue({
 
     },
     data: {
-
         setOBJ : setOBJ,
         idOBJ : idOBJ,
         courses: ['frd1', 'frd2', 'wpe1', 'wpe2'],
@@ -215,7 +214,7 @@ let vue = new Vue({
             'peng' :　'pink',
             'pron' :　'blue',
             'write' :　'purple',
-            'news' : 'pink'
+            'news' : 'grey'
           }
 
           if (status == 1 && p[course].includes('1'|'2')) {
@@ -229,9 +228,21 @@ let vue = new Vue({
           }
         },
         tStyle: function(studentID, course) {
+          let p = {
+            'frd1': 'lightgreen',
+            'wpe1': 'gold',
+            'frd2' : 'lightgreen',
+            'wpe2' : 'gold',
+            'icc' : 'aqua',
+            'food' : 'pink',
+            'peng' :　'pink',
+            'pron' :　'darkblue',
+            'write' :　'purple',
+            'news' : 'black'
+          }
           if (this.idOBJ[course] && this.idOBJ[course].includes(studentID)) {
             console.log('found')
-            return { background:'lightgrey'}
+            return { background:p[course]}
           }
         },
         idStyle: function(id) {
