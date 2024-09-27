@@ -50,6 +50,7 @@ from routesWRITE import *
 from routesPRON import *
 from routesPENG import *
 from routesMDE import *
+from routesNEWS import *
 
 
 

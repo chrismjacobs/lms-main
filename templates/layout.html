@@ -122,6 +122,9 @@
                                   <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('pr_assignment_list') }}">My Pronunciation</a>
                                   <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('pro_list') }}">My Classwork</a>
                                {% endif %}
+                               {% if SCHEMA == 12 %}
+                                  <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('news_list') }}">My News Pojects</a>
+                               {% endif %}
 
                                {% if SCHEMA == 5 %}
                                   <a class="nav-item nav-link" style="color:{{titleColor}};background:white" href="{{ url_for ('food_list') }}">My Presentations</a>
