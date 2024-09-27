@@ -60,6 +60,8 @@ folder = [
         "json_files/PRON/",  #8
         "json_files/DUB/",  #9
         "json_files/WRITE/",  #10
+        "json_files/LNC/",  #11
+        "json_files/NEWS/",  #12
     ]
 
 buckets = [
@@ -70,12 +72,12 @@ buckets = [
         "workplace-lms2",  #4
         "food-lms", #5
         "icc-lms", #6
-        "peng-lms",
-        "pron-lms",
-        "nme-lms",
-        "writing-lms",
-        "culture-lms",
-
+        "peng-lms", #7
+        "pron-lms", #8
+        "nme-lms", #9
+        "writing-lms", #10
+        "culture-lms", #11
+        "news-lms", #12
         ]
 
 courseDict = {
@@ -88,7 +90,9 @@ courseDict = {
         'PENG' : 7,
         'PRON' : 8,
         'DUB' : 9,
-        'WRITE' : 10
+        'WRITE' : 10,
+        'LNC' : 11,
+        'NEWS' : 12
         }
 
 def make_sources(course, courseCode):
@@ -373,6 +377,7 @@ def get_ids(course, courseCode):
 
 def actions(c, act):
 
+
     course = courseDict[c]
     result = 'None'
 
@@ -397,11 +402,13 @@ def actions(c, act):
     return result
 
 
-c = 'WPE2'
-act = 'ids'
+c = 'FRD2'
+act = 'vcb'
+go = 9
 ''' reset WPE2 exam '''
 
-#actions(c, act)
+if go > 0:
+    actions(c, act)
 
 # actions('FRD1', act)
 # actions('FRD2', act)
