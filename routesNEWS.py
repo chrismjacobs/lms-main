@@ -580,15 +580,9 @@ def news_setup(qs, unit, team):
     srcDict = get_project_news()
     meta = srcDict['00']
     print(meta)
-    if current_user.username == 'Test2':
-        project_answers = {}
-        teamMembers = []
-        ansDict = {}
-        current_score = 0
-    else:
-        data = get_team_data(unit, team)
-        project_answers = data['project_answers']
-        teamMembers = data['teamMembers']
+    data = get_team_data(unit, team)
+    project_answers = data['project_answers']
+    teamMembers = data['teamMembers']
 
     if current_user.username == "Chris" or current_user.username == "Test":
         pass
@@ -615,9 +609,6 @@ def news_setup(qs, unit, team):
                 'imageLink' : imageTag,
             }
         html = 'news/news_qna.html'
-        if current_user.username != 'Test':
-            ansDict = project_answers.Ans01
-            current_score = project_answers.Ans04
 
     if qs == 'snl':
         testDict = {}
@@ -631,9 +622,6 @@ def news_setup(qs, unit, team):
             'imageLink' : None,
             }
         html = 'news/news_snl.html'
-        if current_user.username != 'Test':
-            ansDict = project_answers.Ans02
-            current_score = project_answers.Ans05
 
     if qs == 'rp':
         testDict = {'audio': None}
@@ -644,9 +632,6 @@ def news_setup(qs, unit, team):
             'user' : None
             }
         html = 'news/news_rp.html'
-        if current_user.username != 'Test':
-            ansDict = project_answers.Ans03
-            current_score = project_answers.Ans06
 
 
     return render_template(html, legend='Questions & Answers',
