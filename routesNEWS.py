@@ -580,7 +580,7 @@ def news_setup(qs, unit, team):
     srcDict = get_project_news()
     meta = srcDict['00']
     print(meta)
-    if current_user.username == 'Test':
+    if current_user.username == 'Test2':
         project_answers = {}
         teamMembers = []
         ansDict = {}

@@ -411,7 +411,7 @@ function startVue(){
                 this.ansOBJ[key]['user'] = document.getElementById(key +  'u').innerHTML
                 this.ansOBJ[key]['vocab'] = document.getElementById(key + 'v').value
                 this.ansOBJ[key]['def'] = document.getElementById(key + 'd').value
-                this.ansOBJ[key]['sentencequestion'] = document.getElementById(key + 'q').value
+                this.ansOBJ[key]['sentence'] = document.getElementById(key + 's').value
             }
 
             this.checkMarkers2()

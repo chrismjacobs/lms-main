@@ -52,7 +52,7 @@
                   <td> [[ proj.Team]] </td>
                   <td>
                       <span v-if="proj.Number == 0"> </span>  &nbsp;
-                      <span v-else @click="goTo(unit, proj.Number, 'Q')" class="unit-span" :style="buttonStyle(proj.QTotal, 'qna', 'edit')"> &nbsp;[[proj.QTotal]]/14&nbsp; </span>
+                      <span v-else @click="goTo(unit, proj.Number, 'Q')" class="unit-span" :style="buttonStyle(proj.QTotal, 'qna', 'edit')"> &nbsp;[[proj.QTotal]]/13&nbsp; </span>
                        <br>
                        <br>
 
@@ -243,7 +243,7 @@ function startVue(OBJ, report, source){
             if (parseInt(total) >= 4 && mode === 'rp'){
               return { background: 'mediumseagreen', padding:'3px'}
             }
-            else if (parseInt(total) >= 14 && mode === 'qna') {
+            else if (parseInt(total) >= 13 && mode === 'qna') {
               return { background: 'mediumseagreen', padding:'3px'}
             }
             else if (parseInt(total) >= 5 && mode === 'snl') {
