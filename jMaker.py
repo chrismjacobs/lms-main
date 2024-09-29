@@ -404,7 +404,7 @@ def actions(c, act):
 
 c = 'FRD2'
 act = 'vcb'
-go = 9
+go = 0
 ''' reset WPE2 exam '''
 
 if go > 0:
