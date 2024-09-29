@@ -50,7 +50,7 @@
 <h6  v-if="item.user"> [[ item.user ]] </h6>
 <h6  v-if="item.vocab"> [[ item.vocab ]] </h6>
 <h6  v-if="item.def"> [[ item.def ]] </h6>
-<h6  v-if="item.question"> [[ item.sentence ]] </h6>
+<h6  v-if="item.sentence"> [[ item.sentence ]] </h6>
 
 <br>
 <audio v-if="item.audioLink" controls>
@@ -96,6 +96,7 @@
                 <button  class="btn btn-warning btn-sm" @click="storeData(key)">Update Text</button>
                 </div>
                 <br>
+        <div v-if="item.sentence">
                 <template id="Voice Record">
                         <div style="display:flex">
                         <div  v-if="audio[key] == 1" >
@@ -134,7 +135,7 @@
                         </div>
                         <br>
                 </template>
-                <div >
+                <template>
                         Sentence Image:&nbsp&nbsp
                         <div>
                         <input type="file" id="image" accept="image/*" @change="imageValidation()" > </input> <button class="btn btn-secondary btn-sm"> Select </button>
@@ -143,7 +144,8 @@
                         <div v-if="image64['fileType']">
                         <button  class="btn btn-danger btn-sm" @click="storeB64(key, 'i1')">Update</button>
                         </div>
-                </div>
+                </template>
+        </div>
 
 
         <div>
