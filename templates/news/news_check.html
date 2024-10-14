@@ -54,8 +54,8 @@
 
               <td v-for="(set, num) in answerSet.qna_list">
                 <div v-if="!showInputs">
-                  <span style="color:white;background:green;font-style:bold"> [[ answerSet.qna_list[num]['header']  ]] </span> <br>
-                  <span style="color:white;background:green;font-style:bold"> [[ answerSet.qna_list[num]['text']  ]] </span>
+                  <span :style="getHeaderStyle(answerSet.qna_list[num]['header'])"> [[ answerSet.qna_list[num]['header']  ]] </span> <br>
+                  <span > <h6  :style="getHeaderStyle(answerSet.qna_list[num]['header'])" v-for="(t, key) in getList(answerSet.qna_list[num]['text'])"> [[t]] </h6> </span>
                   <br>
                 </div>
                 <div v-else>
@@ -93,14 +93,14 @@
               <td v-for="(set, num) in answerSet.snl_list">
                 [[ answerSet.snl_list[num]['user']  ]] <br>
                 <div v-if="!showInputs">
-                  <span style="color:white;background:green;font-style:bold"> [[ answerSet.snl_list[num]['vocab']  ]]  </span> <br>
-                  <span style="color:white;background:green;font-style:bold"> [[ answerSet.snl_list[num]['def']  ]]  </span> <br>
-                  <span style="color:white;background:green;font-style:bold"> [[ answerSet.snl_list[num]['sentence']  ]]  </span> <br>
+                  <span :style="getHeaderStyle('vocab')"> [[ answerSet.snl_list[num]['vocab']  ]]  </span> <br>
+                  <span :style="getHeaderStyle('def')"> [[ answerSet.snl_list[num]['def']  ]]  </span> <br>
+                  <span :style="getHeaderStyle('sentence')"> [[ answerSet.snl_list[num]['sentence']  ]]  </span> <br>
                 </div>
                 <div v-else>
-                  <input style="color:white;background:green;font-style:bold" v-model="answerSet.snl_list[num]['vocab']"> </input> <br>
-                  <input style="color:white;background:green;font-style:bold" v-model="answerSet.snl_list[num]['def']"> </input> <br>
-                  <input style="color:white;background:green;font-style:bold" v-model="answerSet.snl_list[num]['sentence']"> </input> <br>
+                  <input :style="getHeaderStyle('vocab')" v-model="answerSet.snl_list[num]['vocab']"> </input> <br>
+                  <input :style="getHeaderStyle('def')" v-model="answerSet.snl_list[num]['def']"> </input> <br>
+                  <input :style="getHeaderStyle('sentence')" v-model="answerSet.snl_list[num]['sentence']"> </input> <br>
                 </div>
 
                 <img v-if="answerSet.snl_list[num]['imageLink']" class="rounded img-fluid" id="final_image" alt="No file yet" style="width: 150px"  :src="answerSet.snl_list[num]['imageLink']">
@@ -231,6 +231,37 @@ function startVue(OBJ, unit){ new Vue({
           }
 
         },
+        getList: function (str) {
+
+          let list = []
+          if (str) {
+              points = str.split(';')
+              for(let l in points){
+              list.push('- ' + points[l])
+          }
+          }
+          return list
+
+
+      },
+        getHeaderStyle: function (head) {
+          if (head == 'Title') {
+            return 'color:white;background:green;font-style:bold'
+          } else if (head.includes('Warmup') ) {
+            return 'color:white;background:blue;font-style:bold'
+          } else if (head.includes('Part') ) {
+            return 'color:black;font-style:bold'
+          } else if (head.includes('vocab') ) {
+            return 'color:white;background:black;font-style:bold'
+          } else if (head.includes('def') ) {
+            return 'color:black;font-style:bold'
+          } else if (head.includes('sentence') ) {
+            return 'color:white;background:blue;font-style:bold'
+          } else {
+            return 'color:white;background:green;font-style:bold'
+          }
+
+        },
         goTo: function(key, state) {
 
           var str = window.location.href
@@ -260,7 +291,7 @@ function startVue(OBJ, unit){ new Vue({
               unit : this.unit,
           },
           type : 'POST',
-          url : '/pr_updateStatus'
+          url : '/news_updateStatus'
           })
           .done(function(data) {
            alert(data.status);
@@ -292,7 +323,7 @@ function startVue(OBJ, unit){ new Vue({
               unit : this.unit,
           },
           type : 'POST',
-          url : '/pr_updateStudentWork'
+          url : '/news_updateStudentWork'
           })
           .done(function(data) {
            alert(data.status);
