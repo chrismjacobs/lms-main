@@ -60,7 +60,7 @@
                 </div>
                 <div v-else>
                   <span style="color:white;background:green;font-style:bold"> [[ answerSet.qna_list[num]['header']  ]] </span> <br>
-                  <input style="color:white;background:green;font-style:bold" v-model="answerSet.qna_list[num]['text']"> </input> <br>
+                  <textarea style="color:white;background:green;font-style:bold" v-model="answerSet.qna_list[num]['text']"> </textarea> <br>
                 </div>
                 [[ answerSet.qna_list[num]['user']  ]] <br>
                 <input :style="getNoteStyle(answerSet.qna_notes, num)" type="number" v-model="answerSet.qna_notes[num].status"></input>
