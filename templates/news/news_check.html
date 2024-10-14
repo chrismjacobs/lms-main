@@ -99,8 +99,8 @@
                 </div>
                 <div v-else>
                   <input :style="getHeaderStyle('vocab')" v-model="answerSet.snl_list[num]['vocab']"> </input> <br>
-                  <input :style="getHeaderStyle('def')" v-model="answerSet.snl_list[num]['def']"> </input> <br>
-                  <input :style="getHeaderStyle('sentence')" v-model="answerSet.snl_list[num]['sentence']"> </input> <br>
+                  <textarea :style="getHeaderStyle('def')" v-model="answerSet.snl_list[num]['def']"> </textarea> <br>
+                  <textarea :style="getHeaderStyle('sentence')" v-model="answerSet.snl_list[num]['sentence']"> </textarea> <br>
                 </div>
 
                 <img v-if="answerSet.snl_list[num]['imageLink']" class="rounded img-fluid" id="final_image" alt="No file yet" style="width: 150px"  :src="answerSet.snl_list[num]['imageLink']">
