@@ -7,10 +7,9 @@
 
 <div id="vue-app">
 
-<div class="content-section">
+<div class="content-section sticky">
         <h1> Work {{unit}}: {{ title }}  </h1>
         <h3 @click="showInputs = !showInputs"> Show Inputs </h3>
-
 </div>
 
 <div class="content-section">
@@ -55,7 +54,7 @@
               <td v-for="(set, num) in answerSet.qna_list">
                 <div v-if="!showInputs">
                   <span :style="getHeaderStyle(answerSet.qna_list[num]['header'])"> [[ answerSet.qna_list[num]['header']  ]] </span> <br>
-                  <span > <h6  :style="getHeaderStyle(answerSet.qna_list[num]['header'])" v-for="(t, key) in getList(answerSet.qna_list[num]['text'])"> [[t]] </h6> </span>
+                  <span > <h6  :style="getHeaderStyle(answerSet.qna_list[num]['header'])" v-for="(t, key) in getList(answerSet.qna_list[num]['text'], answerSet.qna_list[num]['header'])"> [[t]] </h6> </span>
                   <br>
                 </div>
                 <div v-else>
@@ -231,15 +230,30 @@ function startVue(OBJ, unit){ new Vue({
           }
 
         },
-        getList: function (str) {
-
+        getList: function (str, head) {
           let list = []
-          if (str) {
+
+          if (head.includes('Wh') || head.includes('How')) {
+            if (str) {
               points = str.split(';')
               for(let l in points){
               list.push('- ' + points[l])
+              }
+            }
           }
+          else if (head.includes('Part')) {
+            if (str) {
+              points = str.split('.')
+              for(let l in points){
+              list.push('- ' + points[l])
+              }
+            }
           }
+          else {
+            list.push(str)
+          }
+
+
           return list
 
 
