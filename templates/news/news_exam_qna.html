@@ -5,36 +5,96 @@
 <div id="vue-app">
 
 <div class="content-section">
-        <h1> Exam: {{ title }}  </h1>
+        <h1> Exam: {{ title }}  Stage:[[stage]] </h1>
 </div>
 
 <div class="content-section">
 
-    <div style="overflow-x:auto;">
+    <div id="stage1" style="overflow-x:auto;">
       <table class="table table-sm">
         <thead>
             <tr>
-              <th scope="col" >Questions</th>
+              <th scope="col" ><h1>Stage 1: Warm Up</h1></th>
             </tr>
         </thead>
 
         <tbody>
-        <template v-for="(q, key) in qnaOBJ" >
+            <tr>
+              <td>
+                <img class="rounded img-fluid" alt="No file yet" style="width: 100%"  :src="qnaOBJ['1']['imageLink']">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h2><span >[[ qnaOBJ['1']['header'] ]] : [[ qnaOBJ['1']['text'] ]] <br><br> </span></h2>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h4>[[ qnaOBJ['2']['header'] ]] <br><br> [[ qnaOBJ['2']['text'] ]] </h4>
+                <textarea v-model="warmupAns[1]"><br><br> </textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h4>[[ qnaOBJ['3']['header'] ]] <br><br> [[ qnaOBJ['3']['text'] ]] </h4>
+                <textarea v-model="warmupAns[2]"><br><br> </textarea>
+              </td>
+            </tr>
+            <tr>
+              <td>
+              <br>
+              <button v-if="stage == 1" class="btn btn-warning" @click="checkWarmup()"> Update Warmup </button>
+              </td>
+            </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+
+    <br>
+    <br>
+    <br>
+
+
+    <div id="stage2" v-if="stage > 1" style="overflow-x:auto;">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col" colspan="6"><h1>Stage 2: Vocab</h1></th>
+          </tr>
+        </thead>
+
+        <tbody>
+        <template>
 
             <tr>
-              <td :id="q.answer1">
-                <span style="display:none">[[  q.question  ]] <br><br> </span>
-                <select  type="text" style="width: 100%" name="vocab" v-model="answerSet[key]">
-                  <option v-for="option in ansShuffle[key]" :value="option.value">[[option.text]]</option>
-                </select>
+              <td v-for="(q, key) in randomVocab">
+                <h5>[[q]]</h5>
                 <br>
                 <br>
               </td>
-              <td>
-                <audio controls style="width: 400px">
-                  <source :src="q.audioLink" type="audio/mpeg" >
-                  <source :src="q.audioLink" type="audio/x-m4a" >
-                </audio>
+            </tr>
+            <tr v-for="(v, key) in snlOBJ">
+              <td colspan="2">
+                <input
+                type="text"
+                class="input2"
+                :style="getBG(key)"
+                :id="key + v"
+                :name="'defAns'"
+                v-model="defAns[key]"
+                autocapitalize="none"
+                autocomplete="off"
+                autocorrect="off"
+                spellcheck="false"
+                onpaste="return false"
+                >
+                </input>
+              </td>
+              <td colspan="4">
+                <h5> [[v.def]] </h5>
               </td>
             </tr>
 
@@ -43,12 +103,205 @@
         </tbody>
       </table>
 
-      <button v-if="display" class="btn btn-warning" @click="submitQNA()"> Submit </button>
-      <button v-else class="btn btn-info" @click="checkQNA()"> Check Answers </button>
+    <button v-if="getDefBTN() && stage == 2" @click="updateGrades(1, true, 'vocab')" class="btn btn-warning" type="button" > Update Definitions </button>
     </div>
 
-</div>
+    <br>
+    <br>
+    <br>
 
+    <div id="stage3" v-if="stage > 2" style="overflow-x:auto;">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col" colspan="6"><h1>Stage 3: Listening  Grade: [[gradeSNL]] </h1></th>
+          </tr>
+        </thead>
+
+        <tbody v-if="stage==3" >
+        <template v-for="(answerSet, key) in snlOBJ" >
+
+            <tr>
+              <td style="width: 25%; word-wrap: break-word">
+               <div align="center" style="background:darkgreen; padding:3px; width:100%">
+               <h3 style="color:white" >[[ key ]]</h3>
+               </div>
+
+                <span v-if="gradeSNL < 6"> [[  answerSet['vocab']  ]] <br> </span>
+                <span v-if="gradeSNL < 5"> [[  answerSet['sentence']  ]] <br> </span>
+                <br>
+              </td>
+              <td style="width: 25%; word-wrap: break-word">
+                <img class="rounded img-fluid" alt="No file yet" style="width: 100%"  :src="answerSet.imageLink">
+                <br>
+              </td>
+              <td style="background:lightgrey">
+              <div align="center">
+                <audio controls style="width: 250px">
+                 <source :src="orderOBJSNL[key][1]" type="audio/mpeg" >
+                 <source :src="orderOBJSNL[key][1]" type="audio/x-m4a" >
+                </audio>
+              </div>
+              </td>
+              <td style="background:lightgrey">
+                <select style="height:100px;width:100px;color:white;background:royalblue;font-size:20px" :id="'SNL' + orderOBJSNL[key][0]" name="listening">
+                  <option value="0">--</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+              </td>
+            </tr>
+        </template>
+        <tr>
+          <td>
+            <br>
+            <button class="btn btn-warning" @click="submitSNL()"> Submit Listening </button>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+
+
+    </div>
+
+    <br>
+    <br>
+    <br>
+
+    <div id="stage4" v-if="stage > 3" style="overflow-x:auto;">
+      <table class="table table-sm">
+        <thead>
+            <tr>
+              <th scope="col" colspan="6"><h1>Stage 4: Article Grade: [[gradeART]] </h1></th>
+            </tr>
+        </thead>
+
+        <tbody>
+          <template v-for="(answerSet, key) in artOBJ">
+              <div v-if="gradeART >= key">
+              <tr>
+                <td style="width: 14%; word-wrap: break-word">
+                  <div align="center">
+                    <audio controls style="width: 250px">
+                     <source :src="artOBJ[key]['audioLink']" type="audio/mpeg" >
+                     <source :src="artOBJ[key]['audioLink']" type="audio/x-m4a" >
+                    </audio>
+                  </div>
+                  <br>
+                  <br>
+                </td>
+              </tr>
+              <tr>
+                <td style="width: 14%; word-wrap: break-word">
+                <h3><span v-for="(ans, k) in partsTest[key]"> [[ ans ]] </span></h3>
+                <br>
+                <br>
+                </td>
+              </tr>
+              <div v-if="gradeART == key">
+              <tr>
+                <td>
+                  <templates v-for="(ln, ex) in partsRandom[key]" >
+                  <select  type="text" style="width: 100%" name="vocab" v-model="partsTest[key][ex+1]">
+                    <option v-for="option in partsRandom[key]" :value="option">[[option]]</option>
+                  </select>
+                 </templates>
+
+                  <br>
+                  <br>
+                 <button class="btn btn-warning" @click="submitArt(key)"> Submit Part [[key]]</button>
+                </td>
+              </tr>
+             </div>
+            </div>
+          </template>
+
+          </tbody>
+        </table>
+
+
+      </div>
+
+
+    <div id="stage5" v-if="stage > 4" style="overflow-x:auto;">
+      <table class="table table-sm">
+        <thead>
+            <tr>
+              <th scope="col" colspan="6"><h1>Stage 5: Analysis  Grade: [[gradeWH]] </h1></th>
+            </tr>
+
+            <tr v-if="stage==6">
+              <th scope="col"><h3>WHO</h3></th>
+              <th scope="col"><h3>WHAT</h3></th>
+              <th scope="col"><h3>WHEN</h3></th>
+              <th scope="col"><h3>WHERE</h3></th>
+              <th scope="col"><h3>WHY</h3></th>
+              <th scope="col"><h3>HOW</h3></th>
+            </tr>
+        </thead>
+
+        <tbody>
+          <template>
+
+              <tr>
+                <td v-for="(answerSet, key) in orderOBJWH" style="width: 14%; word-wrap: break-word">
+                 <div align="center" >
+                 <span > <h6  style="color:white; background:green; padding:3px; width:100%" v-for="(t, key) in getList(answerSet[1], 'Wh')"> [[t]] </h6> </span>
+                </td>
+              </tr>
+              <tr>
+              <td v-if="stage==5" v-for="(answerSet, key) in orderOBJWH"  style="background:lightgrey">
+                  <select style="height:50px;width:150px;color:white;background:royalblue" :id="'WH' + orderOBJWH[key][0]" name="listening">
+                    <option value="0">--</option>
+                    <option value="1">WHO</option>
+                    <option value="2">WHAT</option>
+                    <option value="3">WHEN</option>
+                    <option value="4">WHERE</option>
+                    <option value="5">WHY</option>
+                    <option value="6">HOW</option>
+                  </select>
+              </td>
+            </tr>
+          </template>
+
+          </tbody>
+        </table>
+
+        <button V-if="stage==5" class="btn btn-warning" @click="submitWH()"> Submit Analysis</button>
+      </div>
+
+
+    <div id="stage6" v-if="stage > 5" style="overflow-x:auto;">
+      <table class="table table-sm">
+        <thead>
+            <tr>
+              <th scope="col" colspan="6"><h1>Stage 6: COMPLETED !!!</h1></th>
+            </tr>
+        </thead>
+        </table>
+
+        <button class="btn btn-warning" @click="goTo()"> Go Back to Exam Board</button>
+      </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+
+
+</div>
 
 
 </div> <!-- end of Vue app -->
@@ -56,7 +309,11 @@
 
 <span id="qnaString" style="display:none">{{qnaString}}</span>
 <span id="snlString" style="display:none">{{snlString}}</span>
-<span id="orderString" style="display:none">{{orderDict}}</span>
+<span id="whString" style="display:none">{{whString}}</span>
+<span id="artString" style="display:none">{{artString}}</span>
+<span id="orderStringSNL" style="display:none">{{orderStringSNL}}</span>
+<span id="orderStringWH" style="display:none">{{orderStringWH}}</span>
+
 
 {% endblock %}
 
@@ -67,64 +324,37 @@
 <script type="text/javascript" >
 
 var qnaString = document.getElementById('qnaString').innerHTML
-//var qnaOBJ = JSON.parse(qnaString)
-var qnaOBJ = {
-  "1": {
-      "question": "l hope l will ____the test.",
-      "answer1": "pass",
-      "answer2": "path",
-      "user": "Mandy",
-      "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/03/1/5_4434_audioLink.mp3",
-      "imageLink": "----",
-      "imageLink2": "----"
-  },
-  "2": {
-      "question": "It's good to ____ into a hot tub at the end of a hard day's work.",
-      "answer1": "sink",
-      "answer2": "think",
-      "user": "Amy",
-      "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/03/1/2_0342_audioLink.mp3",
-      "imageLink": "----",
-      "imageLink2": "----"
-  },
-  "3": {
-      "question": "You shouldn't put so much food in your ___ at once.",
-      "answer1": "mouth",
-      "answer2": "mouse",
-      "user": "Amy",
-      "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/03/1/1_0217_audioLink.mp3",
-      "imageLink": "----",
-      "imageLink2": "----"
-  },
-  "4": {
-      "question": "You can buy summer ______ at this time.",
-      "answer1": "clothing",
-      "answer2": "closing",
-      "user": "Mandy",
-      "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/03/1/6_5709_audioLink.mp3",
-      "imageLink": "----",
-      "imageLink2": "----"
-  },
-  "5": {
-      "question": "I won the race when I was in ____ grade.",
-      "answer1": "Forth",
-      "answer2": "Force",
-      "user": "Oscar",
-      "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/03/1/3_3031_audioLink.mp3",
-      "imageLink": "----",
-      "imageLink2": "----"
-  },
-  "6": {
-      "question": "My friends smashed cake on my ____.",
-      "answer1": "Face",
-      "answer2": "Faith",
-      "user": "Oscar",
-      "audioLink": "https://pron-lms.s3.ap-northeast-1.amazonaws.com/03/1/4_3142_audioLink.mp3",
-      "imageLink": "----",
-      "imageLink2": "----"
-  }
-}
-console.log('Dict', qnaOBJ);
+var qnaOBJ = JSON.parse(qnaString)
+
+console.log('Dict QNA', qnaOBJ);
+
+var snlString = document.getElementById('snlString').innerHTML
+var snlOBJ = JSON.parse(snlString)
+
+console.log('Dict SNL', snlOBJ);
+
+var whString = document.getElementById('whString').innerHTML
+var whOBJ = JSON.parse(whString)
+
+console.log('Dict WH', whOBJ);
+
+var artString = document.getElementById('artString').innerHTML
+var artOBJ = JSON.parse(artString)
+
+console.log('Dict ART', artOBJ);
+
+
+var orderStringSNL = document.getElementById('orderStringSNL').innerHTML
+var orderOBJSNL = JSON.parse(orderStringSNL)
+
+console.log('Dict ORDER SNL', orderOBJSNL);
+
+var orderStringWH = document.getElementById('orderStringWH').innerHTML
+var orderOBJWH = JSON.parse(orderStringWH)
+
+console.log('Dict ORDER WH', orderOBJWH);
+
+
 
 
 var str = window.location.href
@@ -144,37 +374,71 @@ function startVue(){
     delimiters: ['[[', ']]'],
     created: function(){
 
-      let answers = {
-        1 : [{value: null, text: '---'}],
-        2 : [{value: null, text: '---'}],
-        3 : [{value: null, text: '---'}],
-        4 : [{value: null, text: '---'}],
-        5 : [{value: null, text: '---'}],
-        6 : [{value: null, text: '---'}]
+      for (let q in this.snlOBJ) {
+        console.log('vocab', q, this.snlOBJ[q]['vocab'])
+        this.randomVocab.push(this.snlOBJ[q]['vocab'])
+        this.defList.push(this.snlOBJ[q]['vocab'].toLowerCase())
       }
-      for (let q in qnaOBJ) {
-        console.log(q)
-        answers[q].push({value:qnaOBJ[q].answer1, text:qnaOBJ[q].answer1})
-        answers[q].push({value:qnaOBJ[q].answer2, text:qnaOBJ[q].answer2})
-        this.shuffle(answers[q])
+      this.shuffle(this.randomVocab)
+
+      for (let q in this.artOBJ) {
+        artList = this.getList(this.artOBJ[q]['text'], 'Part')
+        count = 1
+        for (let p in artList){
+          console.log('original', p)
+          this.partsOriginal[q][count] = artList[p]
+          count +=1
+        }
+        artListCopy = this.shuffle([...artList])
+        //console.log('part', q, artList, artListCopy)
+        this.partsRandom[q] = artListCopy
       }
 
-      this.ansShuffle = answers
-      console.log(this.ansShuffle)
+      console.log(this.partsOriginal, this.partsTest, this.partsRandom)
+
+      this.updateGrades(0, false, 'load')
 
     },
     data: {
+        gradeART: 1,
+        gradeSNL: 6,
+        gradeWH: 6,
+        errorCountSNL : 0,
+        errorCountWH : 0,
+        defList :[],
+        randomVocab : [],
+        defAns : {1: '',2: '',3: '',4: '',5: '', 6: ''},
+        partsTest : {
+          1: {1: '',2: '',3: '',4: '',5: '',6: ''},
+          2: {1: '',2: '',3: '',4: '',5: '',6: ''},
+          3: {1: '',2: '',3: '',4: '',5: '',6: ''},
+          4: {1: '',2: '',3: '',4: '',5: '',6: ''},
+        },
+        partsOriginal : {
+          1: {1: '',2: '',3: '',4: '',5: '',6: ''},
+          2: {1: '',2: '',3: '',4: '',5: '',6: ''},
+          3: {1: '',2: '',3: '',4: '',5: '',6: ''},
+          4: {1: '',2: '',3: '',4: '',5: '',6: ''},
+        },
+        partsRandom : {
+          1: [],
+          2: [],
+          3: [],
+          4: [],
+        },
+        stage: 1,
+        warmupAns: {
+          1 : '',
+          2 : ''
+        },
+        test: '',
         qnaOBJ: qnaOBJ,
-        ansShuffle: null,
-        display : false,
-        answerSet: {
-          1: null,
-          2: null,
-          3: null,
-          4: null,
-          5: null,
-          6: null
-        }
+        snlOBJ: snlOBJ,
+        whOBJ: whOBJ,
+        artOBJ: artOBJ,
+        orderOBJSNL: orderOBJSNL,
+        orderOBJWH: orderOBJWH,
+        display : false
     },
     methods: {
         shuffle: function (array) {
@@ -187,51 +451,239 @@ function startVue(){
         },
         goTo: function(key, state) {
           var str = window.location.href
-          let url = str.split('pro_exam')[0] + 'pro_list'
+          let url = str.split('news_exam')[0] + 'news_list'
           console.log('goTO', url);
           window.location = url
         },
-        checkQNA: function() {
-          console.log('answerSet', this.answerSet)
-          for (let q in qnaOBJ) {
-            console.log(this.answerSet[q])
-            if (this.answerSet[q] ===  null) {
-              alert('Not complete')
-              return false
-            }
+        updateGrades: function(nextStage, update, mode) {
+          this.stage += nextStage
+
+          let updateSignal = 0
+          if (update) {
+            updateSignal = 1
           }
-          let grade = 0
-          for (let q in qnaOBJ) {
-            if (this.answerSet[q] === qnaOBJ[q].answer1 ) {
-              document.getElementById(qnaOBJ[q].answer1).style.background = 'lightgreen'
-              grade += 1
-            } else {
-              document.getElementById(qnaOBJ[q].answer1).style.background = 'red'
-            }
-          }
-          this.updateGrades(grade)
-        },
-        updateGrades: function(grade) {
 
           $.ajax({
               data : {
                 qORs : 'qna',
                 unit : unit,
                 team : team,
-                grade : grade
+                update : updateSignal,
+                gradeSNL : this.gradeSNL,
+                gradeWH : this.gradeWH,
+                gradeART : this.gradeART,
+                project : this.qnaOBJ['1']['text'],
+                warmupAns : JSON.stringify(this.warmupAns),
+                stage : this.stage,
               },
               type : 'POST',
-              url : '/updateGrades',
+              url : '/updateGradesNews',
             })
             .done(function(data) {
-              alert('Grade Updated', data.grade)
-              vue.goTo()
+
+              console.log(data)
+              let entry = data.entry
+              console.log('RETURN', entry)
+              vue.gradeSNL = parseInt(entry.gradeSNL)
+              vue.gradeWH = parseInt(entry.gradeWH)
+              vue.gradeART = parseInt(entry.gradeART)
+              vue.warmupAns = entry.warmupAns
+              console.log(vue.warmupAns, entry.warmupAns)
+              vue.stage = parseInt(entry.stage)
+
+              if (vue.stage > 2) {
+                for (let q in vue.snlOBJ) {
+                  vue.defAns[q] = vue.snlOBJ[q]['vocab']
+                }
+              }
+              if (vue.gradeART > 1) {
+                vue.partsTest[1] = vue.partsOriginal[1]
+              }
+              if (vue.gradeART > 2) {
+                vue.partsTest[2] = vue.partsOriginal[2]
+              }
+              if (vue.gradeART > 3) {
+                vue.partsTest[3] = vue.partsOriginal[3]
+              }
+              if (vue.gradeART > 4) {
+                vue.partsTest[4] = vue.partsOriginal[4]
+              }
+
+              if (vue.stage == 6) {
+                for(let w in vue.whOBJ){
+                  vue.orderOBJWH[w][1] = vue.whOBJ[w]['text']
+                }
+              }
+
+
+              //vue.goTo()
             })
             .fail(function(){
                 alert('error has occurred');
             });
         },
+        getBG: function (key) {
+          s = this.defAns[key]
+
+          var entry = s.toLowerCase()
+          if (this.stage > 2) {
+            return 'background:gray'
+          }
+
+
+          if (entry.length > 0) {
+            entry = entry.replace(/\s/g, '')
+          } else {
+            return false
+          }
+          console.log('getBG', key, entry)
+          let ans = this.defList[key-1].replace(/\s/g, '').toLowerCase()
+          console.log('getBG', key, entry, ans)
+
+          if (entry.length > ans.length) {
+            return 'background:red'
+          }
+
+          var style = 'background:green'
+          for (let i = 0; i < entry.length; i++) {
+            if (entry[i] != ans[i]) {
+              style = 'background:red'
+            }
+          }
+
+          if (style == 'background:green' && entry.length == ans.length) {
+            return 'background:DarkTurquoise'
+          }
+
+          return style
+        },
+        getDefBTN: function () {
+
+          console.log('spell btn')
+          var allow = 0
+
+          for (let b in this.snlOBJ) {
+            if (this.defAns[b] == '') {
+              console.log('false ""')
+            } else if (this.defAns[b].replace(/\s/g, '').toLowerCase() == this.snlOBJ[b]['vocab'].replace(/\s/g, '').toLowerCase()) {
+              //console.log(this.spelling[b], this.qOBJ[key].b[b])
+              allow += 1
+            }
+          }
+
+          return allow == 6
+        },
+        checkWarmup: function () {
+          if (this.warmupAns['1'].length > 3 && this.warmupAns['2'].length > 3) {
+            alert('Updating Warmup')
+            this.updateGrades(1, true, 'warmup')
+          } else {
+            alert('Answers are too short, please add detail')
+          }
+        },
+        submitArt: function (part) {
+          console.log(this.partsOriginal[part], this.partsTest[part])
+          if (JSON.stringify(this.partsOriginal[part]) == JSON.stringify(this.partsTest[part])) {
+            this.gradeART += 1
+            if (part == 4) {
+              this.updateGrades(1, true, 'art')
+            } else {
+              this.updateGrades(0, true, 'art')
+            }
+
+          } else{
+            alert('Not correct, please listen and try again')
+            location.reload()
+          }
+        },
+        submitSNL: function() {
+          //check if dropdown answers match
+          for (var object in vue.snlOBJ){
+            console.log(object, vue.orderOBJSNL);
+            console.log(vue.orderOBJSNL[object][0]);
+            var dropdown = 'SNL' + vue.orderOBJSNL[object][0] //
+            var e = document.getElementById(dropdown)
+            if (e.options[e.selectedIndex].value != vue.orderOBJSNL[object][0] ) {
+              e.setAttribute('style', 'height:100px;width:100px;color:white;background:coral;font-size:25')
+              vue.errorCountSNL += 1
+              console.log(vue.errorCountSNL);
+              }
+            else {
+              e.setAttribute('style', 'height:100px;width:100px;color:white;background:mediumseagreen;font-size:25')
+            }
+          }
+          if (vue.errorCountSNL > 0){
+              alert('Sorry, you have ' + vue.errorCountSNL + ' incorrect answers. Please try again')
+              vue.errorCountSNL = 0
+              if (vue.gradeSNL > 0 ){
+                vue.gradeSNL -= 1
+              }
+              vue.updateGrades(0, true, 'snl')
+          }
+          else{
+              alert('Great, all answers are correct - your grade will be updated')
+              vue.updateGrades(1, true, 'snl')
+          }
+        },
+        submitWH: function() {
+          //check if dropdown answers match
+          for (var object in vue.whOBJ){
+            console.log(object, vue.orderOBJWH);
+            console.log(vue.orderOBJWH[object][0]);
+            var dropdown = 'WH' + vue.orderOBJWH[object][0] //
+
+            var e = document.getElementById(dropdown)
+            console.log(dropdown, e)
+            if (e.options[e.selectedIndex].value != vue.orderOBJWH[object][0] ) {
+              e.setAttribute('style', 'height:50px;width:150px;color:white;background:coral')
+              vue.errorCountWH += 1
+              console.log(vue.errorCountWH);
+              }
+            else {
+              e.setAttribute('style', 'height:50px;width:150px;color:white;background:mediumseagreen')
+            }
+          }
+          if (vue.errorCountWH > 0){
+              alert('Sorry, you have ' + vue.errorCountWH + ' incorrect answers. Please try again')
+              vue.errorCountWH = 0
+              if (vue.gradeWH > 0 ){
+                vue.gradeWH -= 1
+              }
+              vue.updateGrades(0, true, 'wh')
+          }
+          else{
+              alert('Great, all answers are correct - your grade will be updated')
+              vue.updateGrades(1, true, 'wh')
+          }
+        },
+        getList: function (str, head) {
+          let list = []
+
+          if (head.includes('Wh') || head.includes('How')) {
+            if (str) {
+              points = str.split(';')
+              for(let l in points){
+              list.push('- ' + points[l])
+              }
+            }
+          }
+          else if (head.includes('Part')) {
+            if (str) {
+              points = str.split('.')
+              for(let l in points){
+                if (points[l].length > 2) {
+                  list.push(points[l] + '.')
+                }
+              }
+            }
+          }
+          else {
+            list.push(str)
+          }
+          return list
+      },
     }
+
 })// end NEW VUE
 
 

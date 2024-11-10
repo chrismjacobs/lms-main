@@ -90,7 +90,7 @@ def news_project_teams(unit, number):
 
     manualTeams = {
 
-        1: ['Chris', 'Test'],
+        5: ['Sean', 'Cindy Wang', 'Vida'],
         #8: ['Chloe', 'Lou', 'Vivi']
         # 2:['Nora','Amy'],
         # 3:['Anita','Bly','T.Y','MAC'],
@@ -193,7 +193,7 @@ def news_project_teams(unit, number):
     return returnStr
 
 
-def midtermGrades():
+def newsExamGrades():
     try:
         checkUser = Exams_NEWS.query.filter_by(username=current_user.username).first().username
     except:
@@ -206,7 +206,7 @@ def midtermGrades():
     return user
 
 def get_tests(unit, team):
-    user = midtermGrades()
+    user = newsExamGrades()
     print('USER', user)
 
     qna = json.loads(user.j1)
@@ -235,61 +235,97 @@ def get_tests(unit, team):
     return { 'snlCount' : snlCount, 'qnaCount' : qnaCount, 'rpCount' : rpCount }
 
 
-@app.route('/updateGrades_news', methods=['POST'])
-def updateGrades_news():
+@app.route('/updateGradesNews', methods=['POST'])
+def updateGradesNews():
     qORs = request.form ['qORs']
     unit = request.form ['unit']
     team = request.form ['team']
-    grade = request.form ['grade']
+    project = request.form ['project']
+    update = request.form ['update']
+    gradeSNL = request.form ['gradeSNL']
+    gradeART = request.form ['gradeART']
+    gradeWH = request.form ['gradeWH']
+    warmupAns = json.loads(request.form ['warmupAns'])
+    stage = request.form ['stage']
 
-    user = midtermGrades()
+    user = newsExamGrades()
 
-    if qORs == 'qna':
+    isMidterm = False
+    unitList = Units_NEWS.query.all()
+    uCount = 0
+    for u in unitList:
+        uCount += 1
+
+    if  uCount <= 4:
+        isMidterm = True
+
+    if qORs == 'qna' and isMidterm:
         examDict = json.loads(user.j1)
-        # examDict = json.loads(user.j4)
-    elif qORs == 'snl':
-        examDict = json.loads(user.j2)
-        # examDict = json.loads(user.j5)
-    elif qORs == 'rp':
-        examDict = json.loads(user.j3)
-        # examDict = json.loads(user.j6)
-        pass
+    elif qORs == 'qna' and not isMidterm:
+        examDict = json.loads(user.j4)
 
     print('before', examDict)
 
-    entryChecker = True
+    newEntry = True
+    currentEntry = {
+            'unit' : unit,
+            'team' : team,
+            'gradeSNL' : 6,
+            'gradeWH' : 6,
+            'gradeART' : 1,
+            'warmupAns' : {1:'', 2:''},
+            'stage' : stage,
+            'project' : 'None'
+        }
     for entry in examDict:
+        print(team, unit)
+        print(examDict[entry]['team'], examDict[entry]['unit'])
         if examDict[entry]['team'] == team and examDict[entry]['unit'] == unit:
-            entryChecker = False
-            print("entryChecker False")
+            newEntry = False
+            if int(update) == 1:
+                examDict[entry] = {
+                'unit' : unit,
+                'team' : team,
+                'gradeSNL' : gradeSNL,
+                'gradeWH' : gradeWH,
+                'gradeART' : gradeART,
+                'warmupAns' : warmupAns,
+                'stage' : stage,
+                'project' : project
+                }
+            currentEntry = examDict[entry]
+            print("newEntry False")
 
-    if entryChecker:
+    if newEntry:
         count = len(examDict)
         examDict[count+1] = {
             'unit' : unit,
             'team' : team,
-            'grade' : grade
+            'gradeSNL' : gradeSNL,
+            'gradeWH' : gradeWH,
+            'gradeART' : gradeART,
+            'warmupAns' : warmupAns,
+            'stage' : stage,
+            'project' : project
             }
 
-        if qORs == 'qna':
+    if int(update) == 1:
+        if qORs == 'qna' and isMidterm:
             user.j1 = json.dumps(examDict)
-            # user.j4 = json.dumps(examDict)
             db.session.commit()
-            print('qnaCommit')
-        elif qORs == 'snl':
-            user.j2 = json.dumps(examDict)
-            # user.j5 = json.dumps(examDict)
+            print('qnaCommit Midterm')
+
+        if qORs == 'qna' and not isMidterm:
+            user.j4 = json.dumps(examDict)
             db.session.commit()
-            print('snlCommit')
-        elif qORs == 'rp':
-            user.j3 = json.dumps(examDict)
-            # user.j6 = json.dumps(examDict)
-            db.session.commit()
-            print('rpCommit')
+            print('qnaCommit Final')
+
+
+
 
     print('after', examDict)
 
-    return jsonify({'grade' : grade})
+    return jsonify({'entry' : currentEntry})
 
 
 def get_project_news():
@@ -412,8 +448,8 @@ def news_list():
 
     examDict = {}
 
-    # eUnits = ['01','02']
-    eUnits = ['03','04', '05']
+    eUnits = ['01','02','03']
+    # eUnits = ['03','04', '05']
     for src in eUnits:
         if int(src) > 16: # change to match number of units
             pass
@@ -454,53 +490,29 @@ def news_list():
 
                         examDict[src][proj.teamnumber] = {
                             'QTotal' : QTotal,
-                            'STotal' : STotal,
-                            'RTotal' : RTotal,
                             'Qscore' : 0,
-                            'Sscore' : 0,
-                            'Rscore' : 0,
+                            'project' : 'New Project'
                             }
 
 
-    user = midtermGrades()
+    user = newsExamGrades()
     qna = json.loads(user.j1)
-    snl = json.loads(user.j2)
-    rp = json.loads(user.j3)
-    # qna = json.loads(user.j4)
-    # snl = json.loads(user.j5)
-    # rp = json.loads(user.j6)
-    #print (qna)
-    #print (snl)
+
 
     for entry in qna:
         unit = qna[entry]['unit']
         team = qna[entry]['team']
-        grade = qna[entry]['grade']
+        gradeSNL = qna[entry]['gradeSNL']
+        gradeWH = qna[entry]['gradeWH']
+        stage = qna[entry]['stage']
+        project = qna[entry]['project']
         try:
             #print(examDict[unit][int(team)]['Qscore'])
-            examDict[unit][int(team)]['Qscore'] = grade
+            examDict[unit][int(team)]['Qscore'] = stage
+            examDict[unit][int(team)]['project'] = project
         except:
             print('FAIL QNA')
 
-    for entry in snl:
-        unit = snl[entry]['unit']
-        team = snl[entry]['team']
-        grade = snl[entry]['grade']
-        try:
-            #print(examDict[unit][int(team)]['Sscore'])
-            examDict[unit][int(team)]['Sscore'] = grade
-        except:
-            print('FAIL QNA')
-
-    for entry in rp:
-        unit = rp[entry]['unit']
-        team = rp[entry]['team']
-        grade = rp[entry]['grade']
-        try:
-            #print(examDict[unit][int(team)]['Sscore'])
-            examDict[unit][int(team)]['Rscore'] = grade
-        except:
-            print('FAIL RP')
 
 
     #'''
@@ -855,7 +867,7 @@ def news_exam(qORs, unit, team):
     team_data = get_team_data(unit, team)
     teamMembers = team_data['teamMembers']
 
-    if current_user.extra == 3:
+    if current_user.extra == 5:
         print('exam user')
     elif current_user.username not in teamMembers:
         flash('Exam not ready - Please see instructor', 'warning')
@@ -883,31 +895,47 @@ def news_exam(qORs, unit, team):
         rpString = ''
         rpDict = {}
 
-    orderList = ['1','2','3','4','5','6']
-    random.shuffle(orderList)
-    print('orderList', orderList)
-    orderDict = {}
-    qnaDictNew = {}
-    snlDictNew = {}
+    orderListSNL = ['1','2','3','4','5','6']
+    random.shuffle(orderListSNL)
+    print('orderList', orderListSNL)
+    orderDictSNL = {}
 
-    if qnaDict != {}:
+    orderListWH = ['1','2','3','4','5','6']
+    random.shuffle(orderListWH)
+    print('orderList', orderListWH)
+    orderDictWH = {}
 
+    # 5Ws + H
+    whDict = {
+        1 : qnaDict['8'],
+        2 : qnaDict['9'],
+        3 : qnaDict['10'],
+        4 : qnaDict['11'],
+        5 : qnaDict['12'],
+        6 : qnaDict['13'],
+    }
+
+    # Article
+    artDict = {
+        1 : qnaDict['4'],
+        2 : qnaDict['5'],
+        3 : qnaDict['6'],
+        4 : qnaDict['7']
+    }
+
+    print(whDict)
+
+    if snlDict != {}:
         count = 1
-        for number in orderList:
-            orderDict[count] = [number, snlDict[number]['audioLink']]
+        for number in orderListSNL:
+            orderDictSNL[count] = [number, snlDict[number]['audioLink']]
             count +=1
 
-
+    if whDict != {}:
         count = 1
-        for number in orderList:
-            qnaDictNew[count] = qnaDict[number]
+        for number in orderListWH:
+            orderDictWH[count] = [number, whDict[int(number)]['text']]
             count +=1
-
-        count = 1
-        for number in orderList:
-            snlDictNew[count] = snlDict[number]
-            count +=1
-
 
 
     if qORs == 'qna':
@@ -917,7 +945,16 @@ def news_exam(qORs, unit, team):
     else:
         html = 'news/news_exam_rp.html'
 
-    return render_template(html, legend='News Exam', title=unit, meta=meta, orderDict=json.dumps(orderDict), qnaString=json.dumps(qnaDictNew), snlString=json.dumps(snlDictNew), rpString=rpString)
+    return render_template(html, legend='News Exam',
+                           title=unit,
+                           meta=meta,
+                           orderStringSNL=json.dumps(orderDictSNL),
+                           orderStringWH=json.dumps(orderDictWH),
+                           qnaString=json.dumps(qnaDict),
+                           snlString=json.dumps(snlDict),
+                           whString=json.dumps(whDict),
+                           artString=json.dumps(artDict),
+                        )
 
 
 

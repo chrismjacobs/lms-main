@@ -418,8 +418,9 @@ def completeStatus(time, name):
     SCHEMA = getSchema()
 
     ICC = [6]
+    exceptionClass = SCHEMA == 8 or SCHEMA == 12 ## escape logic for pronunciation class and news class
 
-    if SCHEMA == 8:
+    if exceptionClass:
         return [0,0]
 
     elif SCHEMA not in ICC:
@@ -850,6 +851,8 @@ def grades_midterm ():
     if SCHEMA == 2 or SCHEMA == 4:
         version = 2
 
+    exceptionClass = SCHEMA == 8 or SCHEMA == 12 ## escape logic for pronunciation class and news class
+
 
     semester = int(User.query.filter_by(username='Chris').first().semester)
 
@@ -893,7 +896,7 @@ def grades_midterm ():
     if SCHEMA == 6 or SCHEMA == 3:
         midterm_unit_list = ['01', '02', '03', '04', '05']
 
-    elif SCHEMA == 8:
+    elif exceptionClass:
         midterm_unit_list = []
     else:
         midterm_unit_list = ['01', '02', '03', '04']
@@ -1002,7 +1005,9 @@ def grades_midterm ():
 
     print(gradesDict)
 
-    if MT_marker and SCHEMA != 8: ## escape logic for pronunciation class
+
+
+    if MT_marker and not exceptionClass:
         return gradesDict
     else:
         if current_user.id != 1:

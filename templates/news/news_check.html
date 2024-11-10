@@ -215,14 +215,21 @@ function startVue(OBJ, unit){ new Vue({
           }
 
           if (num == 0) {
-            let check = true
+            let green = true
+            let orange = true
             for(let n in obj) {
-              if (obj[n]['status'] != 2) {
-                check = false
+              let status = obj[n]['status']
+              if (status == 0) {
+                green = false
+                orange = false
+              } else if (status != 2) {
+                green = false
               }
             }
-            if (check) {
+            if (green) {
               return 'background:lightgreen'
+            } else if (orange) {
+              return 'background:orange'
             }
           } else {
             status = obj[num]['status']
