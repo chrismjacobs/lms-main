@@ -36,7 +36,6 @@
         </tbody>
 
 
-
       </table>
     </div>
 
@@ -73,11 +72,20 @@ let vue = new Vue({
     },
     data: {
         gradesOBJ: gradesOBJ,
-        excluded: ['Chris', 'Test', 'Jane', 'Michelle', 'Kevin', 'Wayne123', 'Penny']
-
-
+        excluded: ['Chris']
     },
     methods: {
+        displayItem: function(head, item) {
+
+          let ret = []
+          if (!item.constructor === Array) {
+            ret.push(item)
+            return ret
+          } else {
+            return item
+          }
+
+        },
         setStatus: function(head, key) {
           if (head == 'Status') {
             $.ajax({
@@ -211,7 +219,7 @@ let vue = new Vue({
             }
           }
           if (head == 'Status') {
-            if (item == 3){
+            if (item == 5){
                 return { background:'mediumseagreen', display: 'inline-block', padding:'20px'}
             }
             else{

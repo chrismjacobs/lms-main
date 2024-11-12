@@ -64,6 +64,7 @@ def create_folder(unit, teamnumber, nameRange):
 
     return keyName
 
+
 @app.route ("/news/make_teams/<string:unit>/<string:number>/", methods=['GET','POST'])
 @login_required
 def news_project_teams(unit, number):
@@ -273,7 +274,7 @@ def updateGradesNews():
             'gradeSNL' : 6,
             'gradeWH' : 6,
             'gradeART' : 1,
-            'warmupAns' : {1:'', 2:''},
+            'warmupAns' : warmupAns,
             'stage' : stage,
             'project' : 'None'
         }
@@ -958,15 +959,65 @@ def news_exam(qORs, unit, team):
 
 
 
+
+@app.route ("/grades_news", methods=['GET','POST'])
+@login_required
+def grades_news():
+    SCHEMA = getSchema()
+
+    semester = int(User.query.filter_by(username='Chris').first().semester)
+
+    gradesDict = {}
+    completeDict = {}
+
+    users = getUsers(SCHEMA)
+
+    for user in users:
+        gradesDict[user.username] = {
+            'Status' : user.extra,
+            'Name' : user.username,
+            'ID' : user.studentID,
+            'Total' : 0,
+            'units' : 0,
+            'uP' : 0,
+            'asses' : 0,
+            'aP' : 0,
+            'tries1' : 0,
+            'pscore1' : 0,
+            'tries2' : 0,
+            'pscore2' : 0,
+            'exam1' : 0,
+            'exam2' : 0,
+            'rscore1' : '',
+            'rscore2' : '',
+            'blurs' : ''
+        }
+
+    attendance = getModels()['Attendance_'].query.all()
+
+    for a in attendance:
+        if a.username in gradesDict:
+            gradesDict[a.username]['Name'] += ' ='
+
+    MT_marker = False
+    ### set max grades
+
+
+    return render_template('news/news_grades2.html', SCHEMA=SCHEMA, title='Grades', ansString=json.dumps(gradesDict), compString=json.dumps(completeDict))
+
+
+
 @app.route ("/news_grades", methods=['GET','POST'])
 @login_required
 def news_grades():
 
     gradesDict = {}
 
-    users = User.query.all()
+    SCHEMA = getSchema()
 
-    units = ['13','14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24']
+    users = getUsers(SCHEMA)
+
+    units = ['01','02', '03']
 
     for user in users:
         gradesDict[user.username] = {
@@ -981,13 +1032,10 @@ def news_grades():
                 'team' : 0,
                 'QNA' : 0,
                 'SNL' : 0,
-                'RP' : 0,
-                'QNA_check' : 0,
-                'SNL_check' : 0,
-                'RP_check' : 0,
-                'QNA_grades' : [],
-                'SNL_grades' : [],
-                'RP_grades' : []
+                'Projects': [],
+                'Listening': [],
+                'Info': [],
+                'Warmup': [],
             }
 
     exams = Exams_NEWS.query.all()
@@ -995,47 +1043,32 @@ def news_grades():
     models = unitDict # at top of page
 
     for model in models:
-        if int(model) > 12:
+        if int(model) > 0 and int(model) < 4:
             projects = models[model].query.all()
             for proj in projects:
                 team = ast.literal_eval(proj.username)
                 for stu in team:
                     gradesDict[stu][model]['QNA'] = proj.Ans04
                     gradesDict[stu][model]['SNL'] = proj.Ans05
-                    gradesDict[stu][model]['RP'] = proj.Ans06
                     gradesDict[stu][model]['team'] = str(proj.teamnumber)
 
     for exam in exams:
         #break
         #QNA = json.loads(exam.j1)
-        QNA = json.loads(exam.j3)
+        QNA = json.loads(exam.j1)
+        user = exam.username
+        print(user, QNA)
+
         for record in QNA:
+
             entry = QNA[record]
-            print(exam.username, entry)
-            if entry['team'] == gradesDict[exam.username][entry['unit']]['team']:
-                gradesDict[exam.username][entry['unit']]['QNA_check'] = 1
-            else:
-                gradesDict[exam.username][ entry['unit'] ]['QNA_grades'].append(entry['grade'])
+            unit = entry['unit']
+            print(record, user, entry)
+            gradesDict[user][unit]['Projects'].append(entry['project'])
+            gradesDict[user][unit]['Listening'].append(int(entry['gradeSNL']))
+            gradesDict[user][unit]['Info'].append(int(entry['gradeWH']))
+            gradesDict[user][unit]['Warmup'].append(entry['warmupAns'])
 
-        #SNL = json.loads(exam.j2)
-        SNL = json.loads(exam.j4)
-        for record in SNL:
-            entry = SNL[record]
-            print(exam.username, entry)
-            if entry['team'] == gradesDict[exam.username][entry['unit']]['team']:
-                gradesDict[exam.username][entry['unit']]['SNL_check'] = 1
-            else:
-                gradesDict[exam.username][ entry['unit'] ]['SNL_grades'].append(entry['grade'])
-
-        #RP = json.loads(exam.j3)
-        RP = json.loads(exam.j6)
-        for record in RP:
-            entry = RP[record]
-            print(exam.username, entry)
-            if entry['team'] == gradesDict[exam.username][entry['unit']]['team']:
-                gradesDict[exam.username][entry['unit']]['RP_check'] = 1
-            else:
-                gradesDict[exam.username][ entry['unit'] ]['RP_grades'].append(entry['grade'])
 
 
     return render_template('news/news_grades.html', ansString=json.dumps(gradesDict))

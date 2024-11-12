@@ -1,0 +1,346 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div id="vue-app">
+
+
+
+<div class="content-section">
+     <legend class="border-bottom mb-4">Grades</legend>
+     <button class="btn btn-outline-secondary" @click="gotoAdmin('exams')">Exams</button>
+     <button class="btn btn-outline-secondary" @click="exdata += 1">Data</button>
+     <button class="btn btn-outline-secondary" @click="gList += 1">List [[gList]]</button>
+     <button class="btn btn-outline-secondary" @click="resetAll()">Reset all</button>
+     <button class="btn btn-outline-secondary" @click="goTo('participation_check')">Participation Check</button>
+     <button class="btn btn-outline-secondary" @click="remove = !remove">Remove Exam: [[remove]]</button>
+     <br>
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='1-grades') }}">FRD</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='2-grades') }}">FRD GE</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='3-grades') }}">WPE</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='4-grades') }}">WPE GE</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='6-grades') }}">ICC</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='5-controls') }}">FOOD</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='7-controls') }}">PENG</a>
+
+     <a class="btn btn-outline-secondary" class="btn" href="{{ url_for ('change', data='8-controls') }}">APP</a>
+
+
+
+    <br>
+    <br>
+    <div style="overflow-x:auto;width:80%">
+      <table class="table table-sm">
+        <thead>
+            <tr>
+              <th scope="col" >Status</th>
+              <th scope="col" >Name</th>
+              <th scope="col" >ID</th>
+              <th scope="col" >Total</th>
+              <th scope="col" >U</th>
+              <th scope="col" >%</th>
+              <th scope="col" >A</th>
+              <th scope="col" >%</th>
+              <th scope="col" >T1</th>
+              <th scope="col" >T2</th>
+              <th scope="col" >E1</th>
+              <th scope="col" >E2</th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+        <template v-for="(user, key) in gradesOBJ">
+            <tr>
+              <td v-for="(data, head) in user" :style="gStyle(head, data)" @click="setStatus(head, key, data)"> [[ data ]] </td>
+              <td :style="gStyle('p', 1)"> [[ compOBJ[key] ]] </td>
+            </tr>
+
+        </template>
+        </tbody>
+
+      </table>
+    </div>
+
+</div>
+
+<span id="ansString" style="display:none">{{ansString}}</span>
+<span id="compString" style="display:none">{{compString}}</span>
+<span id="SCHEMA" style="display:none">{{SCHEMA}}</span>
+<span id="bonus" style="display:none">{{bonus}}</span>
+
+</div> <!-- end of Vue app -->
+
+
+{% endblock %}
+
+{% block script %}
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+
+<script type="text/javascript" >
+
+var ansString = document.getElementById('ansString').innerHTML
+var compString = document.getElementById('compString').innerHTML
+var schema = parseInt(document.getElementById('SCHEMA').innerHTML)
+var bonus = document.getElementById('bonus').innerHTML
+var gradesOBJ = JSON.parse(ansString)
+var compOBJ = JSON.parse(compString)
+console.log('OBJ', gradesOBJ);
+console.log('COMP', compOBJ);
+console.log('bonus', bonus);
+
+
+startVue()
+
+function startVue(){
+
+let vue = new Vue({
+
+    el: '#vue-app',
+    delimiters: ['[[', ']]'],
+    mounted: function(){
+
+    },
+    data: {
+        remove: false,
+        gradesOBJ: gradesOBJ,
+        compOBJ: compOBJ,
+        exdata: 0,
+        schema: schema,
+        gList: 0
+    },
+    methods: {
+        goTo: function(destination){
+
+          var str = window.location.href
+
+          let url = (str).split('grades')[0] + destination
+          console.log('goTO', url);
+          window.location = url
+
+        },
+        gotoAdmin: function (target) {
+          schemaList = {
+            1 : '_frd1',
+            2 : '_wpe1',
+            3 : '_frd2',
+            4 : '_wpe2',
+            5 : '_food',
+            6 : '_icc'
+          }
+
+          tag = schemaList[this.schema]
+
+          let breaker = 'admin/'
+          var str = window.location.href
+          let url = ''
+          console.log((str).split('grades_midterm')[0], str.includes('midterm'))
+          if (str.includes('midterm')) {
+            url = (str).split('grades_midterm')[0] + breaker + target + tag
+          } else {
+            url = (str).split('grades_final')[0] + breaker + target + tag
+          }
+
+          window.open(url, '_blank')
+        },
+        getType: function () {
+          var str = window.location.href
+          if (str.includes('midterm')) {
+            return 'T'
+          } else {
+            return 'F'
+          }
+        },
+        gStyle: function(head, g) {
+          if (this.gList > 0 && this.gList < 3) {
+            // console.log(head[0])
+            let showName = head[0] == 'N'
+            let nameToggle = this.gList > 1
+            let remove = ['I', this.getType()]
+            if (!remove.includes(head[0]) && !showName) {
+              return { display:'none'}
+            } else if (nameToggle && showName) {
+              return { display:'none'}
+            } else if (g < 60) {
+              return { background:'coral'}
+            }
+          } else if (head == 'Status'){
+            if (g == 1) {
+            return { background:'mediumseagreen'}
+            }
+            else if (g == 2) {
+            return { background:'mediumseagreen'}
+            }
+            else if (g == 3) {
+            return { background:'orange'}
+            }
+            else if (g == 4) {
+            return { background:'orange'}
+            }
+            else if (g == 6) {
+            return { background:'aqua'}
+            }
+            else {
+            return { background:'gold'}
+            }
+            }
+          else if (head == 'MT'){
+            if (this.exdata == 0) {
+              return { display:'none'}
+            } else {
+              return { background:'lightskyblue'}
+            }
+          }
+          else if (head == 'blurs'){
+            if (this.exdata == 0) {
+              return { display:'none'}
+            } else if (g  && g > 0 ) {
+              return { background:'lightpink'}
+            }
+          }
+          else if (head == 'Total') {
+            if (g < 60) {
+              return { background:'lightpink'}
+            }
+          }
+          else if (head == 'uP' || head == 'aP') {
+            if (g == 30) {
+              return { background:'lightgreen'}
+            }
+            else if (g > 20) {
+              return { background:'yellow'}
+            } else if (g < 5) {
+              return { background:'lightcoral'}
+            } else {
+              return { background:'orange'}
+            }
+          }
+          else if (head == 'units' || head == 'asses') {
+            return { background:'lightgrey'}
+          }
+          else if (head[0] == 't') {
+            if (g == 1 ) {
+              return { background:'pink'}
+            } if (g == 0 ) {
+              return { background:'lightcoral'}
+            } else {
+              return { background:'hotpink'}
+            }
+          }
+          else if (head[0] == 'p' || head[0] == 'r') {
+            // M == midterm  p = pscore  r = rscore b = blurs F = final
+            if (this.exdata == 0) {
+              return { display:'none'}
+            }
+            else if (this.exdata > 1 && head[0] != 'r') {
+              return { display:'none'}
+            }
+            else if (this.exdata > 2 && head[0] != 'p') {
+              return { display:'none'}
+            }
+          }
+          else if (head[0] == 'F') {
+            // M == midterm  p = pscore  r = rscore b = blurs F = final
+            if (this.exdata == 0) {
+              return { display:'none'}
+            }
+            else if (g < 60) {
+              return { background:'coral'}
+            }
+          }
+          else if (g == 0) {
+            return { background:'lightcoral'}
+          }
+          else if (head == 'exam1' || head == 'exam2') {
+            if (g >= 12) {
+              return { color:'lightgreen' , background:'lightgreen'}
+            } else if (g > 0 && g < 12) {
+              return { color:'orange' , background:'orange'}
+            }
+          }
+        },
+        gListCreate: function () {
+          for (let x in this.gradesOBJ) {
+            let name = this.gradesOBJ[x]['Name']
+            let id = this.gradesOBJ[x]['ID']
+            let total = this.gradesOBJ[x]['Total']
+            this.gList.push(name + ' ' + id + ' ' + total)
+          }
+          console.log(this.gList)
+        },
+        setStatus: function(head, key, value) {
+          if (head == 'Status') {
+            $.ajax({
+              data : {
+                username : key,
+              },
+              type : 'POST',
+              url : '/setStatus',
+            })
+            .done(function(data) {
+              gradesOBJ[key]['Status'] = data.set
+            })
+            .fail(function(){
+                alert('error has occurred');
+            });
+          }
+          if (head == 'exam1' || head == 'exam2') {
+            if (!this.remove) {
+              return false
+            }
+            $.ajax({
+              data : {
+                username : key,
+                head: head
+              },
+              type : 'POST',
+              url : '/resetExam',
+            })
+            .done(function(data) {
+              alert('exam reset', key, value)
+            })
+            .fail(function(){
+                alert('error has occurred');
+            });
+          }
+
+        },
+        resetAll: function() {
+          if (true) {
+            $.ajax({
+              data : {
+              },
+              type : 'POST',
+              url : '/resetAll',
+            })
+            .done(function(data) {
+              alert(data)
+              console.log(data)
+
+            })
+            .fail(function(){
+                alert('error has occurred');
+            });
+          }
+
+        },
+    }
+
+})// end NEW VUE
+
+
+
+}// endFunction
+
+</script>
+
+
+{% endblock %}
+

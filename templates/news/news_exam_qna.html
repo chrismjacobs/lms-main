@@ -116,53 +116,93 @@
           <tr>
             <th scope="col" colspan="6"><h1>Stage 3: Listening  Grade: [[gradeSNL]] </h1></th>
           </tr>
+          <tr>
+            <th scope="col" ></th>
+            <th scope="col" ></th>
+            <th scope="col" ></th>
+            <th scope="col" ></th>
+            <th scope="col" ></th>
+            <th scope="col" ></th>
+          </tr>
         </thead>
 
-        <tbody v-if="stage==3" >
-        <template v-for="(answerSet, key) in snlOBJ" >
-
-            <tr>
-              <td style="width: 25%; word-wrap: break-word">
-               <div align="center" style="background:darkgreen; padding:3px; width:100%">
-               <h3 style="color:white" >[[ key ]]</h3>
-               </div>
-
-                <span v-if="gradeSNL < 6"> [[  answerSet['vocab']  ]] <br> </span>
-                <span v-if="gradeSNL < 5"> [[  answerSet['sentence']  ]] <br> </span>
-                <br>
-              </td>
-              <td style="width: 25%; word-wrap: break-word">
-                <img class="rounded img-fluid" alt="No file yet" style="width: 100%"  :src="answerSet.imageLink">
-                <br>
-              </td>
-              <td style="background:lightgrey">
-              <div align="center">
-                <audio controls style="width: 250px">
+        <tbody>
+          <template v-if="stage==3" v-for="(answerSet, key) in snlOBJ" >
+            <tr v-if="key == 1 || key == 3 || key == 5">
+               <td style="background:lightgrey" colspan="2">
+               <div align="center">
+                 <audio controls style="width: 250px">
                  <source :src="orderOBJSNL[key][1]" type="audio/mpeg" >
                  <source :src="orderOBJSNL[key][1]" type="audio/x-m4a" >
-                </audio>
-              </div>
-              </td>
-              <td style="background:lightgrey">
-                <select style="height:100px;width:100px;color:white;background:royalblue;font-size:20px" :id="'SNL' + orderOBJSNL[key][0]" name="listening">
-                  <option value="0">--</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                </select>
-              </td>
+                 </audio>
+               </div>
+               </td>
+               <td style="background:lightgrey">
+                 <select style="height:100px;width:100px;color:white;background:royalblue;font-size:20px" :id="'SNL' + orderOBJSNL[key][0]" name="listening">
+                   <option value="0">--</option>
+                   <option value="1">1</option>
+                   <option value="2">2</option>
+                   <option value="3">3</option>
+                   <option value="4">4</option>
+                   <option value="5">5</option>
+                   <option value="6">6</option>
+                 </select>
+               </td>
+               <td style="background:lightgrey">
+               <div align="center">
+                 <audio controls style="width: 250px">
+                 <source :src="orderOBJSNL[parseInt(key)+1][1]" type="audio/mpeg" >
+                 <source :src="orderOBJSNL[parseInt(key)+1][1]" type="audio/x-m4a" >
+                 </audio>
+               </div>
+               </td>
+               <td style="background:lightgrey">
+                 <select style="height:100px;width:100px;color:white;background:royalblue;font-size:20px" :id="'SNL' + orderOBJSNL[parseInt(key)+1][0]" name="listening">
+                   <option value="0">--</option>
+                   <option value="1">1</option>
+                   <option value="2">2</option>
+                   <option value="3">3</option>
+                   <option value="4">4</option>
+                   <option value="5">5</option>
+                   <option value="6">6</option>
+                 </select>
+               </td>
+           </tr>
+          </template>
+          <tr v-if="stage == 3">
+            <td>
+              <br>
+              <button class="btn btn-warning" @click="submitSNL()"> Submit Listening </button>
+            </td>
+          </tr>
+            <tr>
+              <template v-for="(answerSet, key) in snlOBJ" >
+                <td v-if="key < 4" style="width: 30%; word-wrap: break-word" colspan="2" :id="'SNLImage' + key">
+                <div align="center" style="background:darkgreen; padding:3px; width:100%">
+                <h3 style="color:white" >[[ key ]]</h3>
+                </div>
+                  <span v-if="gradeSNL < 6 || stage > 3"> <h4>[[  answerSet['vocab']  ]]</h4>  </span>
+                  <span v-if="gradeSNL < 5 || stage > 3"> <h5>[[  answerSet['sentence']  ]]</h5> </span>
+                  <br>
+                  <img class="rounded img-fluid" alt="No file yet" style="width: 80%"  :src="answerSet.imageLink">
+                  <br>
+                </td>
+              </template>
             </tr>
-        </template>
-        <tr>
-          <td>
-            <br>
-            <button class="btn btn-warning" @click="submitSNL()"> Submit Listening </button>
-          </td>
-        </tr>
-
+            <tr>
+              <template v-for="(answerSet, key) in snlOBJ" >
+                <td v-if="key > 3" style="width: 30%; word-wrap: break-word" colspan="2" :id="'SNLImage' + key">
+                <div align="center" style="background:darkgreen; padding:3px; width:100%">
+                <h3 style="color:white" >[[ key ]]</h3>
+                </div>
+                  <span v-if="gradeSNL < 6"> <h4>[[  answerSet['vocab']  ]]</h4>  </span>
+                  <span v-if="gradeSNL < 5"> <h5>[[  answerSet['sentence']  ]]</h5>  </span>
+                  <br>
+                  <img class="rounded img-fluid" alt="No file yet" style="width: 80%"  :src="answerSet.imageLink">
+                  <br>
+                </td>
+              </template>
+            </tr>
         </tbody>
       </table>
 
@@ -602,15 +642,20 @@ function startVue(){
             console.log(object, vue.orderOBJSNL);
             console.log(vue.orderOBJSNL[object][0]);
             var dropdown = 'SNL' + vue.orderOBJSNL[object][0] //
+            var dropimage = 'SNLImage' + vue.orderOBJSNL[object][0] //
             var e = document.getElementById(dropdown)
+            var i = document.getElementById(dropimage)
             if (e.options[e.selectedIndex].value != vue.orderOBJSNL[object][0] ) {
               e.setAttribute('style', 'height:100px;width:100px;color:white;background:coral;font-size:25')
+              i.setAttribute('style', 'background:coral')
               vue.errorCountSNL += 1
               console.log(vue.errorCountSNL);
               }
             else {
               e.setAttribute('style', 'height:100px;width:100px;color:white;background:mediumseagreen;font-size:25')
+              i.setAttribute('style', 'background:mediumseagreen')
             }
+
           }
           if (vue.errorCountSNL > 0){
               alert('Sorry, you have ' + vue.errorCountSNL + ' incorrect answers. Please try again')
