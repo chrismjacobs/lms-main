@@ -284,6 +284,47 @@ def team_details ():
             }
     return nnDict
 
+@app.route('/gradeChange', methods=['POST'])
+def gradeChange():
+
+    uModsDict = getInfo()['uModsDict']
+    print(uModsDict)
+    part_num = request.form ['part_num']
+    unit_num = request.form ['unit_num']
+    team_num = request.form ['team_num']
+    grade_num = int(request.form ['grade_num'])
+
+    print (part_num, unit_num, team_num, type(team_num))
+
+    modDict = uModsDict
+    model = modDict[unit_num][int(part_num)]
+    print(model)
+    student = model.query.filter_by(teamnumber=int(team_num)).first()
+    print(student)
+    new_grade = 0
+    comment = 'Not Completed'
+    if grade_num == 2:
+        new_grade = 0
+        comment = 'Not Completed'
+    elif grade_num == 1:
+        new_grade = 2
+        comment = 'Grade Updated'
+    elif grade_num == 0:
+        new_grade = 1
+        comment = 'Grade Updated'
+
+    print(grade_num, new_grade, comment)
+
+    student.Grade = new_grade
+    student.Comment = comment
+    db.session.commit()
+
+    return jsonify({'grade_num' : grade_num, 'new_grade' : new_grade, 'comment' : comment,})
+
+
+
+
+
 # check the score of teams during participation for the games panel
 @app.route('/partCheck', methods=['POST'])
 def scoreCheck():
@@ -303,7 +344,7 @@ def scoreCheck():
     for answer in answers:
         print (answer)
         scoreList = [answer.Ans01, answer.Ans02, answer.Ans03, answer.Ans04,
-        answer.Ans05, answer.Ans06, answer.Ans07, answer.Ans08]
+        answer.Ans05, answer.Ans06, answer.Ans07, answer.Ans08, answer.Ans09]
         if answer.teamnumber <21:
             scoreDict[answer.teamnumber] = []
             for item in scoreList[0:int(qNum)+1]:

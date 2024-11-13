@@ -696,7 +696,7 @@ def participation_check():
             checkDict[m] = {}
         for row in rows:
             if len(ast.literal_eval(row.username)) == 1:
-                checkDict[m][row.username] = [ row.id, row.Grade, row.Ans01, row.Ans02, row.Ans03, row.Ans04, row.Ans05, row.Ans06, row.Ans07, row.Ans08]
+                checkDict[m][row.username] = [ row.id, row.Grade, row.teamnumber, row.Ans01, row.Ans02, row.Ans03, row.Ans04, row.Ans05, row.Ans06, row.Ans07, row.Ans08, row.Ans09, row.Comment]
                 print(rows)
     return render_template('instructor/check.html', checkString=json.dumps(checkDict))
 

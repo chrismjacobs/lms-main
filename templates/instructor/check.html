@@ -18,7 +18,8 @@
         <div v-for="(data, s) in m">
         [[ key ]]
          <a :href="getLink(key, data)"> [[s]] </a>
-         <br> <span v-for="d in data"> <span v-if="d !== null">[[d]]</span> <br>  </span>
+         <br> <span v-for="(d, idx) in data"> <span :style="getStyle(idx, d)" v-if="d !== null">[[idx]]: [[d]]<br></span>   </span>
+         <button @click="gradeChange(data, s, key)">[[ s ]]</button>
          <br>
          <br>
 
@@ -68,6 +69,41 @@ let vue = new Vue({
 
     },
     methods: {
+        getStyle: function (idx, d) {
+            if (idx == 1 && d == 2) {
+                return 'background:lightgreen'
+            }
+            if (idx == 1 && d == 1) {
+                return 'background:yellow'
+            }
+            if (idx == 1 && d == 0) {
+                return 'background:coral'
+            }
+
+        },
+         gradeChange: function (data, s, key) {
+            let unit_num = key[0]+key[1]
+            let part_num = key[2]
+
+            console.log(data, s, key, unit_num, part_num)
+            $.ajax({
+                data : {
+                  team_num : data[2],
+                  grade_num : data[1],
+                  part_num : part_num,
+                  unit_num : unit_num
+                },
+                type : 'POST',
+                url : '/gradeChange',
+              })
+              .done(function(data) {
+                alert(JSON.stringify(data))
+                location.reload()
+              })
+              .fail(function(){
+                  alert('error has occurred');
+              });
+          },
         getLink: function (key, data) {
 
             schemaList = {
