@@ -714,10 +714,10 @@ function startVue(){
           }
           else if (head.includes('Part')) {
             if (str) {
-              points = str.split('.')
+              points = str.split('. ')
               for(let l in points){
                 if (points[l].length > 2) {
-                  list.push(points[l] + '.')
+                  list.push(points[l] + '. ')
                 }
               }
             }

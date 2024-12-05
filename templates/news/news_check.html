@@ -250,7 +250,7 @@ function startVue(OBJ, unit){ new Vue({
           }
           else if (head.includes('Part')) {
             if (str) {
-              points = str.split('.')
+              points = str.split('. ')
               for(let l in points){
               list.push('- ' + points[l])
               }
