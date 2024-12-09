@@ -91,7 +91,7 @@ def news_project_teams(unit, number):
 
     manualTeams = {
 
-        5: ['Sean', 'Cindy Wang', 'Vida'],
+        5: ['Fei', 'Cindy Wang', 'Vida'],
         #8: ['Chloe', 'Lou', 'Vivi']
         # 2:['Nora','Amy'],
         # 3:['Anita','Bly','T.Y','MAC'],
@@ -449,7 +449,7 @@ def news_list():
 
     examDict = {}
 
-    eUnits = ['01','02','03']
+    eUnits = ['01','02','03','04','05']
     # eUnits = ['03','04', '05']
     for src in eUnits:
         if int(src) > 16: # change to match number of units
