@@ -402,9 +402,9 @@ def actions(c, act):
     return result
 
 
-c = 'FRD2'
+c = 'WPE1'
 act = 'vcb'
-go = 0
+go = 9
 ''' reset WPE2 exam '''
 
 if go > 0:
