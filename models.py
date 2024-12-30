@@ -454,6 +454,10 @@ admin.add_view(MyModelView(U011U_NEWS, db.session))
 admin.add_view(MyModelView(U012U_NEWS, db.session))
 admin.add_view(MyModelView(U013U_NEWS, db.session))
 admin.add_view(MyModelView(U014U_NEWS, db.session))
+admin.add_view(MyModelView(U021U_NEWS, db.session))
+admin.add_view(MyModelView(U022U_NEWS, db.session))
+admin.add_view(MyModelView(U031U_NEWS, db.session))
+admin.add_view(MyModelView(U032U_NEWS, db.session))
 
 ##### U02
 

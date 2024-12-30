@@ -91,7 +91,7 @@ def news_project_teams(unit, number):
 
     manualTeams = {
 
-        5: ['Fei', 'Cindy Wang', 'Vida'],
+        6: ['Cindy Wang', 'Sean', 'Raven'],
         #8: ['Chloe', 'Lou', 'Vivi']
         # 2:['Nora','Amy'],
         # 3:['Anita','Bly','T.Y','MAC'],
@@ -449,7 +449,12 @@ def news_list():
 
     examDict = {}
 
-    eUnits = ['01','02','03','04','05']
+    eUnits = []
+    for u in Units_NEWS.query.all():
+        if u.uA == 1:
+            eUnits.append(u.unit)
+
+
     # eUnits = ['03','04', '05']
     for src in eUnits:
         if int(src) > 16: # change to match number of units
@@ -1017,7 +1022,10 @@ def news_grades():
 
     users = getUsers(SCHEMA)
 
-    units = ['01','02', '03']
+    units = []
+    for u in Units_NEWS.query.all():
+        if u.uA == 1:
+            units.append(u.unit)
 
     for user in users:
         gradesDict[user.username] = {
