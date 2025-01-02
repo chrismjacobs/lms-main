@@ -1399,9 +1399,20 @@ def ass(unit):
         ansDict[1]['model'] = speechModel1
 
     except Exception as e:
-        print('S3 exception 1', e)
+        print('S3 exception m4a 1', e)
         ansDict[1]['model'] = None
 
+    if ansDict[1]['model'] == None:
+        try:
+            print(S3_LOCATION)
+            keyName1 = 'Chris/' + unit + '_1_A.mp3'
+            speechModel1 = S3_LOCATION + keyName1
+            s3_client.head_object(Bucket=S3_BUCKET_NAME, Key=keyName1)
+            ansDict[1]['model'] = speechModel1
+
+        except Exception as e:
+            print('S3 exception mp3 1', e)
+            ansDict[1]['model'] = None
 
     try:
         keyName2 = 'Chris/' + unit + '_2_A.m4a'
@@ -1409,9 +1420,21 @@ def ass(unit):
         s3_client.head_object(Bucket=S3_BUCKET_NAME, Key=keyName2)
         ansDict[2]['model'] = speechModel2
     except Exception as e:
-        print('S3 exception 1', e)
+        print('S3 exception m4a 2', e)
 
         ansDict[2]['model']  = None
+
+    if ansDict[2]['model'] == None:
+        try:
+            print(S3_LOCATION)
+            keyName1 = 'Chris/' + unit + '_2_A.mp3'
+            speechModel1 = S3_LOCATION + keyName1
+            s3_client.head_object(Bucket=S3_BUCKET_NAME, Key=keyName1)
+            ansDict[2]['model'] = speechModel1
+
+        except Exception as e:
+            print('S3 exception mp3 2', e)
+            ansDict[2]['model'] = None
 
     context = {
         'SCHEMA' : SCHEMA,
